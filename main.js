@@ -18,8 +18,8 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 			// Access framework parameters
 			declare.safeMixin(this, frameworkParameters);
 			// Set initial app size based on split screen state
-			this.con = dom.byId('plugins/benefits_explorer-0');
-			this.con1 = dom.byId('plugins/benefits_explorer-1');
+			this.con = dom.byId('plugins/benefits_explorer_prototype-0');
+			this.con1 = dom.byId('plugins/benefits_explorer_prototype-1');
 			/*if (this.con1 != undefined){
 				domStyle.set(this.con1, "width", "390px");
 			}else{

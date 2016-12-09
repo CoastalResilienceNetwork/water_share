@@ -16,15 +16,6 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi ) {
 						heightStyle: "fill"
 					});
 				});
-				// Use map resize listener to to track browser window change and refresh accordians
-			/*	$(window).resize(function() {
-					clearTimeout(window.resizedFinished);
-					window.resizedFinished = setTimeout(function(){
-						t.clicks.updateAccord(t);
-						console.log('Resized finished.');
-					}, 250);
-				});*/
-
 				t.map.on('resize',lang.hitch(t,function(){
 					t.clicks.updateAccord(t);
 				}))		
