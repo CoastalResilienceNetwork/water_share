@@ -1,5 +1,12 @@
 body.be_waiting * {
     cursor: progress;
+}
+.dflex{
+	display:flex;
+	flex-direction:column;
+}		
+.be_dflexChildren{
+	flex:1;
 }	
 .nav-locations{
 	display:none !important;	
@@ -284,4 +291,30 @@ abbr.search-choice-close {
 }	
 .content .plugin-container-outer .plugin-container{
 	padding-bottom:0;	
-}		
+}
+.be_mainAccord{
+	display:none;
+}	
+.be_infoWrap{
+	padding:0px; color:#000; margin-top:40px; margin-bottom: 2px; 
+}
+.be_exWrap p{
+	font-size:1.4rem; margin-top:5px; margin-bottom:5px; text-align:left; color:#21658c;	
+}
+.be_dlHeader{
+	font-size:1.4rem; text-align:left; margin:10px 0px 5px 0px; text-decoration:underline;
+}
+.be_a{
+	color:blue !important; margin:0 !important;
+}	
+.getHelpBtnWrap{
+    background-color: #eee; padding:10px 12px;	
+}	
+.getHelpBtn{
+	background-color:#26648E; font-size:1.5rem; line-height:1.5; padding:.6rem 1.4rem; 
+    border:1px solid #ddd; text-align:center; cursor:pointer; color:#eee; border-radius:3px;
+}	
+.getHelpBtn:hover{
+	background-color:#35a1ab;	
+}	
+

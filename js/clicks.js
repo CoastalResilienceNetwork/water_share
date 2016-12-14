@@ -1,7 +1,7 @@
 define([
-	"esri/tasks/query", "esri/tasks/QueryTask", "dojo/_base/declare", "esri/layers/FeatureLayer", "dojo/_base/lang", "dojo/on", "jquery", './jquery-ui-1.11.2/jquery-ui', './esriapi'
+	"esri/tasks/query", "esri/tasks/QueryTask", "dojo/_base/declare", "esri/layers/FeatureLayer", "dojo/_base/lang", "dojo/on", "jquery", './jquery-ui-1.11.2/jquery-ui', './esriapi', "dojo/dom",
 ],
-function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi ) {
+function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, dom ) {
         "use strict";
 
         return declare(null, {
@@ -11,8 +11,8 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi ) {
 				$( function() {
 					$( "#" + t.id + "be_mainAccord" ).accordion({
 						heightStyle: "fill"
-					});
-					$( ".plugin-infographic  #be_infoAccord" ).accordion({
+					}); 
+					$( "#" + t.id + "be_infoAccord" ).accordion({
 						heightStyle: "fill"
 					});
 				});
@@ -24,17 +24,26 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi ) {
 				$('.sidebar-button-bottom button').on('click',lang.hitch(t,function(){
 					t.clicks.updateAccord(t);
 				}));	
-				
+				$('#' + t.id + 'getHelpBtn').on('click',lang.hitch(t,function(c){
+					$('#' + t.id + 'be_infoAccord').hide();
+					$('#' + t.id + 'be_mainAccord').show();
+					$('#' + t.id + 'getHelpBtnWrap').hide();
+					$('#' + t.id + 'getHelpBtn').html('Back to Benefits Explorer');
+					t.clicks.updateAccord(t);
+				}));
 				$('#' + t.id + ' .be_minfo').on('click',lang.hitch(t,function(c){
-					$('.plugin-help').trigger('click');
+					//$('.plugin-help').trigger('click');
+					$('#' + t.id + 'be_mainAccord').hide();
+					$('#' + t.id + 'be_infoAccord').show();
+					$('#' + t.id + 'getHelpBtnWrap').show();
 					var ben = c.target.id.split("-").pop();
-					$( ".plugin-infographic  #be_infoAccord" ).accordion({
+					$('#' + t.id + 'be_infoAccord').accordion({
 						heightStyle: "fill"
 					});
 					t.inAc = 'yes';
 					t.clicks.updateAccord(t);	
-					$('.plugin-infographic .' + ben).trigger('click');
-					$('.plugin-infographic .sidebar-button-bottom').children('button').html('Back');
+					$('#' + t.id + 'be_infoAccord .' + ben).trigger('click');
+					//$('.plugin-infographic .sidebar-button-bottom').children('button').html('Back');
 					
 				}));	
 				// Hide/show benefit sections
@@ -166,18 +175,21 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi ) {
 				});
 			},
 			updateAccord: function(t){
-				var wh = $(window).height();
-				var hh = $('header').outerHeight();
+				console.log('updateAccord')
+			//	var wh = $(window).height();
+			//	var hh = $('header').outerHeight();
 				//app accordian
-				$('#' + t.id).css('height', wh - hh - 42);
-				$( "#" + t.id + "be_mainAccord" ).accordion('refresh');	
-				
-				//info accordian
-				t.infoheight = wh - hh - 50;
-				$('.plugin-infographic').css('height', t.infoheight);
-				if (t.inAc == 'yes'){
-					$( ".plugin-infographic  #be_infoAccord" ).accordion('refresh');				
+			//	$('#' + t.id).css('height', wh - hh - 42);
+				if ( $(dom.byId(t.container)).is(':visible') ){
+						
+					$( "#" + t.id + "be_mainAccord" ).accordion('refresh');	
 				}
+				//info accordian
+			//	t.infoheight = wh - hh - 50;
+			//	$('.plugin-infographic').css('height', t.infoheight);
+			//	if (t.inAc == 'yes'){
+					$( "#" + t.id +  "be_infoAccord" ).accordion('refresh');				
+			//	}
 			},
 			numberWithCommas: function(x){
 				return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

@@ -5,14 +5,14 @@ require({
 // Bring in dojo and javascript api classes as well as varObject.json, js files, and content.html
 define([
 	"dojo/_base/declare", "framework/PluginBase", "dijit/layout/ContentPane", "dojo/dom", "dojo/dom-style", "dojo/dom-geometry", "dojo/_base/lang", "dojo/text!./obj.json", 
-	"jquery", "dojo/text!./html/content.html", "dojo/text!./html/infoGraphic.html", './js/jquery-ui-1.11.2/jquery-ui', './js/esriapi', './js/clicks', './js/barChart', './js/horizontalBar'
+	"jquery", "dojo/text!./html/content.html", './js/jquery-ui-1.11.2/jquery-ui', './js/esriapi', './js/clicks', './js/barChart', './js/horizontalBar'
 ],
 function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj, 
-			$, content, ig, ui, esriapi, clicks, barChart, hbar ) {
+			$, content, ui, esriapi, clicks, barChart, hbar ) {
 	return declare(PluginBase, {
 		// The height and width are set here when an infographic is defined. When the user click Continue it rebuilds the app window with whatever you put in.
 		toolbarName: "Benefits Explorer", showServiceLayersInLegend: true, allowIdentifyWhenActive: false, rendered: false, resizable: false,
-		hasCustomPrint: true, usePrintPreviewMap: true, previewMapSize: [1000, 550], infoGraphic: ig, size:'small',	
+		hasCustomPrint: true, usePrintPreviewMap: true, previewMapSize: [1000, 550], size:'small',	
 		// First function called when the user clicks the pluging icon. 
 		initialize: function (frameworkParameters) {
 			// Access framework parameters
@@ -101,8 +101,9 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 			this.clicks = new clicks();
 			// ADD HTML TO APP
 			// Define Content Pane as HTML parent		
-			this.appDiv = new ContentPane({style:'padding:0px 0px 0px 0px; position:relative; color:#000;'});
+			this.appDiv = new ContentPane({style:'padding:0; color:#000; flex:1; display:flex; flex-direction:column;}'});
 			this.id = this.appDiv.id
+			$(dom.byId(this.container)).addClass('dflex')
 			dom.byId(this.container).appendChild(this.appDiv.domNode);					
 			// Get html from content.html, prepend appDiv.id to html element id's, and add to appDiv
 			var idUpdate = content.replace(/id='/g, "id='" + this.id);	
