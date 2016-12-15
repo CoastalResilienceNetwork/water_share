@@ -6,24 +6,20 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 
         return declare(null, {
 			clickListener: function(t){
-				t.inAc = 'yes';
-				//make main accrodian
+				//make accrodians
 				$( function() {
-					$( "#" + t.id + "be_mainAccord" ).accordion({
-						heightStyle: "fill"
-					}); 
-					$( "#" + t.id + "be_infoAccord" ).accordion({
-						heightStyle: "fill"
-					});
+					$( "#" + t.id + "be_mainAccord" ).accordion({heightStyle: "fill"}); 
+					$( "#" + t.id + "be_infoAccord" ).accordion({heightStyle: "fill"});
 				});
+				// update accordians on window resize - map resize is much cleaner than window resize
 				t.map.on('resize',lang.hitch(t,function(){
 					t.clicks.updateAccord(t);
-				}))		
-				t.clicks.updateAccord(t);						
+				}))								
 				// track when info window is closed
 				$('.sidebar-button-bottom button').on('click',lang.hitch(t,function(){
 					t.clicks.updateAccord(t);
 				}));	
+				// leave the get help section
 				$('#' + t.id + 'getHelpBtn').on('click',lang.hitch(t,function(c){
 					$('#' + t.id + 'be_infoAccord').hide();
 					$('#' + t.id + 'be_mainAccord').show();
@@ -31,33 +27,15 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					$('#' + t.id + 'getHelpBtn').html('Back to Benefits Explorer');
 					t.clicks.updateAccord(t);
 				}));
+				// info icon clicks
 				$('#' + t.id + ' .be_minfo').on('click',lang.hitch(t,function(c){
-					//$('.plugin-help').trigger('click');
 					$('#' + t.id + 'be_mainAccord').hide();
 					$('#' + t.id + 'be_infoAccord').show();
 					$('#' + t.id + 'getHelpBtnWrap').show();
 					var ben = c.target.id.split("-").pop();
-					$('#' + t.id + 'be_infoAccord').accordion({
-						heightStyle: "fill"
-					});
-					t.inAc = 'yes';
 					t.clicks.updateAccord(t);	
 					$('#' + t.id + 'be_infoAccord .' + ben).trigger('click');
-					//$('.plugin-infographic .sidebar-button-bottom').children('button').html('Back');
-					
-				}));	
-				// Hide/show benefit sections
-				$('#' + t.id + ' .be_hs').on('click',lang.hitch(t,function(c){
-					if ( $(c.currentTarget).next().is(":hidden") ){
-						$('#' + t.id + ' .be_sectionWrap').slideUp();
-						$(c.currentTarget).next().slideDown();
-					}	
-				}));
-				// Explain benefits click
-				$('#' + t.id + 'moreInfo').on('click',lang.hitch(t,function(c){
-					$('#' + t.id + 'moreInfo span').toggle();
-					$('#' + t.id + ' .explanations').slideToggle();
-				}));	
+				}));		
 				// Benefit CB Clicks
 				$('#' + t.id + 'cbListener .be_cbBenWrap').on('click',lang.hitch(t,function(c){
 					var ben = "";
@@ -175,21 +153,8 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 				});
 			},
 			updateAccord: function(t){
-				console.log('updateAccord')
-			//	var wh = $(window).height();
-			//	var hh = $('header').outerHeight();
-				//app accordian
-			//	$('#' + t.id).css('height', wh - hh - 42);
-				if ( $(dom.byId(t.container)).is(':visible') ){
-						
-					$( "#" + t.id + "be_mainAccord" ).accordion('refresh');	
-				}
-				//info accordian
-			//	t.infoheight = wh - hh - 50;
-			//	$('.plugin-infographic').css('height', t.infoheight);
-			//	if (t.inAc == 'yes'){
-					$( "#" + t.id +  "be_infoAccord" ).accordion('refresh');				
-			//	}
+				$( "#" + t.id + "be_mainAccord" ).accordion('refresh');	
+				$( "#" + t.id +  "be_infoAccord" ).accordion('refresh');				
 			},
 			numberWithCommas: function(x){
 				return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
