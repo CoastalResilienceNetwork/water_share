@@ -18,8 +18,8 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 			// Access framework parameters
 			declare.safeMixin(this, frameworkParameters);
 			// Set initial app size based on split screen state
-			this.con = dom.byId('plugins/benefits_explorer_prototype-0');
-			this.con1 = dom.byId('plugins/benefits_explorer_prototype-1');
+			this.con = dom.byId('plugins/water_share_prototype-0');
+			this.con1 = dom.byId('plugins/water_share_prototype-1');
 			/*if (this.con1 != undefined){
 				domStyle.set(this.con1, "width", "390px");
 			}else{
@@ -27,14 +27,14 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 			}*/	
 			// Define object to access global variables from JSON object. Only add variables to varObject.json that are needed by Save and Share. 
 			this.obj = dojo.eval("[" + obj + "]")[0];	
-			this.url = "http://dev.services2.coastalresilience.org:6080/arcgis/rest/services/Water_Blueprint/BenefitsExplorer/MapServer";
+			this.url = "http://dev.services2.coastalresilience.org:6080/arcgis/rest/services/Water_Blueprint/water_share_test/MapServer";
 			this.layerDefs = [];
 		},
 		// Called after initialize at plugin startup (why all the tests for undefined). Also called after deactivate when user closes app by clicking X. 
 		hibernate: function () {
 			if (this.appDiv != undefined){
 				this.map.removeLayer(this.dynamicLayer);
-				this.map.removeLayer(this.basinFl);
+				this.map.removeLayer(this.depletion);
 				this.map.graphics.clear();
 				$('.plugin-infographic .sidebar-button-bottom').children('button').html('Get Started');
 			}
@@ -49,7 +49,7 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 				this.dynamicLayer.setVisibility(true);
 			}else{
 				this.map.addLayer(this.dynamicLayer);
-				this.map.addLayer(this.basinFl);
+				this.map.addLayer(this.depletion);
 				// on set state it calls activate twice. on the second call render is true so it call this else. layer infos isn't done yet so if you call setNavBtns it can't use layer infos
 				if (this.obj.stateSet == "no"){	
 					//this.navigation.setNavBtns(this);	
@@ -95,6 +95,7 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 		render: function() {
 			//$('.basemap-selector').trigger('change', 3);
 			// BRING IN OTHER JS FILES
+			console.log('look here')
 			this.barChart = new barChart();
 			this.hbar = new hbar();
 			this.esriapi = new esriapi();
@@ -113,6 +114,7 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 			this.clicks.clickListener(this);
 			// CREATE ESRI OBJECTS AND EVENT LISTENERS	
 			this.esriapi.esriApiFunctions(this);
+			console.log('look here 3')
 			// set up chartjs charts
 			this.chartjs.createChart(this);
 			this.rendered = true;	

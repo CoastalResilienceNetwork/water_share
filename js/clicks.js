@@ -6,6 +6,7 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 
         return declare(null, {
 			clickListener: function(t){
+				console.log('click lis')
 				//make accrodians
 				$( function() {
 					$( "#" + t.id + "be_mainAccord" ).accordion({heightStyle: "fill"}); 
