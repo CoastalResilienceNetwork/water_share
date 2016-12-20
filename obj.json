@@ -1,3 +1,4 @@
 {
-	"visibleLayers": [1,2]
+	"visibleLayers": [1,2],
+	"chartVisBtn": "sh_rawBtn"
 }
