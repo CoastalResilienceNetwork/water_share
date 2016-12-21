@@ -6,7 +6,6 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 
         return declare(null, {
 			clickListener: function(t){
-				console.log('click lis')
 				//make accrodians
 				$( function() {
 					$( "#" + t.id + "be_mainAccord" ).accordion({heightStyle: "fill"}); 
@@ -15,11 +14,10 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 				// update accordians on window resize - map resize is much cleaner than window resize
 				t.map.on('resize',lang.hitch(t,function(){
 					t.clicks.updateAccord(t);
-				}))								
-				// track when info window is closed
-				$('.sidebar-button-bottom button').on('click',lang.hitch(t,function(){
-					t.clicks.updateAccord(t);
-				}));	
+				}))		
+				// temp to show main accordians
+				t.clicks.updateAccord(t);
+				$('#' + t.id + 'be_mainAccord').show();
 				// leave the get help section
 				$('#' + t.id + 'getHelpBtn').on('click',lang.hitch(t,function(c){
 					$('#' + t.id + 'be_infoAccord').hide();
@@ -37,6 +35,69 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					t.clicks.updateAccord(t);	
 					$('#' + t.id + 'be_infoAccord .' + ben).trigger('click');
 				}));		
+				// year clicks
+				$('#' + t.id + ' .sh_togYear').on('click',lang.hitch(t,function(c){
+					$('#' + t.id + ' .sh_togYear').removeClass('sh_togBtnSel');
+					$('#' + c.target.id).addClass('sh_togBtnSel');
+					console.log(c.target.id);
+				}));
+				
+				// click on depletion header 
+				$('#' + t.id + 'depHeader').on('click',lang.hitch(t,function(c){
+					if($('#' + t.id + 'depHeader').next().is(':hidden')){
+						console.log('opening dep header')
+					}
+				}));
+				// click on catagory header 
+				$('#' + t.id + 'catHeader').on('click',lang.hitch(t,function(c){
+					if($('#' + t.id + 'catHeader').next().is(':hidden')){
+						console.log('opening cat header')
+						t.obj.visibleLayers = [0];
+						t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
+						
+						t.map.addLayer(t.category);
+						t.clicks.categorySelComplete(t);
+					}
+				}));
+				// click on profile header
+				$('#' + t.id + 'proHeader').on('click',lang.hitch(t,function(c){
+					if($('#' + t.id + 'proHeader').next().is(':hidden')){
+						console.log('opening pro header')
+					}
+				}));
+				
+				// fire when the multi year slider is changed
+				// year range slider
+				$('#' + t.id + 'sh_multiYearSlider').slider({range:false, min:0, max:14, slide:function(event,ui){t.clicks.sliderChange(event,ui,t)}});
+				// use the below if you want the slide event to fire only after you are done with the slide
+				//$('#' + t.id + 'sh_multiYearSlider').slider({range:false, min:0, max:14, change:function(event,ui){t.clicks.sliderChange(event,ui,t)}});
+				
+				
+				
+				
+				
+				// var ben  = event.target.id.split("-").pop()
+				// t[ben] = "(" + ben + " >= " + ui.values[0] + " AND " + ben + " <= " + ui.values[1] + ")";	
+				// t.clicks.layerDefsUpdate(t);
+				// var low = 0;
+				// var high = 0;
+				// if (ben == 'freshbiot'){
+					// low = ui.values[0]/10;
+					// high = ui.values[1]/10;			
+				// }else{	
+					// low = t.clicks.numberWithCommas(ui.values[0])
+					// high = t.clicks.numberWithCommas(ui.values[1])
+				// }
+				// if (low == high){						
+					// $('#' + t.id + ben + '-range').html("(" + low);
+				// }else{
+					// $('#' + t.id + ben + '-range').html("(" + low + " - " + high);
+				// }
+				// $('#' + t.id + ben + '-unit').css('display', 'inline-block');
+					
+					
+				
+				
 				// Benefit CB Clicks
 				$('#' + t.id + 'cbListener .be_cbBenWrap').on('click',lang.hitch(t,function(c){
 					var ben = "";
@@ -59,100 +120,60 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 						$('#' + t.id + ben + '-unit').hide();
 					}	
 				}));	
-				// Standing Carbon range slider
-				$('#' + t.id + '-standingc').slider({range:true, min:0, max:6600, values:[0,6600], change:function(event,ui){t.clicks.sliderChange(event,ui,t)}});
-				// Forest Loss range slider
-				$('#' + t.id + '-forloss').slider({range:true, min:0, max:20000, values:[0,20000], change:function(event,ui){t.clicks.sliderChange(event,ui,t)}});
-				// Reforestation Potential range slider
-				$('#' + t.id + '-refor').slider({range:true, min:0, max:65100, values:[0,65100], change:function(event,ui){t.clicks.sliderChange(event,ui,t)}});	
-				// Freshwater Biodiversity Threats range slider
-				$('#' + t.id + '-freshbiot').slider({range:true, min:0, max:10, values:[0,10], change:function(event,ui){t.clicks.sliderChange(event,ui,t)}});	
-				// IUCN Listed Terrestrial Species range slider
-				$('#' + t.id + '-terrsp').slider({range:true, min:0, max:220, values:[0,220], change:function(event,ui){t.clicks.sliderChange(event,ui,t)}});
-				// Habitat for Pollinators and Impacts on Vitamin A range slider
-				$('#' + t.id + '-vita' ).slider({ range: true, min: 0, max: 85, values: [ 0, 85 ], change:function(event,ui){t.clicks.sliderChange(event,ui,t)}});
-				// Habitat for Pollinators and Impacts on Crop Yield Economic Output range slider
-				$('#' + t.id + '-agloss' ).slider({ range: true, min: 0, max: 70, values: [ 0, 70 ], change:function(event,ui){t.clicks.sliderChange(event,ui,t)}});
-				// Excess Nitrogen range slider
-				$('#' + t.id + '-nitrogen' ).slider({ range: true, min: 0, max: 615, values: [ 0, 615 ], change:function(event,ui){t.clicks.sliderChange(event,ui,t)}});	
+				
 			},
+			// fire when the multi year slider is changed
 			sliderChange: function( event, ui, t ){
-				var ben  = event.target.id.split("-").pop()
-				t[ben] = "(" + ben + " >= " + ui.values[0] + " AND " + ben + " <= " + ui.values[1] + ")";	
-				t.clicks.layerDefsUpdate(t);
-				var low = 0;
-				var high = 0;
-				if (ben == 'freshbiot'){
-					low = ui.values[0]/10;
-					high = ui.values[1]/10;			
-				}else{	
-					low = t.clicks.numberWithCommas(ui.values[0])
-					high = t.clicks.numberWithCommas(ui.values[1])
-				}
-				if (low == high){						
-					$('#' + t.id + ben + '-range').html("(" + low);
-				}else{
-					$('#' + t.id + ben + '-range').html("(" + low + " - " + high);
-				}
-				$('#' + t.id + ben + '-unit').css('display', 'inline-block');
-			},	
-			layerDefsUpdate: function(t){
-				t.exp = [t.standingc, t.forloss, t.refor, t.freshbiot, t.terrsp, t.vita, t.agloss, t.nitrogen]
-				var exp = "";
-				var cnt = 0;
-				var nd = "f";
-				$.each(t.exp, lang.hitch(t,function(i, v){
-					if (v.length > 0){
-						if (exp.length == 0){
-							exp = v;
-							cnt = 1;
-						}else{
-							exp = exp + " AND " + v;
-							cnt = cnt + 1;
-						}	
-					}	
-				}));
-				if (cnt == 1){
-					$('#' + t.id + 'cbListener input').each(function(i,v){
-						if ($(v).prop('checked')){
-							t.exp1 = $(v).val() + " = -99";
-						}	
-					});
-					var q = new Query();
-					var qt = new QueryTask(t.url + '/0');
-					q.where = t.exp1;
-					qt.executeForCount(q,function(count){
-						var layerDefinitions = [];
-						layerDefinitions[1] = exp;
-						if (count > 0){
-							layerDefinitions[0] = t.exp1;	
-							t.obj.visibleLayers = [0,1,2];
-						}else{
-							t.obj.visibleLayers = [1,2];
-						}
-						t.dynamicLayer.setLayerDefinitions(layerDefinitions);
-						t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);						
-					});
-				}else{	
-					if (exp.length == 0){
-						exp = "OBJECTID < 0";
-						t.obj.visibleLayers = [2];
-					}else{
-						t.obj.visibleLayers = [1,2];
-					}		
-					var layerDefinitions = [];		
-					layerDefinitions[1] = exp;	
-					t.dynamicLayer.setLayerDefinitions(layerDefinitions);
-					t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
-				}
-				var query = new Query();
-				var queryTask = new QueryTask(t.url + '/0');
-				query.where = exp;
-				queryTask.executeForCount(query,function(count){
-					var cnt = t.clicks.numberWithCommas(count)
-					$('#' + t.id + 'basinCnt').html(cnt); 
-				});
+				console.log('slider fire 2')
 			},
+			
+			// build chart on selection complete
+			categorySelComplete: function(t){
+				t.category.on('selection-complete', lang.hitch(t,function(evt){
+					if (evt.features.length > 0){
+						// retrieve attribute data
+						t.obj.chartData = evt.features[0].attributes;
+						// data for the chart, parse the data
+						t.tempData = [{
+							AVL: JSON.parse(t.obj.chartData.AVL_mean_Mil_Array),
+							AVL_Min: JSON.parse(t.obj.chartData.AVL_min_Mil_Array),
+							AVL_Max: JSON.parse(t.obj.chartData.AVL_MAX_Mil_Array),
+							DOM: JSON.parse(t.obj.chartData.DOM_Mil_Array),
+							IND: JSON.parse(t.obj.chartData.IND_Mil_Array),
+							IRR: JSON.parse(t.obj.chartData.IRR_Mil_Array),
+							LIV: JSON.parse(t.obj.chartData.LIV_Mil_Array)
+						}]
+						// set the max for the y axis on the graph
+						// availmax
+						t.availMax = Math.max.apply(Math, t.tempData[0].AVL)
+						t.availMax = Math.round(t.availMax + (t.availMax * .1))
+						// intermax
+						t.interMax = Math.max.apply(Math, t.tempData[0].AVL_Max)
+						t.interMax = Math.round(t.interMax + (t.interMax * .1))
+						//work with raw max
+						var rawList = t.tempData[0].DOM +',' + t.tempData[0].IND +',' + t.tempData[0].IRR +',' + t.tempData[0].LIV
+						rawList = rawList.split(',');
+						var newRawList = []
+						$.each(rawList, lang.hitch(t,function(i, v){
+							newRawList.push(Number(v));
+						}));
+						//raw max
+						t.rawMax = Math.max.apply(Math, newRawList)
+						t.rawMax = Math.round(t.rawMax + (t.rawMax * .2))
+						
+						// set chart options below with max value for y axis
+						t.myRawChart.config.options.scales.yAxes[0].ticks.max = t.rawMax;
+						t.myAvailChart.config.options.scales.yAxes[0].ticks.max = t.availMax;
+						t.myAvailChart.config.options.scales.yAxes[1].ticks.max = t.availMax;
+						t.myInterChart.config.options.scales.yAxes[0].ticks.max = t.interMax;
+						t.myInterChart.config.options.scales.yAxes[1].ticks.max = t.interMax;
+						
+						// call the update chart function
+						t.chartjs.updateChart(t, t.tempData);
+					}
+				}));
+			},
+			// update accordian of layout
 			updateAccord: function(t){
 				$( "#" + t.id + "be_mainAccord" ).accordion('refresh');	
 				$( "#" + t.id +  "be_infoAccord" ).accordion('refresh');				

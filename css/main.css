@@ -27,10 +27,10 @@ body.be_waiting * {
 .be_futureWrapper{
 	margin-top:10px;	
 }	
-.be_multiShoreSlider{
+.sh_multiYearSlider{
 	width: 350px; margin-left:20px;
 }
-.be_multiShoreSlider label{
+.sh_multiYearSlider label{
 	position: absolute; width: 50px; margin-left: -26px; text-align: left; margin-top: 30px; transform: rotate(90deg);
 	font-size:10pt; text-align:left;
 }
@@ -49,7 +49,7 @@ hr.be_hrStyle {
 .be_chartWrapper{
 	margin-top:10px; width:100%; text-align:center;
 }
-.be_multiShoreSlider input{
+.sh_multiYearSlider input{
 	width:85%; margin:auto; display:block;
 }
 /* Chosen select menu elements */
@@ -253,12 +253,10 @@ abbr.search-choice-close {
 .content .plugin-container-outer .plugin-container{
 	padding-bottom:0;	
 }
-.be_mainAccord{
-	display:none;
+.sh_infoWrap{
+	display:none; padding:0px; color:#000; margin-bottom: 2px; 
 }	
-.be_infoWrap{
-	padding:0px; color:#000; margin-bottom: 2px; 
-}
+
 .be_exWrap p{
 	font-size:1.4rem; margin-top:5px; margin-bottom:5px; text-align:left; color:#21658c;	
 }
@@ -269,7 +267,7 @@ abbr.search-choice-close {
 	color:blue !important; margin:0 !important;
 }	
 .getHelpBtnWrap{
-    background-color: #eee; padding:10px 12px;	
+    background-color: #eee; padding:10px 12px; display:none;
 }	
 .getHelpBtn{
 	background-color:#26648E; font-size:1.5rem; line-height:1.5; padding:.6rem 1.4rem; 
@@ -281,10 +279,10 @@ abbr.search-choice-close {
 
 /* work with styling of the toggle buttons */
 .sh_togBtn{
-	padding:8px; text-decoration:none; -moz-border-radius:1px; -webkit-border-radius:1px; border-radius:1px; -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+	padding:4px; text-decoration:none; -moz-border-radius:1px; -webkit-border-radius:1px; border-radius:1px; -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
 	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.5); box-shadow: 0 1px 2px rgba(0,0,0,0.5); border-bottom: 1px solid rgba(0,0,0,0.25); outline:none; position:relative;
 	font-size:1.4rem; background-color:#f4f4f4; color:#000; text-shadow:0 -1px 1px rgba(255,255,255,0.25); font-weight:100; text-align:center;
-	border:1px solid gray; border-right: 1px solid #676767; border-left: 1px solid #676767; 
+	border:1px solid gray; border-right: 1px solid #676767; border-left: 1px solid #676767;
 }	
 .sh_togBtnSel{
 	border-bottom: 1px solid #a6a6a6; background-color:#e8f5fe; color:#000; text-shadow:0 1px 1px rgba(0,0,0,0.25);
@@ -299,10 +297,13 @@ abbr.search-choice-close {
 .sh_togBtnSel:hover{
 	background-color:#e8f5fe; cursor:default; color:#000;
 }
+.sh_togYear{
+	width:55px; margin-top:5px;
+}
 
 /* work with flex styling */
 .sh_btnFlex{
-	display:flex; padding:5px;
+	display:flex; padding:5px; justify-content:center; flex-wrap: wrap; 
 }
 .sh_lineHeader {
     font-size: 1.4rem;
