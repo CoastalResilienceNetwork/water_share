@@ -185,24 +185,30 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 						// set the max for the y axis on the graph
 						// availmax
 						t.availMax = Math.max.apply(Math, t.chartData[0].AVL)
-						t.availMax = Math.round(t.availMax + (t.availMax * .1))
+						t.availMax = Math.round(t.availMax + (t.availMax * .2))
 						// intermax
 						t.interMax = Math.max.apply(Math, t.chartData[0].AVL_Max)
-						t.interMax = Math.round(t.interMax + (t.interMax * .1))
-						//work with raw max
-						var rawList = t.chartData[0].DOM +',' + t.chartData[0].IND +',' + t.chartData[0].IRR +',' + t.chartData[0].LIV
-						rawList = rawList.split(',');
-						var newRawList = []
-						$.each(rawList, lang.hitch(t,function(i, v){
-							newRawList.push(Number(v));
-						}));
-						//raw max
-						t.rawMax = Math.max.apply(Math, newRawList)
-						t.rawMax = Math.round(t.rawMax + (t.rawMax * .2))
+						t.interMax = Math.round(t.interMax + (t.interMax * .2))
 						
+						//work with raw max
+						var rawMaxArray = [0,1,2,3,4,5,6,7,8,9,10,11];
+						var y = 0;
+						var x = 0;
+						$.each(rawMaxArray, lang.hitch(t,function(i, v){
+							x = t.chartData[0].DOM[i] + t.chartData[0].IND[i] + t.chartData[0].IRR[i] + t.chartData[0].LIV[i]
+							if( x > y ) { y = x }
+						}));
+						t.rawMax = y;
+						
+						//raw max
+						t.rawMax = Math.round(t.rawMax + (t.rawMax * .2))
 						// logic if availemax is less than raw max
 						if(t.availMax < t.rawMax){
 							t.availMax = t.rawMax;
+						}
+						// 
+						if(t.interMax < t.rawMax || t.interMax < t.availMax){
+							t.interMax = Math.max.apply(Math, [t.rawMax ,t.availMax]);
 						}
 						
 						// handle the trigger for show and click the raw button
