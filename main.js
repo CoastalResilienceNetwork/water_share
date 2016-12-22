@@ -46,7 +46,6 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 				this.render();
 				// Hide the print button until a hex has been selected
 				$(this.printButton).hide();
-				this.dynamicLayer.setVisibility(true);
 			}else{
 				this.map.addLayer(this.dynamicLayer);
 				this.map.addLayer(this.category);

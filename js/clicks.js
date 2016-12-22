@@ -39,19 +39,16 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 				$('#' + t.id + ' .sh_togYear').on('click',lang.hitch(t,function(c){
 					$('#' + t.id + ' .sh_togYear').removeClass('sh_togBtnSel');
 					$('#' + c.target.id).addClass('sh_togBtnSel');
-					console.log(c.target.id);
 				}));
 				
 				// click on depletion header 
 				$('#' + t.id + 'depHeader').on('click',lang.hitch(t,function(c){
 					if($('#' + t.id + 'depHeader').next().is(':hidden')){
-						console.log('opening dep header')
 					}
 				}));
 				// click on catagory header 
 				$('#' + t.id + 'catHeader').on('click',lang.hitch(t,function(c){
 					if($('#' + t.id + 'catHeader').next().is(':hidden')){
-						console.log('opening cat header')
 						t.obj.visibleLayers = [0];
 						t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 						
@@ -62,9 +59,16 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 				// click on profile header
 				$('#' + t.id + 'proHeader').on('click',lang.hitch(t,function(c){
 					if($('#' + t.id + 'proHeader').next().is(':hidden')){
-						console.log('opening pro header')
 					}
 				}));
+				
+				// SET UP SLIDER AND ADD EVENT LISTENER //////////////////
+				var vals = 13;
+				var labels = ['1900','1910s','1940s', '1962', '1970s', '1985-6', '1994', '2002', '2004', '2006', '2009', '2011', '2013', '2014'];
+				for (var i = 0; i <= vals; i++) {
+					var el = $('<label>'+(labels[i])+'</label>').css('left',(i/vals*100)+'%');
+					$('#' + t.id + 'sh_multiYearSlider').append(el);
+				}
 				
 				// fire when the multi year slider is changed
 				// year range slider
@@ -72,8 +76,39 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 				// use the below if you want the slide event to fire only after you are done with the slide
 				//$('#' + t.id + 'sh_multiYearSlider').slider({range:false, min:0, max:14, change:function(event,ui){t.clicks.sliderChange(event,ui,t)}});
 				
+				$('#' + t.id + 'sh_multiYearSlider').on('slide', lang.hitch(this,function(w,evt){
+					t.obj.sliderYear = labels[evt.value];
+					t.obj.sliderYearQuery = "CRToolDate = '" + t.obj.sliderYear + "'";
+					t.clicks.setSliderYear(t);
+					if (t.sliderPlayBtn  == 'play'){
+						t.sliderPlayBtn  == ''
+						$('#' + t.id + 'sliderStop').trigger('click');
+					}
+				}));
 				
-				
+				// slider play button click
+				$('#' + t.id + 'sh_sliderPlay').on('click', lang.hitch(t,function(){
+					$('#' + t.id + 'sh_sliderPlay').addClass('sh_hide');
+					$('#' + t.id + 'sh_sliderStop').removeClass('sh_hide');
+					t.sliderPlayBtn  = 'play' 
+					t.setInt = setInterval(function(){
+						//$('#' + t.id + 'multiShoreSlider').slider('value',t.obj.sliderCounter);
+						//t.obj.sliderYear = labels[t.obj.sliderCounter];
+						//t.obj.sliderYearQuery = "CRToolDate = '" + t.obj.sliderYear + "'";
+						// t.clicks.setSliderYear(t);
+						// t.obj.sliderCounter++
+						// if(t.obj.sliderCounter>13){
+							// t.obj.sliderCounter = 0
+						// }
+					}, 100);
+				}));
+				//slider stop button click
+				$('#' + t.id + 'sh_sliderStop').on('click', lang.hitch(t,function(){
+					$('#' + t.id + 'sh_sliderPlay').removeClass('sh_hide');
+					$('#' + t.id + 'sh_sliderStop').addClass('sh_hide');
+					clearInterval(t.setInt);
+					t.sliderPlayBtn  = '';
+				}));
 				
 				
 				// var ben  = event.target.id.split("-").pop()
@@ -124,17 +159,17 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 			},
 			// fire when the multi year slider is changed
 			sliderChange: function( event, ui, t ){
-				console.log('slider fire 2')
 			},
 			
 			// build chart on selection complete
 			categorySelComplete: function(t){
 				t.category.on('selection-complete', lang.hitch(t,function(evt){
 					if (evt.features.length > 0){
+						
 						// retrieve attribute data
 						t.obj.chartData = evt.features[0].attributes;
 						// data for the chart, parse the data
-						t.tempData = [{
+						t.chartData = [{
 							AVL: JSON.parse(t.obj.chartData.AVL_mean_Mil_Array),
 							AVL_Min: JSON.parse(t.obj.chartData.AVL_min_Mil_Array),
 							AVL_Max: JSON.parse(t.obj.chartData.AVL_MAX_Mil_Array),
@@ -143,15 +178,19 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 							IRR: JSON.parse(t.obj.chartData.IRR_Mil_Array),
 							LIV: JSON.parse(t.obj.chartData.LIV_Mil_Array)
 						}]
+						
+						
+						
+						
 						// set the max for the y axis on the graph
 						// availmax
-						t.availMax = Math.max.apply(Math, t.tempData[0].AVL)
+						t.availMax = Math.max.apply(Math, t.chartData[0].AVL)
 						t.availMax = Math.round(t.availMax + (t.availMax * .1))
 						// intermax
-						t.interMax = Math.max.apply(Math, t.tempData[0].AVL_Max)
+						t.interMax = Math.max.apply(Math, t.chartData[0].AVL_Max)
 						t.interMax = Math.round(t.interMax + (t.interMax * .1))
 						//work with raw max
-						var rawList = t.tempData[0].DOM +',' + t.tempData[0].IND +',' + t.tempData[0].IRR +',' + t.tempData[0].LIV
+						var rawList = t.chartData[0].DOM +',' + t.chartData[0].IND +',' + t.chartData[0].IRR +',' + t.chartData[0].LIV
 						rawList = rawList.split(',');
 						var newRawList = []
 						$.each(rawList, lang.hitch(t,function(i, v){
@@ -161,16 +200,23 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 						t.rawMax = Math.max.apply(Math, newRawList)
 						t.rawMax = Math.round(t.rawMax + (t.rawMax * .2))
 						
-						// set chart options below with max value for y axis
-						t.myRawChart.config.options.scales.yAxes[0].ticks.max = t.rawMax;
-						t.myAvailChart.config.options.scales.yAxes[0].ticks.max = t.availMax;
-						t.myAvailChart.config.options.scales.yAxes[1].ticks.max = t.availMax;
-						t.myInterChart.config.options.scales.yAxes[0].ticks.max = t.interMax;
-						t.myInterChart.config.options.scales.yAxes[1].ticks.max = t.interMax;
+						// logic if availemax is less than raw max
+						if(t.availMax < t.rawMax){
+							t.availMax = t.rawMax;
+						}
 						
-						// call the update chart function
-						t.chartjs.updateChart(t, t.tempData);
+						// handle the trigger for show and click the raw button
+						$('#' + t.id + 'sh_rWrap').show();
+						$('#' + t.id + 'sh_chartWrap').slideDown();
+						
+						$('#' + t.id + 'sh_chartUnits').slideUp();
+						$('#' + t.id + 'sh_rawBtn').trigger('click')
+					}else{
+						// hide graph elements when no target has been hit on click
+						$('#' + t.id + 'sh_chartWrap').slideUp();
+						$('#' + t.id + 'sh_chartUnits').slideDown();
 					}
+					
 				}));
 			},
 			// update accordian of layout

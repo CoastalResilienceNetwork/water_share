@@ -7,81 +7,85 @@ The unique ContentPane id makes all the element ids unique and prevents duplicat
 <div id='be_mainAccord' class='be_mainAccord be_dflexChildren'>
 	<h3 id='depHeader'>Explore Basins by Depletion</h3>  
 	<div id='cbListener' class='ac_sectionWrap'>
-		<div class='sh_lineHeader'>Filter by year:</div>
-		<div class='sh_btnFlex'>
-			<div class='sh_togBtn sh_togYear' id='-depYear1'>1900</div>
-			<div class='sh_togBtn sh_togYear' id='-depYear2'>1910</div>
-			<div class='sh_togBtn sh_togYear' id='-depYear3'>1920</div>
-			<div class='sh_togBtn sh_togYear' id='-depYear4'>1930</div>
-			<div class='sh_togBtn sh_togYear' id='-depYear5'>1940</div>
-			<div class='sh_togBtn sh_togYear' id='-depYear6'>1950</div>
-			<div class='sh_togBtn sh_togYear' id='-depYear7'>1960</div>
-			<div class='sh_togBtn sh_togYear' id='-depYear8'>1970</div>
-			<div class='sh_togBtn sh_togYear' id='-depYear9'>1980</div>
-			<div class='sh_togBtn sh_togYear' id='-depYear10'>1985</div>
-			<div class='sh_togBtn sh_togYear' id='-depYear11'>1990</div>
-			<div class='sh_togBtn sh_togYear' id='-depYear12'>1995</div>
-			<div class='sh_togBtn sh_togYear' id='-depYear13'>2000</div>
-			<div class='sh_togBtn sh_togYear' id='-depYear14'>2005</div>
+		<div class='sh_hide'>
+			<div class='sh_lineHeader'>Filter by year:</div>
+			<div class='sh_btnFlex'>
+				<div class='sh_togBtn sh_togYear' id='-depYear1'>1900</div>
+				<div class='sh_togBtn sh_togYear' id='-depYear2'>1910</div>
+				<div class='sh_togBtn sh_togYear' id='-depYear3'>1920</div>
+				<div class='sh_togBtn sh_togYear' id='-depYear4'>1930</div>
+				<div class='sh_togBtn sh_togYear' id='-depYear5'>1940</div>
+				<div class='sh_togBtn sh_togYear' id='-depYear6'>1950</div>
+				<div class='sh_togBtn sh_togYear' id='-depYear7'>1960</div>
+				<div class='sh_togBtn sh_togYear' id='-depYear8'>1970</div>
+				<div class='sh_togBtn sh_togYear' id='-depYear9'>1980</div>
+				<div class='sh_togBtn sh_togYear' id='-depYear10'>1985</div>
+				<div class='sh_togBtn sh_togYear' id='-depYear11'>1990</div>
+				<div class='sh_togBtn sh_togYear' id='-depYear12'>1995</div>
+				<div class='sh_togBtn sh_togYear' id='-depYear13'>2000</div>
+				<div class='sh_togBtn sh_togYear' id='-depYear14'>2005</div>
+			</div>
+			
+			<div class='lineWrapCenter' id='singleShore'>
+				<div class='sh_lineHeader'>Select Shoreline Year</div>
+				<div class='navSpacer'></div>
+				<div class='sh_multiYearSlider' id='sh_multiYearSlider'></div>
+				<div class='navSpacer1'></div>
+				<div class='sh_playStopWrap'>
+					<div class='togBtn sh_sliderPlay' id='sh_sliderPlay'>Play</div>
+					<div class='togBtn sh_sliderStop sh_hide' id='sh_sliderStop'>Stop</div>
+				</div>
+			</div>
 		</div>
-		
-		<div class='lineWrapCenter' id='singleShore'>
-			<div class='sectionHeader'>Select Shoreline Year</div>
-			<div class='navSpacer'></div>
-			<div class='sh_multiYearSlider' id='sh_multiYearSlider'></div>
-			<div class='navSpacer1'></div>
-			<div class='togBtn' id='sliderPlay'>Play</div>
-			<div class='togBtn hide' id='sliderStop'>Stop</div>
-		</div>
-		
 	</div>
 
 	<h3 id='catHeader'>Explore Basins by Categories</h3>
 	<div id='hydroWrap' class='ac_sectionWrap be_hide'>
-		<div class='sh_lineHeader3'>Million Acre-Feet Used in Selected Basin</div>
-		<div class='sh_chWrap' id='sh_rWrap'>	
-			<canvas id='rawChart'></canvas>
-		</div>
-		<div class='sh_chWrap' id='sh_aWrap'>
-			<canvas id='availChart'></canvas>
-		</div>
-		<div class='sh_chWrap' id='sh_iWrap'>
-			<canvas id='interChart'></canvas>
-		</div>
-		<div class='sh_chartLgnd'>
-			<div class='sh_lgndItemWrap sh_liwLeft'>
-				<div class='sh_lgndItem sh_domLgnd'></div><div>Domestic</div>
-			</div>	
-			<div class='sh_lgndItemWrap'>
-				<div class='sh_lgndItem sh_indLgnd'></div><div>Industry</div>
+		<div id='sh_chartUnits' class='sh_lineHeader3'> Click a water unit to see chart</div>
+		<div id='sh_chartWrap' class='sh_chartWrap'>
+			<div id='sh_chartUnits' class='sh_lineHeader3 sh_chartUnits'>Million Acre-Feet Used in Selected Basin</div>
+			<div class='sh_chWrap' id='sh_rWrap'>	
+				<canvas id='rawChart'></canvas>
 			</div>
-			<div class='sh_lgndItemWrap'>
-				<div class='sh_lgndItem sh_irrLgnd'></div><div>Irrigation</div>
+			<div id='sh_chartLgnd1' class='sh_chartLgnd'>
+				<div class='sh_lgndItemWrap sh_liwLeft'>
+					<div class='sh_lgndItem sh_domLgnd'></div><div>Domestic</div>
+				</div>	
+				<div class='sh_lgndItemWrap'>
+					<div class='sh_lgndItem sh_indLgnd'></div><div>Industry</div>
+				</div>
+				<div class='sh_lgndItemWrap'>
+					<div class='sh_lgndItem sh_irrLgnd'></div><div>Irrigation</div>
+				</div>	
+				<div class='sh_lgndItemWrap'>
+					<div class='sh_lgndItem sh_livLgnd'></div><div>Livestock</div>
+				</div>		
+			</div>
+			<div id='sh_chartLgnd2' class='sh_chartLgnd'>
+				<div class='sh_lgndItemWrap' id='sh_avlLWrap'>
+					<div class='sh_lgndItem sh_avlLgnd'></div><div>Available</div>
+				</div>	
+				<div class='sh_lgndItemWrap' id='sh_avlmmLWrap'>
+					<div class='sh_lgndItem sh_avlmmLgnd'></div><div>Available (min/max)</div>
+				</div>			
+			</div>
+			<div id='sh_chartBtnWrap' class='sh_chartBtnWrap'>
+				<div class='sh_togBtn sh_chartBtns sh_togBtnSel' id='sh_rawBtn'>Raw</div>
+				<div class='sh_togBtn sh_chartBtns' id='sh_availBtn'>Available</div>
+				<div class='sh_togBtn sh_chartBtns' id='sh_interBtn'>Interannual</div>
 			</div>	
-			<div class='sh_lgndItemWrap'>
-				<div class='sh_lgndItem sh_livLgnd'></div><div>Livestock</div>
-			</div>		
 		</div>
-		<div class='sh_chartLgnd'>
-			<div class='sh_lgndItemWrap' id='sh_avlLWrap'>
-				<div class='sh_lgndItem sh_avlLgnd'></div><div>Available</div>
-			</div>	
-			<div class='sh_lgndItemWrap' id='sh_avlmmLWrap'>
-				<div class='sh_lgndItem sh_avlmmLgnd'></div><div>Available (min/max)</div>
-			</div>			
-		</div>
-		<div class='sh_chartBtnWrap'>
-			<div class='sh_togBtn sh_chartBtns sh_togBtnSel' id='sh_rawBtn'>Raw</div>
-			<div class='sh_togBtn sh_chartBtns' id='sh_availBtn'>Available</div>
-			<div class='sh_togBtn sh_chartBtns' id='sh_interBtn'>Interannual</div>
-		</div>	
-		<div class='sh_lineHeader3' id='chData'>Click to Change Data</div>
 	</div>
 	<h3 id='proHeader'>View Basins by Profile</h3>
-	<div id='supDataWrap' class='ac_sectionWrap be_hide'>
-		test text for profile
+	<div id='supDataWrap' class='ac_sectionWrap'>
+		<!-- test text for profile -->
 	</div>
 </div>
+
+
+
+
+
 <div id='be_infoAccord' class='sh_infoWrap be_dflexChildren'>
 	<h3>Documentation</h3>
 	<div class='be_exWrap'>
