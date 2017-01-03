@@ -1,4 +1,5 @@
 {
 	"visibleLayers": [14],
-	"chartVisBtn": "sh_rawBtn"
+	"chartVisBtn": "sh_rawBtn",
+	"sliderCounter": 0,
 }

@@ -192,10 +192,10 @@ abbr.search-choice-close {
 .be_lineWrapCenter1{
 	width:100%; text-align:center; margin-top:-5px; margin-bottom:-5px;
 }
-.be_pdfLink{
-	font-size:1.4rem; color:blue; cursor:pointer;	
+.sh_pdfLink{
+	font-size:1.4rem; color:blue !important; cursor:pointer;	
 }	
-.be_pdfLink:active{
+.sh_pdfLink:active{
 	color:blue; font-weight:normal; 
 }
 .be_topLineWrap{
@@ -313,14 +313,14 @@ abbr.search-choice-close {
 }
 
 /* charts */
-.sh_lineHeader3{
-	font-size:1.4rem; text-align:center; margin-top:8px;  
-}
 .sh_chWrap{
 	display:none; width:434px; margin-top:10px; margin-left:-5px;
 }
 .sh_chartBtnWrap{
 	display:flex; margin-top:14px; justify-content:center;
+}
+.sh_yearMonthWrap{
+	display:flex; justify-content:center; margin-bottom:-10px;
 }
 .sh_chartBtns{
 	padding:4px; width:96px;
@@ -359,12 +359,7 @@ abbr.search-choice-close {
 	display:none;
 }
 .sh_lineHeader3 {
-    font-size: 1.4rem;
-    text-align: center;
-    margin-top: 12px;
-    margin-bottom: 10px;
-    color: #21658c;
-	font-weight:bold;
+    font-size: 1.4rem; text-align: center; margin-top: 12px; margin-bottom: 10px; color: #21658c; font-weight:bold;
 }
 .sh_hide{
 	display:none;
@@ -376,7 +371,68 @@ abbr.search-choice-close {
 	display:none;
 }
 .sh_playStopWrap{
-	display:flex; justify-content:center;
+	display:flex; justify-content:center; margin-top:50px;
+}
+.sh_exWrap p{
+	font-size: 1.4rem; margin-top: 5px; margin-bottom: 5px; text-align: left; color: #21658c; margin-left:10px;
+}
+.sh_multiYearSlider{
+	margin:auto; margin-top:25px;
 }
 
-
+.sh_yearChartLables{
+	display:flex; margin-top:-20px; justify-content:center; margin-left:-50px;
+}
+.sh_yearLabel{
+	width:110px; margin-left:80px;
+}
+.sh_depletionText{
+	margin-left:10px;
+}
+.sh_yearMapText{
+	color:#21658c ;background-color:white; font-size: 23px; width: 60px;
+}
+.sh_yearMonthBtns{
+	height:28px; margin-top:7px;
+}
+.sh_yearMonthHeader{
+	margin-right:10px;
+}
+/* Work with water basin categories attributes styling ////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+.sh_attribute{
+	text-decoration:underline; 
+}
+.sh_attLine{
+	font-size:1.4rem; padding-bottom:6px; padding-left:5px; text-indent:-10px; margin-left:5px;	
+}	
+.sh_attSpan{
+	color: #21658c;
+}
+.sh_attPaddingBump{
+	padding-left:5px; padding-right:10px;	
+}	
+.sh_topAtt{
+	margin-top:15px;
+}
+.sh_zoomToText{
+	font-size:1.3rem; color:blue !important; cursor:pointer; font-weight:bold;
+}	
+.sh_zoomToText:hover{
+    color:#21658c !important;
+}
+.sh_waterBudgetWrap{
+	margin-left:15px;
+}
+/* Styles for the profile section of water share ////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+.sh_proHeader{
+	margin-top:15px; margin-bottom:10px;
+}
+.sh_proChoosenWrapper{
+	display:flex;
+}
+.sh_profileName{
+	font-size: 1.4rem; color: #21658c; font-weight:bold; margin-top:5px; margin-bottom:5px; display:none; 
+}
+.sh_profileAttWrap{
+	margin-top:10px; display:none;
+}

@@ -7,8 +7,28 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
         "use strict";
 
         return declare(null, {
-			esriApiFunctions: function(t){	
-				// Add dynamic map service
+			esriApiFunctions: function(t){
+// build the dropdown menu for the profiles section with the code below. ////////////////////////////////////////////////////////////////////
+				var queryTask = new QueryTask(t.url + "/1")
+				var query = new Query();
+				query.returnGeometry = false;
+				//query.outFields = ["Abbr", "clean_names", "Ammonia", "DissolvedOxygen", "InorganicNitrogen", "Nitrate"];
+				query.where = "OBJECTID > -1"
+				queryTask.execute(query, lang.hitch(t, function(results){
+					var profiles = [];
+					$.each(results.features,lang.hitch(this, function(i,v){
+						profiles.push(v.attributes.Name)
+					}));
+					profiles.sort(function(a,b) {return (a.clean_names > b.clean_names) ? 1 : ((b.clean_names > a.clean_names) ? -1 : 0);} ); 
+					$('#' + t.id + 'ch-pro').empty();
+					$('#' + t.id + 'ch-pro').append("<option value=''></option>")
+					$.each(profiles, lang.hitch(this, function(i,v){
+						$('#' + t.id + 'ch-pro').append("<option value='" + v + "'>" + v + "</option>")
+					})); 
+					$('#' + t.id + 'ch-pro').trigger("chosen:updated");
+				}));
+					
+// Add dynamic map service ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				t.dynamicLayer = new ArcGISDynamicMapServiceLayer(t.url, {opacity:0.7});
 				t.map.addLayer(t.dynamicLayer);
 				
@@ -29,7 +49,7 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 					t.clicks.layerDefsUpdate(t);
 					t.map.setMapCursor("pointer");
 				}));
-				
+// Work with feature layers and map clicks //////////////////////////////////////////////////////////////////////////////////////////////////////////				
 				// set the initial visible layers on app load
 				t.obj.visibleLayers = [14];
 				t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
@@ -44,6 +64,11 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 				// set depletion layer
 				
 				// set profile layer
+				t.profile = new FeatureLayer(t.url + "/1", { mode: FeatureLayer.MODE_SELECTION, outFields: ["*"] });
+				t.profile.setSelectionSymbol(catSym);
+				// set profile dropdown layer
+				t.profileDD = new FeatureLayer(t.url + "/1", { mode: FeatureLayer.MODE_SELECTION, outFields: ["*"] });
+				t.profileDD.setSelectionSymbol(catSym);
 				
 				// on map click
 				t.map.on("click", lang.hitch(t, function(evt) {
@@ -51,6 +76,7 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 					var q = new Query();
 					q.geometry = pnt;
 					t.category.selectFeatures(q,esri.layers.FeatureLayer.SELECTION_NEW);
+					t.profile.selectFeatures(q,esri.layers.FeatureLayer.SELECTION_NEW);
 				}));
 				// zoom end 
 				t.map.on("zoom-end", lang.hitch(t,function(e){
@@ -60,6 +86,12 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 				t.map.on("update-end", lang.hitch(t,function(e){
 					t.map.setMapCursor("pointer");
 				}));				
+			},
+			commaSeparateNumber: function(val){
+				while (/(\d+)(\d{3})/.test(val.toString())){
+					val = val.toString().replace(/(\d+)(\d{3})/, '$1'+','+'$2');
+				}
+				return val;
 			}
 		});
     }

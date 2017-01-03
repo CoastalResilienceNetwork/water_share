@@ -17,17 +17,9 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 		initialize: function (frameworkParameters) {
 			// Access framework parameters
 			declare.safeMixin(this, frameworkParameters);
-			// Set initial app size based on split screen state
-			this.con = dom.byId('plugins/water_share_prototype-0');
-			this.con1 = dom.byId('plugins/water_share_prototype-1');
-			/*if (this.con1 != undefined){
-				domStyle.set(this.con1, "width", "390px");
-			}else{
-				domStyle.set(this.con, "width", "390px");
-			}*/	
 			// Define object to access global variables from JSON object. Only add variables to varObject.json that are needed by Save and Share. 
 			this.obj = dojo.eval("[" + obj + "]")[0];	
-			this.url = "http://dev.services2.coastalresilience.org:6080/arcgis/rest/services/Water_Blueprint/water_share/MapServer";
+			this.url = "http://cirrus-web-adapter-241060755.us-west-1.elb.amazonaws.com/arcgis/rest/services/tempFolder/watershare_v1/MapServer";
 			this.layerDefs = [];
 		},
 		// Called after initialize at plugin startup (why all the tests for undefined). Also called after deactivate when user closes app by clicking X. 
@@ -90,8 +82,10 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 			else { this.sph = cdg.h - 62; }*/
 			domStyle.set(this.appDiv.domNode, "height", this.sph + "px"); 
 		},
+		
 		// Called by activate and builds the plugins elements and functions
 		render: function() {
+			
 			//$('.basemap-selector').trigger('change', 3);
 			// BRING IN OTHER JS FILES
 			this.barChart = new barChart();
@@ -102,16 +96,25 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 			// ADD HTML TO APP
 			// Define Content Pane as HTML parent		
 			this.appDiv = new ContentPane({style:'padding:0; color:#000; flex:1; display:flex; flex-direction:column;}'});
+			
 			this.id = this.appDiv.id
 			$(dom.byId(this.container)).addClass('dflex')
 			dom.byId(this.container).appendChild(this.appDiv.domNode);					
 			// Get html from content.html, prepend appDiv.id to html element id's, and add to appDiv
 			var idUpdate = content.replace(/id='/g, "id='" + this.id);	
 			$('#' + this.id).html(idUpdate);
-			// Click listeners
-			this.clicks.clickListener(this);
+			
+			// add this.yearDiv like above and add styling 
+			this.yearDiv = new ContentPane({style:'padding:0; color:#000; opacity: 0.7; margin-right:145px; flex:1; z-index:1000; position: absolute; top: 27px; left: 50%; text-align: center;  width: 200px;}'});
+			this.yearID = this.yearDiv.id;
+			dom.byId('map-0').appendChild(this.yearDiv.domNode);
+			//
+			$('#' + this.yearID).html('<div class="sh_yearMapText" id="yearMapText"></div>');
+			// $('#map-0').append()
 			// CREATE ESRI OBJECTS AND EVENT LISTENERS	
 			this.esriapi.esriApiFunctions(this);
+			// Click listeners
+			this.clicks.clickListener(this);
 			// set up chartjs charts
 			this.chartjs.createChart(this);
 			this.rendered = true;	

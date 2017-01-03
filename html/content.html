@@ -7,30 +7,11 @@ The unique ContentPane id makes all the element ids unique and prevents duplicat
 <div id='be_mainAccord' class='be_mainAccord be_dflexChildren'>
 	<h3 id='depHeader'>Explore Basins by Depletion</h3>  
 	<div id='cbListener' class='ac_sectionWrap'>
-		<div class='sh_hide'>
-			<div class='sh_lineHeader'>Filter by year:</div>
-			<div class='sh_btnFlex'>
-				<div class='sh_togBtn sh_togYear' id='-depYear1'>1900</div>
-				<div class='sh_togBtn sh_togYear' id='-depYear2'>1910</div>
-				<div class='sh_togBtn sh_togYear' id='-depYear3'>1920</div>
-				<div class='sh_togBtn sh_togYear' id='-depYear4'>1930</div>
-				<div class='sh_togBtn sh_togYear' id='-depYear5'>1940</div>
-				<div class='sh_togBtn sh_togYear' id='-depYear6'>1950</div>
-				<div class='sh_togBtn sh_togYear' id='-depYear7'>1960</div>
-				<div class='sh_togBtn sh_togYear' id='-depYear8'>1970</div>
-				<div class='sh_togBtn sh_togYear' id='-depYear9'>1980</div>
-				<div class='sh_togBtn sh_togYear' id='-depYear10'>1985</div>
-				<div class='sh_togBtn sh_togYear' id='-depYear11'>1990</div>
-				<div class='sh_togBtn sh_togYear' id='-depYear12'>1995</div>
-				<div class='sh_togBtn sh_togYear' id='-depYear13'>2000</div>
-				<div class='sh_togBtn sh_togYear' id='-depYear14'>2005</div>
-			</div>
-			
+		<div class=''>
 			<div class='lineWrapCenter' id='singleShore'>
-				<div class='sh_lineHeader'>Select Shoreline Year</div>
-				<div class='navSpacer'></div>
+				<div class='sh_lineHeader'>Water Supply Scarcity Over Time:</div>
+				<div class='sty_explainWrap sh_depletionText'><p>Some regions of our planet have been experiencing water scarcity for a very long time. This map illustrates the degree to which irrigated agriculture has depleted the renewable water supply. (adapted from Brauman and others, 2016)</p></div>
 				<div class='sh_multiYearSlider' id='sh_multiYearSlider'></div>
-				<div class='navSpacer1'></div>
 				<div class='sh_playStopWrap'>
 					<div class='togBtn sh_sliderPlay' id='sh_sliderPlay'>Play</div>
 					<div class='togBtn sh_sliderStop sh_hide' id='sh_sliderStop'>Stop</div>
@@ -41,8 +22,15 @@ The unique ContentPane id makes all the element ids unique and prevents duplicat
 
 	<h3 id='catHeader'>Explore Basins by Categories</h3>
 	<div id='hydroWrap' class='ac_sectionWrap be_hide'>
-		<div id='sh_chartUnits' class='sh_lineHeader3'> Click a water unit to see chart</div>
+		<div id='sh_chartUnits' class='sh_lineHeader3'> Click a water basin to see chart</div>
 		<div id='sh_chartWrap' class='sh_chartWrap'>
+		
+			<div class='sh_yearMonthWrap'>
+				<div class='sh_lineHeader3 sh_yearMonthHeader'> View Data by:</div>
+				<div class='sh_togBtn sh_yearMonthBtns' id='sh_monthlyBtn'>Month</div>
+				<div class='sh_togBtn sh_yearMonthBtns' id='sh_yearlyBtn'>Year</div>
+			</div>
+
 			<div id='sh_chartUnits' class='sh_lineHeader3 sh_chartUnits'>Million Acre-Feet Used in Selected Basin</div>
 			<div class='sh_chWrap' id='sh_rWrap'>	
 				<canvas id='rawChart'></canvas>
@@ -69,21 +57,57 @@ The unique ContentPane id makes all the element ids unique and prevents duplicat
 					<div class='sh_lgndItem sh_avlmmLgnd'></div><div>Available (min/max)</div>
 				</div>			
 			</div>
+			<div id='sh_yearChartLables' class='sh_yearChartLables'>
+				<div class='sh_yearLabel'>1970</div>
+				<div class='sh_yearLabel'>1980</div>
+				<div class='sh_yearLabel'>1990</div>
+				<div class='sh_yearLabel'>2000</div>
+			</div>
+			<div id='sh_chartLgnd3' class='sh_chartLgnd'>
+				<div class='sh_lgndItemWrap' id='sh_avlLWrap1'>
+					<div class='sh_lgndItem sh_avlLgnd'></div><div>Water by Year</div>
+				</div>		
+			</div>
 			<div id='sh_chartBtnWrap' class='sh_chartBtnWrap'>
-				<div class='sh_togBtn sh_chartBtns sh_togBtnSel' id='sh_rawBtn'>Raw</div>
+				<div class='sh_togBtn sh_chartBtns sh_togBtnSel' id='sh_rawBtn'>Used</div>
 				<div class='sh_togBtn sh_chartBtns' id='sh_availBtn'>Available</div>
 				<div class='sh_togBtn sh_chartBtns' id='sh_interBtn'>Interannual</div>
 			</div>	
+			<!-- Water category attribute section -->
+			<div id='sh_attributeWrap'>
+				<div class='sh_attPaddingBump'>
+					<div class='sh_attLine sh_topAtt' style='font-weight:bold;'><span id='-BasinID' class='sh_attribute'>Basin ID</span>: <span id='-subBas_ID' class='sh_attSpan'></span> - <span id='zoomToFund' class='sh_zoomToText'> Zoom</span></div>
+					<div class='sh_attLine' style='font-weight:bold'><span class='sh_attribute'>Market Strategy</span>: <span id='-category' class='sh_attSpan'></span></div>
+					<div class='sh_attLine' style='font-weight:bold'><span class='sh_attribute'>Water Budget</span>:<span id='-PopSize' class='sh_attSpan'></span></div>
+					<div class='sh_waterBudgetWrap'>
+						<div class='sh_attLine'> &#8226 <span class='sh_attribute'>Available Water</span>: <span id='-fundingSource' class='sh_attSpan'></span></div>
+						<div class='sh_attLine'> &#8226 <span class='sh_attribute'>Consumptive Use</span>: <span id='-PartnersNum' class='sh_attSpan'></span></div>
+						<div class='sh_attLine'> &#8226 <span class='sh_attribute'>Net Result</span>: <span id='-Area_Actual' class='sh_attSpan'></span></div>
+						<div class='sh_attLine'> &#8226 <span class='sh_attribute'>Depletion Index</span>: <span id='-DepletionL' class='sh_attSpan'></span></div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
+	<!-- Profile section  -->
 	<h3 id='proHeader'>View Basins by Profile</h3>
 	<div id='supDataWrap' class='ac_sectionWrap'>
-		<!-- test text for profile -->
+	<!--The value of each option refers to the layer name and the text is what is used for the layers definition query-->
+		<div class='sh_lineHeader sh_proHeader'>Select a Profile or Click on the Map: </div>
+		<div id='proChoosenWrapper' class='sh_proChoosenWrapper'>
+			<select id='ch-pro' data-placeholder="Select a Profile" class="chosen-crs" tabindex="16">
+				<option value=""></option>
+			</select>
+			<!-- <div id='profileName' class='sh_profileName'>Name of Profile</div> -->
+		</div>
+		<div id='profileAttWrap' class='sh_profileAttWrap'>
+			<div id='profileName' class='sh_profileName'>Name of Profile</div>
+			<div>
+				<span id='zoomToProfile' class='sh_zoomToText'>Zoom to Profile</span> - <a class="sh_zoomToText" href="plugins/water_share/assets/name1.pdf" target="_blank">View Water Basin Profile</a>
+			</div>
+		</div>
 	</div>
 </div>
-
-
-
 
 
 <div id='be_infoAccord' class='sh_infoWrap be_dflexChildren'>
