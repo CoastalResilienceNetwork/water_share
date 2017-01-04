@@ -153,17 +153,11 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					t.myRawChart.update();
 					$('#' + t.id + ' .sh_yearMonthBtns').removeClass('sh_togBtnSel');
 					$('#' + t.id + 'sh_chartLgnd1').addClass('sh_opacity');
-					// $('#' + t.id + 'sh_chartLgnd2').addClass('sh_opacity');
-					//$('#' + t.id + 'sh_chartLgnd2').addClass('sh_opacity');
 					$('#' + t.id + 'sh_avlLWrap').css('opacity', '1');
-					//$('#' + t.id + 'sh_avlLWrap').removeClass('sh_opacity');
+					$('#' + t.id + 'sh_avlmmLWrap').css('opacity', '0.4');
 					$('#' + t.id + 'sh_avlmmLWrap').addClass('sh_opacity');
-					// sh_availOpacity
 					$('#' + t.id + 'sh_chartBtnWrap').addClass('sh_opacity');
-					// $('#' + t.id + 'sh_chartLgnd3').show()
 					$('#' + t.id + 'sh_yearChartLables').show()
-					
-					
 					$('#' + t.id + 'sh_yearlyBtn').addClass('sh_togBtnSel');
 				}));
 			}
