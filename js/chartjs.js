@@ -44,68 +44,75 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 				
 				// Handle Clicks on chart type buttons
 				$('#' + t.id + 'sh_interBtn').on('click',lang.hitch(t,function(){
-					// update the config of the chart options to show either bars, lines or ranges or all three
-					t.myRawChart.config.data.datasets[0].label = 'AVL'
-					t.myRawChart.config.data.datasets[1].label = 'Year1'
-					t.myRawChart.config.data.datasets[6].label = 'AVL_Min'
-					t.myRawChart.config.data.datasets[7].label = 'AVL_Max'
-					t.myRawChart.config.options.scales.yAxes[0].ticks.max = t.interMax;
-					t.myRawChart.config.options.scales.yAxes[1].ticks.max = t.interMax;
-					$.each(main,function(i,v){
-						v.data = t.chartData[0][v.label]
-					})
-					t.myRawChart.update();
-					// work with css and show rawChart
-					$('#' + t.id + ' .sh_chartBtns').removeClass('sh_togBtnSel');
-					$('#' + t.id + 'sh_chartWrap').show();
-					$('#' + t.id + 'sh_interBtn').addClass('sh_togBtnSel');
-					$('#' + t.id + 'sh_avlLWrap, #' + t.id + 'sh_avlmmLWrap').css('opacity', '1');
+					if(t.monthYearClick == 'month'){
+						// update the config of the chart options to show either bars, lines or ranges or all three
+						t.myRawChart.config.data.datasets[0].label = 'AVL'
+						t.myRawChart.config.data.datasets[1].label = 'Year1'
+						t.myRawChart.config.data.datasets[6].label = 'AVL_Min'
+						t.myRawChart.config.data.datasets[7].label = 'AVL_Max'
+						t.myRawChart.config.options.scales.yAxes[0].ticks.max = t.interMax;
+						t.myRawChart.config.options.scales.yAxes[1].ticks.max = t.interMax;
+						$.each(main,function(i,v){
+							v.data = t.chartData[0][v.label]
+						})
+						t.myRawChart.update();
+						// work with css and show rawChart
+						$('#' + t.id + ' .sh_chartBtns').removeClass('sh_togBtnSel');
+						$('#' + t.id + 'sh_chartWrap').show();
+						$('#' + t.id + 'sh_interBtn').addClass('sh_togBtnSel');
+						$('#' + t.id + 'sh_avlLWrap, #' + t.id + 'sh_avlmmLWrap').css('opacity', '1');
+					}
 				}));
+				
 				$('#' + t.id + 'sh_availBtn').on('click',lang.hitch(t,function(){
-					// update the config of the chart options to show either bars, lines or ranges or all three
-					t.myRawChart.config.data.datasets[0].label = 'AVL'
-					t.myRawChart.config.data.datasets[1].label = 'Year1'
-					t.myRawChart.config.data.datasets[6].label = 'AVL_Min1'
-					t.myRawChart.config.data.datasets[7].label = 'AVL_Max1'
-					t.myRawChart.config.options.scales.yAxes[0].ticks.max = t.availMax;
-					t.myRawChart.config.options.scales.yAxes[1].ticks.max = t.availMax;
-					$.each(main,function(i,v){
-						v.data = t.chartData[0][v.label]
-					})
-					t.myRawChart.update();
-					// work with css and show rawChart
-					$('#' + t.id + 'sh_chartWrap').show();
-					$('#' + t.id + ' .sh_chartBtns').removeClass('sh_togBtnSel');
-					$('#' + t.id + 'sh_availBtn').addClass('sh_togBtnSel');
-					$('#' + t.id + 'sh_avlLWrap').css('opacity', '1');
-					$('#' + t.id + 'sh_avlmmLWrap').css('opacity', '0.4');
+					if(t.monthYearClick == 'month'){
+						// update the config of the chart options to show either bars, lines or ranges or all three
+						t.myRawChart.config.data.datasets[0].label = 'AVL'
+						t.myRawChart.config.data.datasets[1].label = 'Year1'
+						t.myRawChart.config.data.datasets[6].label = 'AVL_Min1'
+						t.myRawChart.config.data.datasets[7].label = 'AVL_Max1'
+						t.myRawChart.config.options.scales.yAxes[0].ticks.max = t.availMax;
+						t.myRawChart.config.options.scales.yAxes[1].ticks.max = t.availMax;
+						$.each(main,function(i,v){
+							v.data = t.chartData[0][v.label]
+						})
+						t.myRawChart.update();
+						// work with css and show rawChart
+						$('#' + t.id + 'sh_chartWrap').show();
+						$('#' + t.id + ' .sh_chartBtns').removeClass('sh_togBtnSel');
+						$('#' + t.id + 'sh_availBtn').addClass('sh_togBtnSel');
+						$('#' + t.id + 'sh_avlLWrap').css('opacity', '1');
+						$('#' + t.id + 'sh_avlmmLWrap').css('opacity', '0.4');
+					}
 				}));
 				
 				$('#' + t.id + 'sh_rawBtn').on('click',lang.hitch(t,function(){
-					// update the config of the chart options to show either bars, lines or ranges or all three
-					t.myRawChart.config.data.datasets[0].label = 'AVL1'
-					t.myRawChart.config.data.datasets[1].label = 'Year1'
-					t.myRawChart.config.data.datasets[2].label = 'DOM'
-					t.myRawChart.config.data.datasets[3].label = 'IND'
-					t.myRawChart.config.data.datasets[4].label = 'IRR'
-					t.myRawChart.config.data.datasets[5].label = 'LIV'
-					t.myRawChart.config.data.datasets[6].label = 'AVL_Min1'
-					t.myRawChart.config.data.datasets[7].label = 'AVL_Max1'
-					t.myRawChart.config.options.scales.xAxes[0].gridLines.display = true
-					t.myRawChart.config.options.scales.yAxes[0].ticks.max = t.rawMax;
-					t.myRawChart.config.options.scales.yAxes[1].ticks.max = t.rawMax;
-					
-					$.each(main,function(i,v){
-						v.data = t.chartData[0][v.label]
-					})
-					t.myRawChart.update();
-					// work with css and show rawChart
-					$('#' + t.id + ' .sh_chartBtns').removeClass('sh_togBtnSel');
-					$('#' + t.id + 'sh_chartWrap').show();
-					$('#' + t.id + 'sh_chartLgnd3').hide();
-					$('#' + t.id + 'sh_yearChartLables').hide();
-					$('#' + t.id + 'sh_rawBtn').addClass('sh_togBtnSel');
-					$('#' + t.id + 'sh_avlLWrap, #' + t.id + 'sh_avlmmLWrap').css('opacity', '0.4');
+					if(t.monthYearClick == 'month'){
+						// update the config of the chart options to show either bars, lines or ranges or all three
+						t.myRawChart.config.data.datasets[0].label = 'AVL1'
+						t.myRawChart.config.data.datasets[1].label = 'Year1'
+						t.myRawChart.config.data.datasets[2].label = 'DOM'
+						t.myRawChart.config.data.datasets[3].label = 'IND'
+						t.myRawChart.config.data.datasets[4].label = 'IRR'
+						t.myRawChart.config.data.datasets[5].label = 'LIV'
+						t.myRawChart.config.data.datasets[6].label = 'AVL_Min1'
+						t.myRawChart.config.data.datasets[7].label = 'AVL_Max1'
+						t.myRawChart.config.options.scales.xAxes[0].gridLines.display = true
+						t.myRawChart.config.options.scales.yAxes[0].ticks.max = t.rawMax;
+						t.myRawChart.config.options.scales.yAxes[1].ticks.max = t.rawMax;
+						
+						$.each(main,function(i,v){
+							v.data = t.chartData[0][v.label]
+						})
+						t.myRawChart.update();
+						// work with css and show rawChart
+						$('#' + t.id + ' .sh_chartBtns').removeClass('sh_togBtnSel');
+						$('#' + t.id + 'sh_chartWrap').show();
+						$('#' + t.id + 'sh_chartLgnd3').hide();
+						$('#' + t.id + 'sh_yearChartLables').hide();
+						$('#' + t.id + 'sh_rawBtn').addClass('sh_togBtnSel');
+						$('#' + t.id + 'sh_avlLWrap, #' + t.id + 'sh_avlmmLWrap').css('opacity', '0.4');
+					}
 				}));
 				
 				// year clicks
@@ -114,9 +121,11 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					t.monthYearClick = 'month';
 					t.myRawChart.config.data.labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 					$('#' + t.id + 'sh_rawBtn').trigger('click')
-					$('#' + t.id + 'sh_chartLgnd1').show()
-					$('#' + t.id + 'sh_chartLgnd2').show()
-					$('#' + t.id + 'sh_chartBtnWrap').show()
+					$('#' + t.id + 'sh_chartLgnd1').removeClass('sh_opacity');
+					// $('#' + t.id + 'sh_chartLgnd2').removeClass('sh_opacity');
+					$('#' + t.id + 'sh_avlLWrap').removeClass('sh_opacity');
+					$('#' + t.id + 'sh_avlmmLWrap').removeClass('sh_opacity');
+					$('#' + t.id + 'sh_chartBtnWrap').removeClass('sh_opacity');
 					$('#' + t.id + 'sh_chartLgnd3').hide()
 					$('#' + t.id + 'sh_yearChartLables').hide()
 					$('#' + t.id + ' .sh_yearMonthBtns').removeClass('sh_togBtnSel');
@@ -124,6 +133,7 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 				}));
 				
 				$('#' + t.id + 'sh_yearlyBtn').on('click',lang.hitch(t,function(){
+					
 					t.monthYearClick = 'year';
 					t.myRawChart.config.data.labels = t.chartLabels
 					t.myRawChart.config.data.datasets[0].label = 'AVL1'
@@ -142,10 +152,15 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					})
 					t.myRawChart.update();
 					$('#' + t.id + ' .sh_yearMonthBtns').removeClass('sh_togBtnSel');
-					$('#' + t.id + 'sh_chartLgnd1').hide()
-					$('#' + t.id + 'sh_chartLgnd2').hide()
-					$('#' + t.id + 'sh_chartBtnWrap').hide()
-					$('#' + t.id + 'sh_chartLgnd3').show()
+					$('#' + t.id + 'sh_chartLgnd1').addClass('sh_opacity');
+					// $('#' + t.id + 'sh_chartLgnd2').addClass('sh_opacity');
+					//$('#' + t.id + 'sh_chartLgnd2').addClass('sh_opacity');
+					$('#' + t.id + 'sh_avlLWrap').css('opacity', '1');
+					//$('#' + t.id + 'sh_avlLWrap').removeClass('sh_opacity');
+					$('#' + t.id + 'sh_avlmmLWrap').addClass('sh_opacity');
+					// sh_availOpacity
+					$('#' + t.id + 'sh_chartBtnWrap').addClass('sh_opacity');
+					// $('#' + t.id + 'sh_chartLgnd3').show()
 					$('#' + t.id + 'sh_yearChartLables').show()
 					
 					

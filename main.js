@@ -11,10 +11,10 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 			$, content, ui, esriapi, clicks, chartjs, barChart, hbar ) {
 	return declare(PluginBase, {
 		// The height and width are set here when an infographic is defined. When the user click Continue it rebuilds the app window with whatever you put in.
-		toolbarName: "Water Share", showServiceLayersInLegend: true, allowIdentifyWhenActive: false, rendered: false, resizable: false,
+		toolbarName: "Water Share Explorer", showServiceLayersInLegend: true, allowIdentifyWhenActive: false, rendered: false, resizable: false,
 		hasCustomPrint: true, usePrintPreviewMap: true, previewMapSize: [1000, 550], size:'custom', width:460,	
 		// First function called when the user clicks the pluging icon. 
-		initialize: function (frameworkParameters) {
+		initialize: function (frameworkParameters){
 			// Access framework parameters
 			declare.safeMixin(this, frameworkParameters);
 			// Define object to access global variables from JSON object. Only add variables to varObject.json that are needed by Save and Share. 
@@ -104,8 +104,9 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 			var idUpdate = content.replace(/id='/g, "id='" + this.id);	
 			$('#' + this.id).html(idUpdate);
 			
+			
 			// add this.yearDiv like above and add styling 
-			this.yearDiv = new ContentPane({style:'padding:0; color:#000; opacity: 0.7; margin-right:145px; flex:1; z-index:1000; position: absolute; top: 27px; left: 50%; text-align: center;  width: 200px;}'});
+			this.yearDiv = new ContentPane({style:'display:none; padding:0; color:#000; opacity: 0.7; margin-right:145px; flex:1; z-index:1000; position: absolute; top: 27px; left: 50%; text-align:center; border-radius:1px; -moz-box-shadow:0 1px 2px rgba(0,0,0,0.5); -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.5); box-shadow: 0 1px 2px rgba(0,0,0,0.5); border-bottom: 1px solid rgba(0,0,0,0.25);}'});
 			this.yearID = this.yearDiv.id;
 			dom.byId('map-0').appendChild(this.yearDiv.domNode);
 			//

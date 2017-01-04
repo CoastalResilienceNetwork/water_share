@@ -320,7 +320,7 @@ abbr.search-choice-close {
 	display:flex; margin-top:14px; justify-content:center;
 }
 .sh_yearMonthWrap{
-	display:flex; justify-content:center; margin-bottom:-10px;
+	display:flex; justify-content:center; margin-bottom:-10px; margin-top:5px;
 }
 .sh_chartBtns{
 	padding:4px; width:96px;
@@ -365,7 +365,10 @@ abbr.search-choice-close {
 	display:none;
 }
 .sh_sliderPlay{
-	
+	width:48px;
+}
+.sh_sliderStop{
+	width:48px;
 }
 .sh_sliderHide{
 	display:none;
@@ -393,7 +396,7 @@ abbr.search-choice-close {
 	color:#21658c ;background-color:white; font-size: 23px; width: 60px;
 }
 .sh_yearMonthBtns{
-	height:28px; margin-top:7px;
+	height:28px; margin-top:7px; width:70px;
 }
 .sh_yearMonthHeader{
 	margin-right:10px;
@@ -422,6 +425,12 @@ abbr.search-choice-close {
 }
 .sh_waterBudgetWrap{
 	margin-left:15px;
+}
+.sh_opacity{
+	opacity: 0.4; cursor:default;
+}
+.sh_availOpacity{
+	opacity:1 !important;
 }
 /* Styles for the profile section of water share ////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 .sh_proHeader{

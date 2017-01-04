@@ -36,8 +36,10 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 				}));
 // Profile selection complete //////////////////////////////////////////////////////////////////////////////////////////
 				t.profile.on('selection-complete', lang.hitch(t,function(evt){
-					//t.initExtent = t.map.extent;
+					
 					if(evt.features.length > 0){
+						t.proInitExtent = t.map.extent;
+						t.proExtent = evt.features[0].geometry.getExtent().expand(1.5);
 						t.profileNameClick = evt.features[0].attributes.Name;
 						var p = 'p'
 						$('#' + t.id + 'ch-pro').val(t.profileNameClick).trigger('chosen:updated').trigger('change', p);
@@ -52,6 +54,30 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 				// var btnText = 'Zoom to Profile';
 				// var btnTextBack = 'Back';
 				// t.clicks.zoomBackBtn(t, 'zoomToProfile', t.profile, t.proWhere,btnText, btnTextBack);
+				
+				
+				$('#' + t.id + 'zoomToFund').on('click',lang.hitch(t,function(){
+					if($('#' + t.id + 'zoomToFund').html() == ' Zoom'){
+						t.map.setExtent(t.featExtent, true);
+						$('#' + t.id + 'zoomToFund').html(' Back');
+					}else{
+						t.map.setExtent(t.initExtent, true);
+						$('#' + t.id + 'zoomToFund').html(' Zoom');
+					}
+				}));
+				
+				$('#' + t.id + 'zoomToProfile').on('click',lang.hitch(t,function(){
+					if($('#' + t.id + 'zoomToProfile').html() == 'Zoom to Profile'){
+						t.map.setExtent(t.proExtent, true);
+						$('#' + t.id + 'zoomToProfile').html('Back');
+					}else{
+						t.map.setExtent(t.proInitExtent, true);
+						$('#' + t.id + 'zoomToProfile').html('Zoom to Profile');
+					}
+				}));
+				
+				
+				
 // Build innit chart labels //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				// set init val
 				t.monthYearClick = 'month'
@@ -183,12 +209,17 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 				t.category.on('selection-complete', lang.hitch(t,function(evt){
 					if (evt.features.length > 0){
 						t.initExtent = t.map.extent;
+						t.featExtent = evt.features[0].geometry.getExtent().expand(1.5);
+						
+						console.log(t.initExtent);
+						console.log(t.featExtent);
+						
 						t.atts = evt.features[0].attributes;
 						// call zoom back button function in the water catagory area.
-						t.where = "subBas_ID = " + t.atts.subBas_ID;
-						var btnText = ' Zoom';
-						var btnTextBack = ' Back'
-						t.clicks.zoomBackBtn(t, 'zoomToFund', t.category, t.where, btnText, btnTextBack);
+						// t.where = "subBas_ID = " + t.atts.subBas_ID;
+						// var btnText = ' Zoom';
+						// var btnTextBack = ' Back'
+						//t.clicks.zoomBackBtn(t, 'zoomToFund', t.category, t.where, btnText, btnTextBack);
 						
 						$('#' + t.id + 'sh_attributeWrap .sh_attSpan').each(lang.hitch(t,function(i,v){
 							var field = v.id.split("-").pop();
