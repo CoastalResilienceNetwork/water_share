@@ -126,10 +126,14 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					$('#' + t.id + 'sh_avlLWrap').removeClass('sh_opacity');
 					$('#' + t.id + 'sh_avlmmLWrap').removeClass('sh_opacity');
 					$('#' + t.id + 'sh_chartBtnWrap').removeClass('sh_opacity');
+					$('#' + t.id + 'sh_chartBtnWrap').addClass('sh_cursor');
 					$('#' + t.id + 'sh_chartLgnd3').hide()
 					$('#' + t.id + 'sh_yearChartLables').hide()
 					$('#' + t.id + ' .sh_yearMonthBtns').removeClass('sh_togBtnSel');
 					$('#' + t.id + 'sh_monthlyBtn').addClass('sh_togBtnSel');
+					$('#' + t.id + 'sh_availBtn').removeClass('sh_cursor');
+					$('#' + t.id + 'sh_rawBtn').removeClass('sh_cursor');
+					$('#' + t.id + 'sh_interBtn').removeClass('sh_cursor');
 				}));
 				
 				$('#' + t.id + 'sh_yearlyBtn').on('click',lang.hitch(t,function(){
@@ -153,12 +157,18 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					t.myRawChart.update();
 					$('#' + t.id + ' .sh_yearMonthBtns').removeClass('sh_togBtnSel');
 					$('#' + t.id + 'sh_chartLgnd1').addClass('sh_opacity');
+					
 					$('#' + t.id + 'sh_avlLWrap').css('opacity', '1');
 					$('#' + t.id + 'sh_avlmmLWrap').css('opacity', '0.4');
 					$('#' + t.id + 'sh_avlmmLWrap').addClass('sh_opacity');
+					// sh_cursor
 					$('#' + t.id + 'sh_chartBtnWrap').addClass('sh_opacity');
 					$('#' + t.id + 'sh_yearChartLables').show()
 					$('#' + t.id + 'sh_yearlyBtn').addClass('sh_togBtnSel');
+					// $('#' + t.id + 'sh_chartBtnWrap').addClass('sh_cursor');
+					$('#' + t.id + 'sh_availBtn').addClass('sh_cursor');
+					$('#' + t.id + 'sh_rawBtn').addClass('sh_cursor');
+					$('#' + t.id + 'sh_interBtn').addClass('sh_cursor');
 				}));
 			}
 			

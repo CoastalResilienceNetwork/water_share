@@ -393,7 +393,8 @@ abbr.search-choice-close {
 	margin-left:10px;
 }
 .sh_yearMapText{
-	color:#21658c ;background-color:white; font-size: 23px; width: 60px;
+	/* color:#21658c ;background-color:white; font-size: 23px; width: 60px; */
+	color:#FFF; background-color:#21658c; font-size: 23px; width: 66px;
 }
 .sh_yearMonthBtns{
 	height:28px; margin-top:7px; width:70px;
@@ -429,8 +430,11 @@ abbr.search-choice-close {
 .sh_opacity{
 	opacity: 0.4; cursor:default;
 }
-.sh_availOpacity{
-	opacity:1 !important;
+.sh_cursor{
+	cursor:default !important;
+}
+.sh_cursor:hover{
+	cursor:default !important;
 }
 /* Styles for the profile section of water share ////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 .sh_proHeader{

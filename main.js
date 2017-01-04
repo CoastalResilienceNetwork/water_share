@@ -106,7 +106,7 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 			
 			
 			// add this.yearDiv like above and add styling 
-			this.yearDiv = new ContentPane({style:'display:none; padding:0; color:#000; opacity: 0.7; margin-right:145px; flex:1; z-index:1000; position: absolute; top: 27px; left: 50%; text-align:center; border-radius:1px; -moz-box-shadow:0 1px 2px rgba(0,0,0,0.5); -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.5); box-shadow: 0 1px 2px rgba(0,0,0,0.5); border-bottom: 1px solid rgba(0,0,0,0.25);}'});
+			this.yearDiv = new ContentPane({style:'display:none; padding:0; color:#000; opacity: 0.9; margin-right:145px; flex:1; z-index:1000; position: absolute; top: 27px; left: 50%; text-align:center; border-radius:1px; -moz-box-shadow:0 1px 2px rgba(0,0,0,0.5); -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.5); box-shadow: 0 1px 2px rgba(0,0,0,0.5); }'});
 			this.yearID = this.yearDiv.id;
 			dom.byId('map-0').appendChild(this.yearDiv.domNode);
 			//
