@@ -66,16 +66,18 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 				
 				// on map click
 				t.map.on("click", lang.hitch(t, function(evt) {
-					var pnt = evt.mapPoint;
-					var q = new Query();
-					q.geometry = pnt;
-					if(t.accordSection == 'cat'){
-						t.category.selectFeatures(q,esri.layers.FeatureLayer.SELECTION_NEW);
-					} else if (t.accordSection == 'pro'){
-						t.profile.selectFeatures(q,esri.layers.FeatureLayer.SELECTION_NEW);
-					}else{
-						'do nothing here'
-					}
+					if (t.open == "yes"){	
+						var pnt = evt.mapPoint;
+						var q = new Query();
+						q.geometry = pnt;
+						if(t.accordSection == 'cat'){
+							t.category.selectFeatures(q,esri.layers.FeatureLayer.SELECTION_NEW);
+						} else if (t.accordSection == 'pro'){
+							t.profile.selectFeatures(q,esri.layers.FeatureLayer.SELECTION_NEW);
+						}else{
+							'do nothing here'
+						}
+					}	
 					
 					
 				}));
