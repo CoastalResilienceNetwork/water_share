@@ -11,7 +11,7 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 			$, content, ui, esriapi, clicks, chartjs, barChart, hbar ) {
 	return declare(PluginBase, {
 		// The height and width are set here when an infographic is defined. When the user click Continue it rebuilds the app window with whatever you put in.
-		toolbarName: "Water Share Explorer", showServiceLayersInLegend: true, allowIdentifyWhenActive: false, rendered: false, resizable: false,
+		toolbarName: "Water Scarcity Explorer", showServiceLayersInLegend: true, allowIdentifyWhenActive: false, rendered: false, resizable: false,
 		hasCustomPrint: true, usePrintPreviewMap: true, previewMapSize: [1000, 550], size:'custom', width:460,	
 		// First function called when the user clicks the pluging icon. 
 		initialize: function (frameworkParameters){
@@ -19,7 +19,7 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 			declare.safeMixin(this, frameworkParameters);
 			// Define object to access global variables from JSON object. Only add variables to varObject.json that are needed by Save and Share. 
 			this.obj = dojo.eval("[" + obj + "]")[0];	
-			this.url = "http://cirrus-web-adapter-241060755.us-west-1.elb.amazonaws.com/arcgis/rest/services/tempFolder/watershare_v1/MapServer";
+			this.url = "http://dev.services2.coastalresilience.org:6080/arcgis/rest/services/Water_Blueprint/water_share/MapServer";
 			this.layerDefs = [];
 		},
 		// Called after initialize at plugin startup (why all the tests for undefined). Also called after deactivate when user closes app by clicking X. 
@@ -27,6 +27,8 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 			if (this.appDiv != undefined){
 				this.map.removeLayer(this.dynamicLayer);
 				this.map.removeLayer(this.category);
+				this.map.removeLayer(this.profile);
+				this.map.removeLayer(this.profileDD);
 				this.map.graphics.clear();
 				$('.plugin-infographic .sidebar-button-bottom').children('button').html('Get Started');
 			}
@@ -85,7 +87,6 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 		
 		// Called by activate and builds the plugins elements and functions
 		render: function() {
-			
 			//$('.basemap-selector').trigger('change', 3);
 			// BRING IN OTHER JS FILES
 			this.barChart = new barChart();

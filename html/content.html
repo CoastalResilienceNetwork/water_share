@@ -4,13 +4,16 @@ takes the ContentPane id and prepends it to every element with a declared id in 
 The unique ContentPane id makes all the element ids unique and prevents duplicate id errors in split screen mode.-->
 
 <!--Opening view of the app. Give a little background and instructions to get started-->
-<div id='be_mainAccord' class='be_mainAccord be_dflexChildren'>
-	<h3 id='depHeader'>Explore Basins by Depletion</h3>  
+<div id='getHelpBtnWrap' class='sty_getHelpBtnWrap'>
+	<div id='getHelpBtn' class='sty_getHelpBtn'>Start Using Water Scarcity Explorer</div>
+</div>
+<div id='mainAccord' class='sty_flex1 sty_hide'>
+	<h3 id='depHeader'>Explore Basins by Water Depletion Status</h3>  
 	<div id='cbListener' class='ac_sectionWrap'>
 		<div class=''>
 			<div class='lineWrapCenter' id='singleShore'>
-				<div class='sh_lineHeader'>Water Supply Scarcity Over Time:</div>
-				<div class='sty_explainWrap sh_depletionText'><p>Some regions of our planet have been experiencing water scarcity for a very long time. This map illustrates the degree to which irrigated agriculture has depleted the renewable water supply. (adapted from Brauman and others, 2016)</p></div>
+				<div class='sh_lineHeader'>Water Scarcity over Time:<img src='plugins/water_share/images/info.png' alt='show climate info' class='sty_infoIcon' id='-infoDepletion'></div>
+				<div class='sty_explainWrap sh_depletionText'><p>Today more than 90% of water-scarce regions goes to irrigated agriculture, but this phenomenon has a long history. This map illustrates the degree to which irrigated agriculture has depleted the renewable water resources. (adapted from Brauman and others, 2016)</p></div>
 				<div class='sh_multiYearSlider' id='sh_multiYearSlider'></div>
 				<div class='sh_playStopWrap'>
 					<div class='togBtn sh_sliderPlay' id='sh_sliderPlay'>Play</div>
@@ -21,12 +24,9 @@ The unique ContentPane id makes all the element ids unique and prevents duplicat
 	</div>
 	<h3 id='catHeader'>Explore Basins by Categories</h3>
 	<div id='hydroWrap' class='ac_sectionWrap be_hide'>
-		<div id='sh_chartUnits' class='sh_lineHeader3'> Click a water basin to see chart</div>
+		<div id='sh_chartClick' class='sh_lineHeader3'> Click a water basin to see chart</div>
 		<div id='sh_chartWrap' class='sh_chartWrap'>
-		
-			
-
-			<div id='sh_chartUnits' class='sh_lineHeader3 sh_chartUnits'>Million Acre-Feet Used in Selected Basin</div>
+			<div id='sh_chartUnits' class='sh_lineHeader3 sh_chartUnits'>(million Cubic Meters)<img src='plugins/water_share/images/info.png' alt='show climate info' class='sty_infoIcon' id='-infoCategories'></div>
 			<div class='sh_chWrap' id='sh_rWrap'>	
 				<canvas id='rawChart'></canvas>
 			</div>
@@ -70,7 +70,7 @@ The unique ContentPane id makes all the element ids unique and prevents duplicat
 				<div class='sh_togBtn sh_yearMonthBtns' id='sh_yearlyBtn'>Year</div>
 			</div>
 			<div id='sh_chartBtnWrap' class='sh_chartBtnWrap'>
-				<div class='sh_togBtn sh_chartBtns sh_togBtnSel' id='sh_rawBtn'>Used</div>
+				<div class='sh_togBtn sh_chartBtns sh_togBtnSel' id='sh_rawBtn'>Consumed</div>
 				<div class='sh_togBtn sh_chartBtns' id='sh_availBtn'>Available</div>
 				<div class='sh_togBtn sh_chartBtns' id='sh_interBtn'>Interannual</div>
 			</div>	
@@ -79,27 +79,28 @@ The unique ContentPane id makes all the element ids unique and prevents duplicat
 				<div class='sh_attPaddingBump'>
 					<div class='sh_attLine sh_topAtt'><span id='-BasinID' class='sh_attribute'>Basin ID</span>: <span id='-subBas_ID' class='sh_attSpan'></span> - <span id='zoomToFund' class='sh_zoomToText'> Zoom</span></div>
 					<div class='sh_attLine'><span class='sh_attribute'>Market Strategy</span>: <span id='-category' class='sh_attSpan'></span></div>
-					<div class='sh_attLine'><span class='sh_attribute'>Water Budget</span>:<span id='-PopSize' class='sh_attSpan'></span></div>
+					<div class='sh_attLine'><span class='sh_attribute'>Depletion Index</span>: <span id='-DepletionL' class='sh_attSpan'></span></div>
+					<!-- <div class='sh_attLine'><span class='sh_attribute'>Annual Water Budget</span>:<span id='-PopSize' class='sh_attSpan'></span></div>
 					<div class='sh_waterBudgetWrap'>
 						<div class='sh_attLine'> &#8226 <span class='sh_attribute'>Available Water</span>: <span id='-fundingSource' class='sh_attSpan'></span></div>
 						<div class='sh_attLine'> &#8226 <span class='sh_attribute'>Consumptive Use</span>: <span id='-PartnersNum' class='sh_attSpan'></span></div>
-						<div class='sh_attLine'> &#8226 <span class='sh_attribute'>Net Result</span>: <span id='-Area_Actual' class='sh_attSpan'></span></div>
+						<div class='sh_attLine'> &#8226 <span class='sh_attribute'>Net Result</span>: <span id='-Area_Actual' class='sh_attSpan'></span></div> 
 						<div class='sh_attLine'> &#8226 <span class='sh_attribute'>Depletion Index</span>: <span id='-DepletionL' class='sh_attSpan'></span></div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- Profile section  -->
-	<h3 id='proHeader'>View Basins by Profile</h3>
+	<!-- <h3 id='proHeader' class='sty_hide'>View Basins by Profile</h3>
 	<div id='supDataWrap' class='ac_sectionWrap'>
-	<!--The value of each option refers to the layer name and the text is what is used for the layers definition query-->
-		<div class='sh_lineHeader sh_proHeader'>Select a Profile or Click on the Map: </div>
+	
+		<div class='sh_lineHeader sh_proHeader'>Select a Profile or Click on the Map:<img src='plugins/water_share/images/info.png' alt='show climate info' class='sty_infoIcon' id='-infoProfiles'></div>
 		<div id='proChoosenWrapper' class='sh_proChoosenWrapper'>
 			<select id='ch-pro' data-placeholder="Select a Profile" class="chosen-crs" tabindex="16">
 				<option value=""></option>
 			</select>
-			<!-- <div id='profileName' class='sh_profileName'>Name of Profile</div> -->
+			
 		</div>
 		<div id='profileAttWrap' class='sh_profileAttWrap'>
 			<div id='profileName' class='sh_profileName'>Name of Profile</div>
@@ -107,83 +108,43 @@ The unique ContentPane id makes all the element ids unique and prevents duplicat
 				<span id='zoomToProfile' class='sh_zoomToText'>Zoom to Profile</span> - <a class="sh_zoomToText" href="plugins/water_share/assets/name1.pdf" target="_blank">View Water Basin Profile</a>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </div>
 
 
-<div id='be_infoAccord' class='sh_infoWrap be_dflexChildren'>
-	<h3>Documentation</h3>
-	<div class='be_exWrap'>
+<div id='infoAccord' class='sty_flex1'>
+	<h3 class='infoDoc'>Documentation</h3>
+	<div class='sty_explainWrap'>
 		<p>
-			This app allows users to see where investments may achieve the most co-benefits for people and nature. 
-			Users can identify watersheds that meet user-defined criteria related to biodiversity conservation, climate change mitigation, 
-			and human health and well-being, as an aid in prioritizing investment and action. Users can also select individual 
-			watersheds and view more detailed information about what co-benefits may, or may not, be enhanced by investments in that watershed.
+			Water scarcity is a consequence of allowing too much water to be consumed relative to the renewable, affordable supply of water. The problem of water scarcity is planetary in scale: today, at least one-third of the rivers, lakes and aquifers on our planet are being heavily tapped for their water resources.
+The Water Share Explorer leverages data from our report which quantifies water scarcity over time and space to provide users with an exploratory tool to look at how, where and when water has been used in a given basin.
 		</p>
-		<p>Data layers in this explorer are derivatives of the source data. Please note that the accuracy of each data layer is limited by the 
-			coverage and comprehensiveness of the original dataset. Please refer to the original source for more detailed information.
+		<!-- <p>test text second paragraph
 		</p>
-		<p>See <a class='be_a' target='_blank' href='plugins/water_share/images/MethodsDocumentation.pdf'>data documentation</a> for full methodology and citations.
-		</p> 
+		<p>Test Link text <a class='sty_anchor' target='_blank' href='plugins/benefits_explorer_prototype/images/MethodsDocumentation.pdf'>data documentation</a>
+		</p>  -->
 	</div> 
-	<h3 class='infoCarbon'>Climate Change Mitigation/Carbon</h3>
-	<div class='be_exWrap'>
+	<h3 class='infoDepletion'>Explore Basins by Depletion</h3>
+	<div class='sty_explainWrap'>
 		<p>
-			Activities like reforestation, forest protection, and agricultural BMPs can mitigate 
-			climate change by avoiding carbon dioxide emissions through actions that safeguard carbon stored in soil and plants and sequestering 
-			carbon through plant growth. The following data layers provide information on watersheds where these activities have the greatest potential 
-			to contribute to climate change mitigation:
+			explore basins by depletion text
 		</p>
-		<div class='be_dlHeader'>Standing Carbon</div>
+		<div class='sty_underlineInfoHeader'>Test Text Header:</div>
 		<p>
-			Total carbon stored in living, above-ground biomass summarized by HydroBASINS across the tropics. (Source data: Baccini et al. in review; Zarin et al., 2016)
-		</p>
-		<div class='be_dlHeader'>Forest Loss</div>
-		<p class='be_explanations'>
-			Cumulative area of forest loss between 2001 and 2014. (Source data: Hansen et al., 2013)
-		</p>
-		<div class='be_dlHeader'>Reforestation Potential</div>
-		<p class='be_explanations'>
-			Area of degraded forest lands that have the potential to be restored and reforested.  (Source data: WRI 2014)
+		Test Text
 		</p>
 	</div>
-	<h3 class='infoBio'>Biodiversity</h3>
-	<div class='be_exWrap'>
+	<h3 class='infoCategories'>Explore Basins by Categories</h3>
+	<div class='sty_explainWrap'>
 		<p>
-			Strategic land management and protection can conserve habitat for terrestrial species and benefit aquatic 
-			species by improving water quality and flow reliability. The following data layers provide information on where biodiversity is threatened and 
-			where improvements in watershed health may benefit biodiversity conservation:
+			Explore basins bt cat text
 		</p>
-		<div class='be_dlHeader'>Freshwater Biodiversity Threat Index</div>
-		<p>
-			Levels of threat to freshwater biodiversity within HydroBASINS normalized and standardized between zero and one. Some basins do not have average threat values due to insufficient coverage of the index data. (Source data: Vörösmarty et al., 2010)
-		</p>
-		<div class='be_dlHeader'>Imperiled Terrestrial Species</div>
-		<p>
-			Number of terrestrial species, including mammals, birds and amphibians, classified by the IUCN Red List as critically endangered, endangered or vulnerable. (Source data: BirdLife International and NatureServe 2015; IUCN 2016)
-		</p>
+		
 	</div>	
-	<h3 class='infoHealth'>Human Health &#38; Well Being</h3>
-	<div class='be_exWrap'>
+	<!-- <h3 class='infoProfiles'>View Basins by Profile</h3>
+	<div class='sty_explainWrap'>
 		<p>
-			Communities not only benefit from improved water security but also from improved watershed health overall. 
-			The following data layers show where land protection could maintain pollination services providing valuable micronutrient and crop yield benefits, 
-			and also identify places with the greatest need for reducing excess nitrogen in surface waters:
+			View basin by profile test text
 		</p>
-		<div class='be_dlHeader'>Drop in Vitamin A Production w/o Pollination</div>
-		<p>
-			The estimated percent reduction in vitamin A production associated with reduced pollination services. Data are summarized in HydroBASINS currently experiencing moderate or severe vitamin A deficiency, and basins with no data are of low concern for vitamin A deficiency. (Source data: Klein et al., 2007; Monfreda et al., 2008; WHO 2009; FAO 2016)
-		</p>
-		<div class='be_dlHeader'>Agricultural Economic Value Lost w/o Pollination</div>
-		<p>
-			The estimated percent of total agricultural economic value lost with reduced pollination services. (Source data: Monfreda et al., 2008; FAO 2016)
-		</p>
-		<div class='be_dlHeader'>Total Annual Excess Nitrogen Application</div>
-		<p>
-			Estimated total potential excess nitrogen loading per year into adjacent waterbodies. (Source data: EarthStat total fertilizer balance data; West et al., 2014)
-		</p>
-	</div>	
+	</div>	 -->
 </div>	
-<div id='getHelpBtnWrap' class='getHelpBtnWrap'>
-	<div id='getHelpBtn' class='getHelpBtn'>Start Using Benefits Explorer</div>
-</div>

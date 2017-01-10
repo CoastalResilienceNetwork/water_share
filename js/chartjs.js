@@ -149,8 +149,8 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					t.myRawChart.config.data.datasets[6].label = 'AVL_Min1'
 					t.myRawChart.config.data.datasets[7].label = 'AVL_Max1'
 					t.myRawChart.config.options.scales.xAxes[0].gridLines.display = false
-					t.myRawChart.config.options.scales.yAxes[0].ticks.max = t.yearMax;
-					t.myRawChart.config.options.scales.yAxes[1].ticks.max = t.yearMax;
+					t.myRawChart.config.options.scales.yAxes[0].ticks.max = t.interMax;
+					t.myRawChart.config.options.scales.yAxes[1].ticks.max = t.interMax;
 					$.each(main,function(i,v){
 						v.data = t.chartData[0][v.label]
 					})

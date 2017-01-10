@@ -6,6 +6,50 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 
         return declare(null, {
 			clickListener: function(t){
+//make accordians /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				$( function() {
+					$( '#' + t.id + 'mainAccord' ).accordion({heightStyle: "fill"}); 
+					$( '#' + t.id + 'infoAccord' ).accordion({heightStyle: "fill"});
+				});
+// Work with accordian code when click on a part of the accordian or on map resize///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				// update accordians on window resize - map resize is much cleaner than window resize
+				t.map.on('resize',lang.hitch(t,function(){
+					t.clicks.updateAccord(t);
+				}))	
+				$('#' + t.id + 'getHelpBtn').on('click',lang.hitch(t,function(c){
+					if ( $('#' + t.id + 'mainAccord').is(":visible") ){
+						$('#' + t.id + 'infoAccord').show();
+						$('#' + t.id + 'mainAccord').hide();
+						$('#' + t.id + 'getHelpBtn').html('Back to Water Scarcity Explorer');
+						t.clicks.updateAccord(t);
+						$('#' + t.id + 'infoAccord .infoDoc').trigger('click');
+					}else{
+						$('#' + t.id + 'infoAccord').hide();
+						$('#' + t.id + 'mainAccord').show();
+						$('#' + t.id + 'getHelpBtn').html('Back to Documentation');
+						t.clicks.updateAccord(t);
+					}
+				}));
+// info icon clicks ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				$('#' + t.id + ' .sty_infoIcon').on('click',lang.hitch(t,function(c){
+					$('#' + t.id + 'mainAccord').hide();
+					$('#' + t.id + 'infoAccord').show();
+					$('#' + t.id + 'getHelpBtnWrap').show();
+					var ben = c.target.id.split("-").pop();
+					$('#' + t.id + 'getHelpBtn').html('Back to Water Scarcity Explorer');
+					t.clicks.updateAccord(t);	
+					$('#' + t.id + 'infoAccord .' + ben).trigger('click');
+				}));	
+// Work with Info Icon clicks ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				// info icon clicks
+				$('#' + t.id + ' .be_minfo').on('click',lang.hitch(t,function(c){
+					$('#' + t.id + 'mainAccord').hide();
+					$('#' + t.id + 'infoAccord').show();
+					$('#' + t.id + 'getHelpBtnWrap').show();
+					var ben = c.target.id.split("-").pop();
+					t.clicks.updateAccord(t);	
+					$('#' + t.id + 'infoAccord .' + ben).trigger('click');
+				}));		
 // Build and work with choosen menu in the profile section /////////////////////////////////////////////////////////////////				
 				// Enable jquery plugin 'chosen'
 				require(["jquery", "plugins/water_share/js/chosen.jquery"],lang.hitch(t,function($) {
@@ -29,14 +73,26 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 						}else{
 							t.map.graphics.clear()
 							t.profile.clear();
+							t.profileDD.clear();
 							$('#' + t.id + 'profileName').slideUp();
 							$('#' + t.id + 'profileAttWrap').slideUp();
 						}
 					}));
 				}));
-// Profile selection complete //////////////////////////////////////////////////////////////////////////////////////////
+// Profile and Profile DD selection complete //////////////////////////////////////////////////////////////////////////////////////////
+				t.profileDD.on('selection-complete', lang.hitch(t,function(evt){
+					if(evt.features.length > 0){
+						t.proInitExtent = t.map.extent;
+						t.proExtent = evt.features[0].geometry.getExtent().expand(1.5);
+					}else{
+						t.map.graphics.clear()
+						t.profile.clear();
+						t.profileDD.clear();
+						$('#' + t.id + 'ch-pro').val('').trigger('chosen:updated').trigger('change');
+					}
+				}));
+
 				t.profile.on('selection-complete', lang.hitch(t,function(evt){
-					
 					if(evt.features.length > 0){
 						t.proInitExtent = t.map.extent;
 						t.proExtent = evt.features[0].geometry.getExtent().expand(1.5);
@@ -50,12 +106,7 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 						$('#' + t.id + 'ch-pro').val('').trigger('chosen:updated').trigger('change');
 					}
 				}));
-				// t.proWhere = "Name = '" + t.profileName + "'";
-				// var btnText = 'Zoom to Profile';
-				// var btnTextBack = 'Back';
-				// t.clicks.zoomBackBtn(t, 'zoomToProfile', t.profile, t.proWhere,btnText, btnTextBack);
-				
-				
+// Work with Zoom buttons //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////				
 				$('#' + t.id + 'zoomToFund').on('click',lang.hitch(t,function(){
 					if($('#' + t.id + 'zoomToFund').html() == ' Zoom'){
 						t.map.setExtent(t.featExtent, true);
@@ -75,48 +126,21 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 						$('#' + t.id + 'zoomToProfile').html('Zoom to Profile');
 					}
 				}));
-				
-				
-				
-// Build innit chart labels //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-				// set init val
-				t.monthYearClick = 'month'
-				t.chartLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-				//make accrodians
-				$( function() {
-					$( "#" + t.id + "be_mainAccord" ).accordion({heightStyle: "fill"}); 
-					$( "#" + t.id + "be_infoAccord" ).accordion({heightStyle: "fill"});
-				});
-// Work with accordian code when click on a part of the accordian or on map resize///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-				// update accordians on window resize - map resize is much cleaner than window resize
-				t.map.on('resize',lang.hitch(t,function(){
-					t.clicks.updateAccord(t);
-				}))		
-				// temp to show main accordians
-				t.clicks.updateAccord(t);
-				$('#' + t.id + 'be_mainAccord').show();
-				// leave the get help section
-				$('#' + t.id + 'getHelpBtn').on('click',lang.hitch(t,function(c){
-					$('#' + t.id + 'be_infoAccord').hide();
-					$('#' + t.id + 'be_mainAccord').show();
-					$('#' + t.id + 'getHelpBtnWrap').hide();
-					$('#' + t.id + 'getHelpBtn').html('Back to Benefits Explorer');
-					t.clicks.updateAccord(t);
-				}));
-// Work with Info Icon clicks ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-				// info icon clicks
-				$('#' + t.id + ' .be_minfo').on('click',lang.hitch(t,function(c){
-					$('#' + t.id + 'be_mainAccord').hide();
-					$('#' + t.id + 'be_infoAccord').show();
-					$('#' + t.id + 'getHelpBtnWrap').show();
-					var ben = c.target.id.split("-").pop();
-					t.clicks.updateAccord(t);	
-					$('#' + t.id + 'be_infoAccord .' + ben).trigger('click');
-				}));		
+
 // Depletion, category, and profile header clicks //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 				// click on depletion header 
 				$('#' + t.id + 'depHeader').on('click',lang.hitch(t,function(c){
 					if($('#' + t.id + 'depHeader').next().is(':hidden')){
+						t.accordSection = 'dep';
+						$('#' + t.id + 'ch-pro').val('').trigger('chosen:updated').trigger('change');
+						$('#' + t.id + 'sh_chartWrap').hide();
+						$('#' + t.id + 'sh_chartClick').show();
+						t.map.graphics.clear()
+						t.profile.clear();
+						t.category.clear();
+						t.map.removeLayer(t.profile);
+						t.map.removeLayer(t.profileDD);
+						t.map.removeLayer(t.category);
 						t.obj.visibleLayers = [14];
 						t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 					}
@@ -124,24 +148,32 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 				// click on catagory header 
 				$('#' + t.id + 'catHeader').on('click',lang.hitch(t,function(c){
 					if($('#' + t.id + 'catHeader').next().is(':hidden')){
+						t.accordSection = 'cat';
+						$('#' + t.id + 'ch-pro').val('').trigger('chosen:updated').trigger('change');
 						t.obj.visibleLayers = [0];
 						t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 						t.map.addLayer(t.category);
 						t.map.removeLayer(t.profile)
+						t.map.removeLayer(t.profileDD)
 						// trigger click on stop button to stop animation if its going.
 						$('#' + t.id + 'sh_sliderStop').trigger('click');
 						$('#' + t.id + 'sh_monthlyBtn').addClass('sh_togBtnSel');
+						$('#' + t.id + 'sh_yearlyBtn').removeClass('sh_togBtnSel');
 						t.clicks.categorySelComplete(t);
 					}
 				}));
 				// click on profile header
 				$('#' + t.id + 'proHeader').on('click',lang.hitch(t,function(c){
 					if($('#' + t.id + 'proHeader').next().is(':hidden')){
+						t.accordSection = 'pro';
+						$('#' + t.id + 'sh_chartWrap').hide();
+						$('#' + t.id + 'sh_chartClick').show();
 						t.obj.visibleLayers = [1];
 						t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
+						t.map.removeLayer(t.category);
 						t.map.addLayer(t.profile);
 						t.map.addLayer(t.profileDD);
-						t.map.removeLayer(t.category);
+						console.log('remove cat')
 						
 					}
 				}));
@@ -192,15 +224,17 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					$('#' + t.id + 'sh_sliderStop').addClass('sh_hide');
 					// hide year text
 					$('#' + t.yearID).hide();
-					
 					clearInterval(t.setInt);
 					t.sliderPlayBtn  = '';
 					t.obj.sliderCounter = 0;
-					$('#' + t.id + 'sh_multiYearSlider').slider('value',t.obj.sliderCounter);
+					//$('#' + t.id + 'sh_multiYearSlider').slider('value',t.obj.sliderCounter);
 					$('#' + t.yearID).html('<div class="sh_yearMapText" id="yearMapText">1900</div>');
+					//t.clicks.updateSlider(t);
 				}));
-				
-				
+// Build innit chart labels //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				// set init val
+				t.monthYearClick = 'month'
+				t.chartLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 			},
 			
 // Build chart for category section ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -208,19 +242,10 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 			categorySelComplete: function(t){
 				t.category.on('selection-complete', lang.hitch(t,function(evt){
 					if (evt.features.length > 0){
+						console.log('cat was hit')
 						t.initExtent = t.map.extent;
 						t.featExtent = evt.features[0].geometry.getExtent().expand(1.5);
-						
-						console.log(t.initExtent);
-						console.log(t.featExtent);
-						
 						t.atts = evt.features[0].attributes;
-						// call zoom back button function in the water catagory area.
-						// t.where = "subBas_ID = " + t.atts.subBas_ID;
-						// var btnText = ' Zoom';
-						// var btnTextBack = ' Back'
-						//t.clicks.zoomBackBtn(t, 'zoomToFund', t.category, t.where, btnText, btnTextBack);
-						
 						$('#' + t.id + 'sh_attributeWrap .sh_attSpan').each(lang.hitch(t,function(i,v){
 							var field = v.id.split("-").pop();
 							var val = t.atts[field];
@@ -236,18 +261,6 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 							}	
 							$('#' + v.id).html(val);
 						}));
-						console.log(t.zoomTo, 'zoom to')
-						if (t.zoomTo == 'yes'){
-							console.log('if')
-							var fExt = evt.features[0].geometry.getExtent().expand(1.5);	
-							t.map.setExtent(fExt, true);
-							t.zoomTo = 'no';
-							//
-						}else{	
-							console.log('else')
-							t.map.setExtent(t.initExtent, true);
-							//t.esriapi.waterFundAttributeBuilder(evt,t);
-						}	
 						// retrieve attribute data
 						t.obj.chartData = evt.features[0].attributes;
 						// data for the chart, parse the data
@@ -268,9 +281,6 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 						// intermax
 						t.interMax = Math.max.apply(Math, t.chartData[0].AVL_Max)
 						t.interMax = Math.round(t.interMax + (t.interMax * .1))
-						// yearmax
-						t.yearMax = Math.max.apply(Math, t.chartData[0].Year)
-						t.yearMax = Math.round(t.yearMax + (t.yearMax * .1))
 						//work with raw max
 						var rawMaxArray = [0,1,2,3,4,5,6,7,8,9,10,11];
 						var y = 0;
@@ -294,13 +304,13 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 						t.rawMax = t.clicks.maxNumberRound(t.rawMax);
 						t.availMax = t.clicks.maxNumberRound(t.availMax);
 						t.interMax = t.clicks.maxNumberRound(t.interMax);
-						//t.yearMax = t.clicks.maxNumberRound(t.yearMax);
 						
 						// handle the trigger for show and click the raw button
 						$('#' + t.id + 'sh_rWrap').show();
 						$('#' + t.id + 'sh_chartWrap').slideDown();
 						
-						$('#' + t.id + 'sh_chartUnits').slideUp();
+						$('#' + t.id + 'sh_chartUnits').slideDown();
+						$('#' + t.id + 'sh_chartClick').slideUp();
 						// check to see what button year or month was clicked then trigger clicks
 						if(t.monthYearClick == 'month'){
 							$('#' + t.id + 'sh_rawBtn').trigger('click')
@@ -312,15 +322,12 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 						$.each(t.chartData[0].Year, lang.hitch(t,function(i, v){
 							t.chartLabels.push('');
 						}));
-
-						
-						
 					}else{
 						// hide graph elements when no target has been hit on click
 						$('#' + t.id + 'sh_chartWrap').slideUp();
-						$('#' + t.id + 'sh_chartUnits').slideDown();
+						$('#' + t.id + 'sh_chartUnits').slideUp();
+						$('#' + t.id + 'sh_chartClick').slideDown();
 					}
-					
 				}));
 			},
 // Max Number round function /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -373,7 +380,6 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 			zoomBackBtn: function(t, id, featureLayer, where, btnText, btnTextBack){
 				// Zoom to water fund click
 				$('#' + t.id + id).on('click',lang.hitch(t,function(){
-					console.log('zoom')
 					if($('#' + t.id + id).html() == btnText){
 						t.zoomTo =  'yes';	
 						var q = new Query();
@@ -381,9 +387,7 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 						featureLayer.selectFeatures(q,esri.layers.FeatureLayer.SELECTION_NEW)
 						$('#' + t.id + id).html(btnTextBack);
 					}else{
-						console.log('back')
 						t.zoomTo = 'no'
-						console.log(t.initExtent);
 						t.map.setExtent(t.initExtent, true);
 						$('#' + t.id + id).html(btnText);
 					}
@@ -391,8 +395,8 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 			},
 			// update accordian of layout
 			updateAccord: function(t){
-				$( "#" + t.id + "be_mainAccord" ).accordion('refresh');	
-				$( "#" + t.id +  "be_infoAccord" ).accordion('refresh');				
+				$( "#" + t.id + "mainAccord" ).accordion('refresh');	
+				$( "#" + t.id +  "infoAccord" ).accordion('refresh');				
 			},
 			// number with comma function
 			numberWithCommas: function(x){

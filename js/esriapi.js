@@ -51,7 +51,7 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 				}));
 // Work with feature layers and map clicks //////////////////////////////////////////////////////////////////////////////////////////////////////////				
 				// set the initial visible layers on app load
-				t.obj.visibleLayers = [14];
+				t.obj.visibleLayers = [15];
 				t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 				
 				// selection symbolgy for category layer
@@ -75,8 +75,15 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 					var pnt = evt.mapPoint;
 					var q = new Query();
 					q.geometry = pnt;
-					t.category.selectFeatures(q,esri.layers.FeatureLayer.SELECTION_NEW);
-					t.profile.selectFeatures(q,esri.layers.FeatureLayer.SELECTION_NEW);
+					if(t.accordSection == 'cat'){
+						t.category.selectFeatures(q,esri.layers.FeatureLayer.SELECTION_NEW);
+					} else if (t.accordSection == 'pro'){
+						t.profile.selectFeatures(q,esri.layers.FeatureLayer.SELECTION_NEW);
+					}else{
+						'do nothing here'
+					}
+					
+					
 				}));
 				// zoom end 
 				t.map.on("zoom-end", lang.hitch(t,function(e){

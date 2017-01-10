@@ -419,7 +419,7 @@ abbr.search-choice-close {
 	margin-top:15px;
 }
 .sh_zoomToText{
-	font-size:1.3rem; color:blue !important; cursor:pointer; font-weight:bold;
+	font-size:1.3rem; color:blue !important; cursor:pointer;
 }	
 .sh_zoomToText:hover{
     color:#21658c !important;
