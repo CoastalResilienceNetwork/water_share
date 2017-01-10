@@ -137,11 +137,11 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 						$('#' + t.id + 'sh_chartClick').show();
 						t.map.graphics.clear()
 						t.profile.clear();
-						t.category.clear();
+						//t.category.clear();
 						t.map.removeLayer(t.profile);
 						t.map.removeLayer(t.profileDD);
-						t.map.removeLayer(t.category);
-						t.obj.visibleLayers = [14];
+						//t.map.removeLayer(t.category);
+						t.obj.visibleLayers = [16];
 						t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 					}
 				}));
@@ -150,11 +150,11 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					if($('#' + t.id + 'catHeader').next().is(':hidden')){
 						t.accordSection = 'cat';
 						$('#' + t.id + 'ch-pro').val('').trigger('chosen:updated').trigger('change');
-						t.obj.visibleLayers = [0];
+						t.obj.visibleLayers = [1];
 						t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
-						t.map.addLayer(t.category);
-						t.map.removeLayer(t.profile)
-						t.map.removeLayer(t.profileDD)
+						//t.map.addLayer(t.category);
+						//t.map.removeLayer(t.profile)
+						//t.map.removeLayer(t.profileDD)
 						// trigger click on stop button to stop animation if its going.
 						$('#' + t.id + 'sh_sliderStop').trigger('click');
 						$('#' + t.id + 'sh_monthlyBtn').addClass('sh_togBtnSel');
@@ -168,7 +168,7 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 						t.accordSection = 'pro';
 						$('#' + t.id + 'sh_chartWrap').hide();
 						$('#' + t.id + 'sh_chartClick').show();
-						t.obj.visibleLayers = [1];
+						t.obj.visibleLayers = [2];
 						t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 						t.map.removeLayer(t.category);
 						t.map.addLayer(t.profile);
@@ -241,11 +241,25 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 			// build chart on selection complete
 			categorySelComplete: function(t){
 				t.category.on('selection-complete', lang.hitch(t,function(evt){
+					var index = t.obj.visibleLayers.indexOf(t.selectedBasin);
 					if (evt.features.length > 0){
-						console.log('cat was hit')
 						t.initExtent = t.map.extent;
 						t.featExtent = evt.features[0].geometry.getExtent().expand(1.5);
+						
 						t.atts = evt.features[0].attributes;
+						console.log(evt);
+						t.selectedBasinWhere = 'OBJECTID = ' + t.atts.OBJECTID;
+						console.log(t.selectedBasinWhere);
+						console.log(t.selectedBasin);
+						t.layerDefinitions[t.selectedBasin] = t.selectedBasinWhere;
+						t.dynamicLayer.setLayerDefinitions(t.layerDefinitions);
+						console.log(index);
+						if(index == -1){
+							t.obj.visibleLayers.push(t.selectedBasin);
+							console.log(t.obj.visibleLayers);
+							t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
+						}
+						
 						$('#' + t.id + 'sh_attributeWrap .sh_attSpan').each(lang.hitch(t,function(i,v){
 							var field = v.id.split("-").pop();
 							var val = t.atts[field];
@@ -323,6 +337,11 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 							t.chartLabels.push('');
 						}));
 					}else{
+						t.selectedBasinWhere = '';
+						if (index > -1) {
+							t.obj.visibleLayers.splice(index, 1);						
+						}
+						t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 						// hide graph elements when no target has been hit on click
 						$('#' + t.id + 'sh_chartWrap').slideUp();
 						$('#' + t.id + 'sh_chartUnits').slideUp();

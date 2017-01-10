@@ -8,6 +8,9 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 
         return declare(null, {
 			esriApiFunctions: function(t){
+				// define dynamic layer numbers
+				t.selectedBasin = 0;
+				t.layerDefinitions = [];
 // build the dropdown menu for the profiles section with the code below. ////////////////////////////////////////////////////////////////////
 				var queryTask = new QueryTask(t.url + "/1")
 				var query = new Query();
@@ -38,20 +41,11 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 				t.dynamicLayer.on("load", lang.hitch(t, function () { 			
 					t.layersArray = t.dynamicLayer.layerInfos;
 					// Start with empty expressions
-					t.standingc = ""; 
-					t.forloss = "";
-					t.refor = "";
-					t.freshbiot = "";
-					t.terrsp = "";
-					t.vita = "";
-					t.agloss = "";
-					t.nitrogen = "";
-					t.clicks.layerDefsUpdate(t);
 					t.map.setMapCursor("pointer");
 				}));
 // Work with feature layers and map clicks //////////////////////////////////////////////////////////////////////////////////////////////////////////				
 				// set the initial visible layers on app load
-				t.obj.visibleLayers = [15];
+				t.obj.visibleLayers = [16];
 				t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 				
 				// selection symbolgy for category layer
