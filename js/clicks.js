@@ -243,6 +243,9 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 				t.category.on('selection-complete', lang.hitch(t,function(evt){
 					var index = t.obj.visibleLayers.indexOf(t.selectedBasin);
 					if (evt.features.length > 0){
+						if ( $('#' + t.id + 'mainAccord').is(':hidden') ){
+							$('#' + t.id + 'getHelpBtn').trigger('click');
+						}
 						t.initExtent = t.map.extent;
 						t.featExtent = evt.features[0].geometry.getExtent().expand(1.5);
 						t.atts = evt.features[0].attributes;
