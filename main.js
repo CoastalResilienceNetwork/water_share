@@ -42,8 +42,8 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 				// Hide the print button until a hex has been selected
 				$(this.printButton).hide();
 			}else{
-				this.map.addLayer(this.dynamicLayer);
-				this.map.addLayer(this.category);
+				//this.map.addLayer(this.dynamicLayer);
+				//this.map.addLayer(this.category);
 				// on set state it calls activate twice. on the second call render is true so it call this else. layer infos isn't done yet so if you call setNavBtns it can't use layer infos
 				if (this.obj.stateSet == "no"){	
 					//this.navigation.setNavBtns(this);	
@@ -57,6 +57,7 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 		deactivate: function () {
 			if (this.appDiv != undefined){
 				$('#' + this.yearID).hide();
+				this.map.graphics.clear();
 				this.map.removeLayer(this.dynamicLayer);
 			}
 			this.open = "no";

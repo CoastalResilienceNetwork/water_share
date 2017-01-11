@@ -171,8 +171,8 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 						t.obj.visibleLayers = [2];
 						t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 						t.map.removeLayer(t.category);
-						t.map.addLayer(t.profile);
-						t.map.addLayer(t.profileDD);
+						// t.map.addLayer(t.profile);
+						// t.map.addLayer(t.profileDD);
 						console.log('remove cat')
 						
 					}
