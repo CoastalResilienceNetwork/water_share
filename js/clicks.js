@@ -245,15 +245,10 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					if (evt.features.length > 0){
 						t.initExtent = t.map.extent;
 						t.featExtent = evt.features[0].geometry.getExtent().expand(1.5);
-						
 						t.atts = evt.features[0].attributes;
-						console.log(evt);
 						t.selectedBasinWhere = 'OBJECTID = ' + t.atts.OBJECTID;
-						console.log(t.selectedBasinWhere);
-						console.log(t.selectedBasin);
 						t.layerDefinitions[t.selectedBasin] = t.selectedBasinWhere;
 						t.dynamicLayer.setLayerDefinitions(t.layerDefinitions);
-						console.log(index);
 						if(index == -1){
 							t.obj.visibleLayers.push(t.selectedBasin);
 							console.log(t.obj.visibleLayers);

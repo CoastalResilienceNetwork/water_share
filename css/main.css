@@ -449,3 +449,10 @@ abbr.search-choice-close {
 .sh_profileAttWrap{
 	margin-top:10px; display:none;
 }
+.sh_groupCharts {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    padding-bottom: 4px;
+    padding-top: 4px;
+    margin-bottom: 6px;
+    width: 353px;
+}
