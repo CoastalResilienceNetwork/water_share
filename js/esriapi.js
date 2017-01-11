@@ -45,7 +45,7 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 				}));
 // Work with feature layers and map clicks //////////////////////////////////////////////////////////////////////////////////////////////////////////				
 				// set the initial visible layers on app load
-				t.obj.visibleLayers = [16];
+				t.obj.visibleLayers = [4];
 				t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 				
 				// selection symbolgy for category layer
@@ -63,6 +63,17 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 				// set profile dropdown layer
 				t.profileDD = new FeatureLayer(t.url + "/1", { mode: FeatureLayer.MODE_SELECTION, outFields: ["*"] });
 				//t.profileDD.setSelectionSymbol(catSym);
+				
+				$('#' + t.id + 'getHelpBtn').on('click',lang.hitch(t,function(){
+					var initHtml = $('#' + t.id + 'getHelpBtn').html();
+					if(initHtml == 'Start Using Water Scarcity Explorer'){
+						console.log('made it')
+						t.obj.visibleLayers = [16];
+						t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
+					}
+				}));
+				
+					
 				
 				// on map click
 				t.map.on("click", lang.hitch(t, function(evt) {
