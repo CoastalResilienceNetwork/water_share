@@ -254,11 +254,11 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 						t.dynamicLayer.setLayerDefinitions(t.layerDefinitions);
 						if(index == -1){
 							t.obj.visibleLayers.push(t.selectedBasin);
-							console.log(t.obj.visibleLayers);
 							t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 						}
 						
 						$('#' + t.id + 'sh_attributeWrap .sh_attSpan').each(lang.hitch(t,function(i,v){
+							console.log('start')
 							var field = v.id.split("-").pop();
 							var val = t.atts[field];
 							if ( isNaN(val) == false ){
@@ -271,6 +271,10 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 									}	
 								}	
 							}	
+							if(val == 0){
+								val = 'None'
+							}
+							console.log(val, 'val')
 							$('#' + v.id).html(val);
 						}));
 						// retrieve attribute data
