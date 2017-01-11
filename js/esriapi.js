@@ -49,20 +49,20 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 				t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 				
 				// selection symbolgy for category layer
-				var catSym = new SimpleFillSymbol( SimpleFillSymbol.STYLE_SOLID, new SimpleLineSymbol(
-					SimpleLineSymbol.STYLE_SOLID, new Color([0,0,255]), 2 ), new Color([0,0,0,0.1])
-				);
+				//var catSym = new SimpleFillSymbol( SimpleFillSymbol.STYLE_SOLID, new SimpleLineSymbol(
+				//	SimpleLineSymbol.STYLE_SOLID, new Color([0,0,255]), 2 ), new Color([0,0,0,0.1])
+				//);
 				// set category layer
 				t.category = new FeatureLayer(t.url + "/0", { mode: FeatureLayer.MODE_SELECTION, outFields: ["*"] });
-				t.category.setSelectionSymbol(catSym);
+				//t.category.setSelectionSymbol(catSym);
 				// set depletion layer
 				
 				// set profile layer
 				t.profile = new FeatureLayer(t.url + "/1", { mode: FeatureLayer.MODE_SELECTION, outFields: ["*"] });
-				t.profile.setSelectionSymbol(catSym);
+				//t.profile.setSelectionSymbol(catSym);
 				// set profile dropdown layer
 				t.profileDD = new FeatureLayer(t.url + "/1", { mode: FeatureLayer.MODE_SELECTION, outFields: ["*"] });
-				t.profileDD.setSelectionSymbol(catSym);
+				//t.profileDD.setSelectionSymbol(catSym);
 				
 				// on map click
 				t.map.on("click", lang.hitch(t, function(evt) {
