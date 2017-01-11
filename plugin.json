@@ -1,0 +1,16 @@
+{
+    "css": [
+		"//cdn.sencha.io/ext-4.1.1-gpl/resources/css/ext-all.css",
+		"plugins/water_share/css/prism.css",
+		"plugins/water_share/css/chosen.css",
+		"plugins/water_share/css/barChart.css",
+		"plugins/water_share/css/toggleButtons.css",
+		"plugins/water_share/css/horizontalBar.css",
+		"plugins/water_share/css/main.css"
+    ],
+    "use": {
+        "underscore": { "attach": "_" },
+        "tv4": { "attach": "tv4" },
+        "extjs": { "attach": "Ext" }
+    }
+}
