@@ -16,7 +16,7 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					{ label: 'DOM', backgroundColor: 'rgba(253, 191, 45, 0.7)', yAxisID: "bar-y-axis" },
 					{ label: 'IND', backgroundColor: 'rgba(70, 116, 193,0.7)', yAxisID: "bar-y-axis" },
 					{ label: 'IRR', backgroundColor: 'rgba(114, 172, 77, 0.7)', yAxisID: "bar-y-axis" },
-					{ label: 'LIV', backgroundColor: 'rgba(68, 103, 46, 0.7)', yAxisID: "bar-y-axis" },
+					{ label: 'LIV', backgroundColor: 'rgba(217, 83, 79, 0.7)', yAxisID: "bar-y-axis" },
 					{ type:'line', label:'AVL_Min', borderColor:'#96bee2', backgroundColor:'#FFF', fill:true },
 					{ type:'line', label:'AVL_Max', borderColor:'#82b2dc', backgroundColor:'rgba(190, 215, 237, 0.7)', fill: true }
 				]

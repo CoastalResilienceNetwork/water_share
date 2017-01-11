@@ -314,7 +314,7 @@ abbr.search-choice-close {
 
 /* charts */
 .sh_chWrap{
-	display:none; width:434px; margin-top:10px; margin-left:-5px;
+	width:434px; margin-top:10px; margin-left:-5px;
 }
 .sh_chartBtnWrap{
 	display:flex; margin-top:14px; justify-content:center;
@@ -347,7 +347,7 @@ abbr.search-choice-close {
 	background-color:rgba(114, 172, 77, 0.7); border:1px solid rgba(114, 172, 77, 0.7);
 }
 .sh_livLgnd{
-	background-color:rgba(68, 103, 46, 0.7); border:1px solid rgba(68, 103, 46, 0.7);
+	background-color:rgba(217, 83, 79, 0.7); border:1px solid rgba(68, 103, 46, 0.7);
 }
 .sh_avlLgnd{
 	background-color:rgba(68, 103, 46, 0); border:none; border-bottom:2pt solid #3783c7; height:8px;
