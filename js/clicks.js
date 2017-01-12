@@ -12,10 +12,14 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					$( '#' + t.id + 'infoAccord' ).accordion({heightStyle: "fill"});
 				});
 // Work with accordian code when click on a part of the accordian or on map resize///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-				// update accordians on window resize - map resize is much cleaner than window resize
-				t.map.on('resize',lang.hitch(t,function(){
-					t.clicks.updateAccord(t);
-				}))	
+				// update accordians on window resize 
+				var doit;
+				$(window).resize(function(){
+					clearTimeout(doit);
+					doit = setTimeout(function() {
+						t.clicks.updateAccord(t);
+					}, 100);
+				});	
 				$('#' + t.id + 'getHelpBtn').on('click',lang.hitch(t,function(c){
 					if ( $('#' + t.id + 'mainAccord').is(":visible") ){
 						$('#' + t.id + 'infoAccord').show();
@@ -416,8 +420,14 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 			},
 			// update accordian of layout
 			updateAccord: function(t){
-				$( "#" + t.id + "mainAccord" ).accordion('refresh');	
-				$( "#" + t.id +  "infoAccord" ).accordion('refresh');				
+				var ma = $( "#" + t.id + "mainAccord" ).accordion( "option", "active" );
+				var ia = $( "#" + t.id + "infoAccord" ).accordion( "option", "active" );
+				$( "#" + t.id + "mainAccord" ).accordion('destroy');	
+				$( "#" + t.id +  "infoAccord" ).accordion('destroy');	
+				$( "#" + t.id + "mainAccord" ).accordion({heightStyle: "fill"}); 
+				$( "#" + t.id + "infoAccord" ).accordion({heightStyle: "fill"});	
+				$( "#" + t.id + "mainAccord" ).accordion( "option", "active", ma );		
+				$( "#" + t.id + "infoAccord" ).accordion( "option", "active", ia );				
 			},
 			// number with comma function
 			numberWithCommas: function(x){
