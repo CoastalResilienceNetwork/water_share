@@ -42,6 +42,25 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 					t.layersArray = t.dynamicLayer.layerInfos;
 					// Start with empty expressions
 					t.map.setMapCursor("pointer");
+					
+					if (t.obj.stateSet == "yes"){
+						// accordion visibility
+						$('#' + t.id + t.obj.accordVisible).show();
+						console.log(t.obj.accordVisible, 'accord vis')
+						console.log(t.obj.accordActive, 'accord vis')
+						$('#' + t.id + t.obj.accordHidden).hide();
+						$('#' + t.id + 'getHelpBtn').html(t.obj.buttonText);
+						t.clicks.updateAccord(t);
+						$('#' + t.id + t.obj.accordVisible).accordion( "option", "active", t.obj.accordActive );
+						
+						
+						
+						// Update the visible layers from set state vis layers
+						t.dynamicLayer.setVisibleLayers(t.obj.setStateVisLayers);
+						t.obj.stateSet = "no";
+					}else{
+						//t.clicks.layerDefsUpdate(t);
+					}
 				}));
 // Work with feature layers and map clicks //////////////////////////////////////////////////////////////////////////////////////////////////////////				
 				// set the initial visible layers on app load

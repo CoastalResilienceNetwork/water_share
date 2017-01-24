@@ -52,11 +52,35 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 		// Called when user hits 'Save and Share' button. This creates the url that builds the app at a given state using JSON. 
 		// Write anything to you varObject.json file you have tracked during user activity.		
 		getState: function () {
+			console.log(this.obj.visibleLayers)
+			this.obj.setStateVisLayers = this.obj.visibleLayers;
+			if ( $('#' + this.id + 'mainAccord').is(":visible") ){
+				this.obj.accordVisible = 'mainAccord';
+				this.obj.accordHidden = 'infoAccord';
+			}else{
+				this.obj.accordVisible = 'infoAccord';
+				this.obj.accordHidden = 'mainAccord';
+			}	
+			this.obj.accordActive = $('#' + this.id + this.obj.accordVisible).accordion( "option", "active" );
+			this.obj.buttonText = $('#' + this.id + 'getHelpBtn').html();
+			// $('#' + this.id + 'basinByBensWrap input').each(lang.hitch(this,function(i,v){
+				// if ($(v).prop('checked')){
+					// this.obj.checkedBenefits.push($(v).val())
+				// }	
+			// }));	
 			this.obj.extent = this.map.geographicExtent;
 			this.obj.stateSet = "yes";	
+			console.log(this.obj)
 			var state = new Object();
 			state = this.obj;
 			return state;	
+			
+			
+			// this.obj.extent = this.map.geographicExtent;
+			// this.obj.stateSet = "yes";	
+			// var state = new Object();
+			// state = this.obj;
+			// return state;	
 		},
 		// Called before activate only when plugin is started from a getState url. 
 		//It's overwrites the default JSON definfed in initialize with the saved stae JSON.
