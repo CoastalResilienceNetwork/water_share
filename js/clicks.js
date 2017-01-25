@@ -135,7 +135,7 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 				// click on depletion header 
 				$('#' + t.id + 'depHeader').on('click',lang.hitch(t,function(c){
 					if($('#' + t.id + 'depHeader').next().is(':hidden')){
-						t.accordSection = 'dep';
+						t.obj.accordSection = 'dep';
 						$('#' + t.id + 'ch-pro').val('').trigger('chosen:updated').trigger('change');
 						$('#' + t.id + 'sh_chartWrap').hide();
 						$('#' + t.id + 'sh_chartClick').show();
@@ -152,7 +152,7 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 				// click on catagory header 
 				$('#' + t.id + 'catHeader').on('click',lang.hitch(t,function(c){
 					if($('#' + t.id + 'catHeader').next().is(':hidden')){
-						t.accordSection = 'cat';
+						t.obj.accordSection = 'cat';
 						$('#' + t.id + 'ch-pro').val('').trigger('chosen:updated').trigger('change');
 						t.obj.visibleLayers = [1];
 						t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
@@ -169,7 +169,7 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 				// click on profile header
 				$('#' + t.id + 'proHeader').on('click',lang.hitch(t,function(c){
 					if($('#' + t.id + 'proHeader').next().is(':hidden')){
-						t.accordSection = 'pro';
+						t.obj.accordSection = 'pro';
 						$('#' + t.id + 'sh_chartWrap').hide();
 						$('#' + t.id + 'sh_chartClick').show();
 						t.obj.visibleLayers = [2];
@@ -177,7 +177,6 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 						t.map.removeLayer(t.category);
 						// t.map.addLayer(t.profile);
 						// t.map.addLayer(t.profileDD);
-						console.log('remove cat')
 						
 					}
 				}));
@@ -199,8 +198,8 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					t.obj.sliderCounter = evt.value;
 					t.clicks.updateSlider(t);
 					$('#' + t.yearID).html('<div class="sh_yearMapText" id="yearMapText">' + t.labels[t.obj.sliderCounter] + '</div>');
-					if (t.sliderPlayBtn  == 'play'){
-						t.sliderPlayBtn  == ''
+					if (t.obj.sliderPlayBtn  == 'play'){
+						t.obj.sliderPlayBtn  == ''
 						$('#' + t.id + 'sliderStop').trigger('click');
 					}
 				}));
@@ -211,7 +210,7 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					// show year text
 					$('#' + t.yearID).show();
 					//$('#' + this.yearID).html('<div id="yearMapText">test year update</div>');
-					t.sliderPlayBtn  = 'play' 
+					t.obj.sliderPlayBtn  = 'play' 
 					t.setInt = setInterval(function(){
 						$('#' + t.yearID).html('<div class="sh_yearMapText" id="yearMapText">' + t.labels[t.obj.sliderCounter] + '</div>');
 						$('#' + t.id + 'sh_multiYearSlider').slider('value',t.obj.sliderCounter);
@@ -229,7 +228,7 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					// hide year text
 					$('#' + t.yearID).hide();
 					clearInterval(t.setInt);
-					t.sliderPlayBtn  = '';
+					t.obj.sliderPlayBtn  = '';
 					t.obj.sliderCounter = 0;
 					//$('#' + t.id + 'sh_multiYearSlider').slider('value',t.obj.sliderCounter);
 					$('#' + t.yearID).html('<div class="sh_yearMapText" id="yearMapText">1900</div>');
@@ -253,8 +252,8 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 						t.initExtent = t.map.extent;
 						t.featExtent = evt.features[0].geometry.getExtent().expand(1.5);
 						t.atts = evt.features[0].attributes;
-						t.selectedBasinWhere = 'OBJECTID = ' + t.atts.OBJECTID;
-						t.layerDefinitions[t.selectedBasin] = t.selectedBasinWhere;
+						t.obj.selectedBasinWhere = 'OBJECTID = ' + t.atts.OBJECTID;
+						t.layerDefinitions[t.selectedBasin] = t.obj.selectedBasinWhere;
 						t.dynamicLayer.setLayerDefinitions(t.layerDefinitions);
 						if(index == -1){
 							t.obj.visibleLayers.push(t.selectedBasin);
@@ -262,7 +261,6 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 						}
 						
 						$('#' + t.id + 'sh_attributeWrap .sh_attSpan').each(lang.hitch(t,function(i,v){
-							console.log('start')
 							var field = v.id.split("-").pop();
 							var val = t.atts[field];
 							if ( isNaN(val) == false ){
@@ -278,7 +276,6 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 							if(val == 0){
 								val = 'None'
 							}
-							console.log(val, 'val')
 							$('#' + v.id).html(val);
 						}));
 						// retrieve attribute data
@@ -343,7 +340,7 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 							t.chartLabels.push('');
 						}));
 					}else{
-						t.selectedBasinWhere = '';
+						t.obj.selectedBasinWhere = '';
 						if (index > -1) {
 							t.obj.visibleLayers.splice(index, 1);						
 						}
@@ -391,6 +388,7 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 			},
 // update slider function //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			updateSlider: function(t){
+				console.log('update slider')
 				$.each(t.layersArray, lang.hitch(t,function(i, v){
 					var val = t.labels[t.obj.sliderCounter]
 					var lyrName = v.name.split(" - ").pop()
@@ -399,6 +397,7 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					}
 				}));
 				t.obj.visibleLayers = [t.yearLyrId];
+				console.log(t.obj.visibleLayers, 'vis alyers');
 				t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 			},
 // Zoom/back function used in multiple areas ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

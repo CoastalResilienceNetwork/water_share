@@ -43,73 +43,70 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 					// Start with empty expressions
 					t.map.setMapCursor("pointer");
 					
+// State set work on dynamic layer load ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 					if (t.obj.stateSet == "yes"){
 						// accordion visibility
 						$('#' + t.id + t.obj.accordVisible).show();
-						console.log(t.obj.accordVisible, 'accord vis')
-						console.log(t.obj.accordActive, 'accord vis')
 						$('#' + t.id + t.obj.accordHidden).hide();
 						$('#' + t.id + 'getHelpBtn').html(t.obj.buttonText);
 						t.clicks.updateAccord(t);
 						$('#' + t.id + t.obj.accordVisible).accordion( "option", "active", t.obj.accordActive );
+
+						// work with depletion section button
+						if(t.obj.sliderPlayBtn == 'play'){
+							$('#' + t.id + 'sh_sliderPlay').trigger('click');
+						}
 						
-						
-						
+						// Work with cat section in save and share
+						t.clicks.categorySelComplete(t);
+						// category click
+						if (t.obj.selectedBasinWhere.length > 0){
+							var q = new Query();
+							q.where = t.obj.selectedBasinWhere;
+							t.category.selectFeatures(q,esri.layers.FeatureLayer.SELECTION_NEW);
+						}
+						t.layerDefinitions[0] = t.obj.selectedBasinWhere;
+						t.dynamicLayer.setLayerDefinitions(t.layerDefinitions);
 						// Update the visible layers from set state vis layers
 						t.dynamicLayer.setVisibleLayers(t.obj.setStateVisLayers);
 						t.obj.stateSet = "no";
 					}else{
+						// set the initial visible layers on app load
+						t.obj.visibleLayers = [4];
+						t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 						//t.clicks.layerDefsUpdate(t);
 					}
 				}));
 // Work with feature layers and map clicks //////////////////////////////////////////////////////////////////////////////////////////////////////////				
-				// set the initial visible layers on app load
-				t.obj.visibleLayers = [4];
-				t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
-				
-				// selection symbolgy for category layer
-				//var catSym = new SimpleFillSymbol( SimpleFillSymbol.STYLE_SOLID, new SimpleLineSymbol(
-				//	SimpleLineSymbol.STYLE_SOLID, new Color([0,0,255]), 2 ), new Color([0,0,0,0.1])
-				//);
 				// set category layer
 				t.category = new FeatureLayer(t.url + "/0", { mode: FeatureLayer.MODE_SELECTION, outFields: ["*"] });
-				//t.category.setSelectionSymbol(catSym);
-				// set depletion layer
-				
 				// set profile layer
 				t.profile = new FeatureLayer(t.url + "/1", { mode: FeatureLayer.MODE_SELECTION, outFields: ["*"] });
-				//t.profile.setSelectionSymbol(catSym);
 				// set profile dropdown layer
 				t.profileDD = new FeatureLayer(t.url + "/1", { mode: FeatureLayer.MODE_SELECTION, outFields: ["*"] });
-				//t.profileDD.setSelectionSymbol(catSym);
 				
 				$('#' + t.id + 'getHelpBtn').on('click',lang.hitch(t,function(){
 					var initHtml = $('#' + t.id + 'getHelpBtn').html();
 					if(initHtml == 'Start Using Water Scarcity Explorer'){
-						console.log('made it')
 						t.obj.visibleLayers = [16];
 						t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 					}
 				}));
 				
-					
-				
 				// on map click
 				t.map.on("click", lang.hitch(t, function(evt) {
 					if (t.open == "yes"){	
-						var pnt = evt.mapPoint;
+						t.obj.pnt = evt.mapPoint;
 						var q = new Query();
-						q.geometry = pnt;
-						if(t.accordSection == 'cat'){
+						q.geometry = t.obj.pnt;
+						if(t.obj.accordSection == 'cat'){
 							t.category.selectFeatures(q,esri.layers.FeatureLayer.SELECTION_NEW);
-						} else if (t.accordSection == 'pro'){
+						} else if (t.obj.accordSection == 'pro'){
 							t.profile.selectFeatures(q,esri.layers.FeatureLayer.SELECTION_NEW);
 						}else{
 							'do nothing here'
 						}
 					}	
-					
-					
 				}));
 				// zoom end 
 				t.map.on("zoom-end", lang.hitch(t,function(e){

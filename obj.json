@@ -8,5 +8,9 @@
 	"accordHidden": "",
 	"accordActive": 0,
 	"buttonText": "",
-	"extent": ""
+	"extent": "",
+	"selectedBasinWhere": "",
+	"pnt": "",
+	"accordSection": "",
+	"sliderPlayBtn": ""
 }
