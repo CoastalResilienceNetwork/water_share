@@ -4,10 +4,10 @@ require({
 });
 // Bring in dojo and javascript api classes as well as varObject.json, js files, and content.html
 define([
-	"dojo/_base/declare", "framework/PluginBase", "dijit/layout/ContentPane", "dojo/dom", "dojo/dom-style", "dojo/dom-geometry", "dojo/_base/lang", "dojo/text!./obj.json", "dojo/text!./profileContent.json", 
+	"dojo/_base/declare", "framework/PluginBase", "dijit/layout/ContentPane", "dojo/dom", "dojo/dom-style", "dojo/dom-geometry", "dojo/_base/lang", "dojo/text!./obj.json", 
 	"jquery", "dojo/text!./html/content.html", './js/jquery-ui-1.11.2/jquery-ui', './js/esriapi', './js/clicks', './js/chartjs', './js/barChart', './js/horizontalBar'
 ],
-function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj, proCont, $, content, ui, esriapi, clicks, chartjs, barChart, hbar) {
+function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj, $, content, ui, esriapi, clicks, chartjs, barChart, hbar) {
 	return declare(PluginBase, {
 		// The height and width are set here when an infographic is defined. When the user click Continue it rebuilds the app window with whatever you put in.
 		toolbarName: "Water Scarcity Explorer", showServiceLayersInLegend: true, allowIdentifyWhenActive: false, rendered: false, resizable: false,
@@ -18,10 +18,6 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 			declare.safeMixin(this, frameworkParameters);
 			// Define object to access global variables from JSON object. Only add variables to varObject.json that are needed by Save and Share. 
 			this.obj = dojo.eval("[" + obj + "]")[0];	
-			
-			this.proCont = dojo.eval("[" + proCont + "]")[0];
-
-			
 			this.url = "http://dev.services2.coastalresilience.org:6080/arcgis/rest/services/Water_Blueprint/water_share/MapServer";
 			this.layerDefs = [];
 		},
@@ -63,7 +59,6 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 			// remove this conditional statement when minimize is added
 			if ( $('#' + this.id ).is(":visible") ){
 				this.obj.setStateVisLayers = this.obj.visibleLayers;
-				console.log(this.obj.setStateVisLayers, 'on main')
 				if ( $('#' + this.id + 'mainAccord').is(":visible") ){
 					this.obj.accordVisible = 'mainAccord';
 					this.obj.accordHidden = 'infoAccord';
