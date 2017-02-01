@@ -57,7 +57,7 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 // Build and work with choosen menu in the profile section /////////////////////////////////////////////////////////////////				
 				// Enable jquery plugin 'chosen'
 				require(["jquery", "plugins/water_share/js/chosen.jquery"],lang.hitch(t,function($) {
-					var configCrs =  { '.chosen-crs' : {allow_single_deselect:true, width:"200px", disable_search:false}}
+					var configCrs =  { '.chosen-crs' : {allow_single_deselect:true, width:"233px", disable_search:false}}
 					for (var selector in configCrs)  { $(selector).chosen(configCrs[selector]); }
 				}));
 				// Use selections on chosen menus
