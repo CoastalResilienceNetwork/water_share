@@ -8,7 +8,7 @@ The unique ContentPane id makes all the element ids unique and prevents duplicat
 	<div id='getHelpBtn' class='sty_getHelpBtn'>Start Using Water Scarcity Explorer</div>
 </div>
 <div id='mainAccord' class='sty_flex1 sty_hide'>
-	<h3 id='depHeader'>Explore Basins by Water Depletion Status</h3>  
+	<h3 id='depHeader'>Explore Basins by Water Scarcity Status</h3>  
 	<div id='cbListener' class='ac_sectionWrap'>
 		<div class=''>
 			<div class='lineWrapCenter' id='singleShore'>
@@ -16,18 +16,18 @@ The unique ContentPane id makes all the element ids unique and prevents duplicat
 				<div class='sty_explainWrap sh_depletionText'><p>Today more than 90% of water-scarce regions goes to irrigated agriculture, but this phenomenon has a long history. This map illustrates the degree to which irrigated agriculture has depleted the renewable water resources. (adapted from Brauman and others, 2016)</p></div>
 				<div class='sh_multiYearSlider' id='sh_multiYearSlider'></div>
 				<div class='sh_playStopWrap'>
-					<div class='togBtn sh_sliderPlay' id='sh_sliderPlay'>Play</div>
-					<div class='togBtn sh_sliderStop sh_hide' id='sh_sliderStop'>Stop</div>
+					<div class='sh_togBtn sh_sliderPlay' id='sh_sliderPlay'>Play</div>
+					<div class='sh_togBtn sh_sliderStop sh_hide' id='sh_sliderStop'>Stop</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<h3 id='catHeader'>Explore Basins by Categories</h3>
+	<h3 id='catHeader'>Explore Basins by Water Use Categories</h3>
 	<div id='hydroWrap' class='ac_sectionWrap be_hide'>
 		<div id='sh_chartClick' class='sh_lineHeader3'> Click a water basin to see chart</div>
 		<div id='sh_chartWrap' class='sh_chartWrap'>
 		<div class='sh_groupCharts'>
-			<div id='sh_chartUnits' class='sh_lineHeader3 sh_chartUnits'>(million Cubic Meters)<img src='plugins/water_share/images/info.png' alt='show climate info' class='sty_infoIcon' id='-infoCategories'></div>
+			<div id='sh_chartUnits' class='sh_lineHeader3 sh_chartUnits'>(Million Cubic Meters)<img src='plugins/water_share/images/info.png' alt='show climate info' class='sty_infoIcon' id='-infoCategories'></div>
 			<div id='sh_chartUnits' class='sh_lineHeader3 sh_chartUnits' style='margin-top:-7px;'>Calculated over a 30 year average (1970-2000)</div>
 			<div class='sh_chWrap' id='sh_rWrap'>	
 				<canvas id='rawChart'></canvas>
@@ -83,35 +83,28 @@ The unique ContentPane id makes all the element ids unique and prevents duplicat
 					<div class='sh_attLine sh_topAtt'><span id='-BasinID' class='sh_attribute'>Basin ID</span>: <span id='-subBas_ID' class='sh_attSpan'></span> - <span id='zoomToFund' class='sh_zoomToText'> Zoom</span></div>
 					<div class='sh_attLine'><span class='sh_attribute'>Market Strategy</span>: <span id='-category' class='sh_attSpan'></span></div>
 					<div class='sh_attLine'><span class='sh_attribute'>Depletion Index</span>: <span id='-DepletionL' class='sh_attSpan'></span></div>
-					<!-- <div class='sh_attLine'><span class='sh_attribute'>Annual Water Budget</span>:<span id='-PopSize' class='sh_attSpan'></span></div>
-					<div class='sh_waterBudgetWrap'>
-						<div class='sh_attLine'> &#8226 <span class='sh_attribute'>Available Water</span>: <span id='-fundingSource' class='sh_attSpan'></span></div>
-						<div class='sh_attLine'> &#8226 <span class='sh_attribute'>Consumptive Use</span>: <span id='-PartnersNum' class='sh_attSpan'></span></div>
-						<div class='sh_attLine'> &#8226 <span class='sh_attribute'>Net Result</span>: <span id='-Area_Actual' class='sh_attSpan'></span></div> 
-						<div class='sh_attLine'> &#8226 <span class='sh_attribute'>Depletion Index</span>: <span id='-DepletionL' class='sh_attSpan'></span></div>
-					</div> -->
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- Profile section  -->
-	<!-- <h3 id='proHeader' class='sty_hide'>View Basins by Profile</h3>
+	<h3 id='proHeader' class=''>View Available Basin Profiles</h3>
 	<div id='supDataWrap' class='ac_sectionWrap'>
 	
-		<div class='sh_lineHeader sh_proHeader'>Select a Profile or Click on the Map:<img src='plugins/water_share/images/info.png' alt='show climate info' class='sty_infoIcon' id='-infoProfiles'></div>
+		<div class='sh_lineHeader sh_proHeader'>Select a Profile or Click on the Map:<img class='sty_hide' src='plugins/water_share/images/info.png' alt='show climate info' class='sty_infoIcon' id='-infoProfiles'></div>
+		<!-- <div>Here you can click on selected basins to learn more about water issues in the area.</div> -->
 		<div id='proChoosenWrapper' class='sh_proChoosenWrapper'>
 			<select id='ch-pro' data-placeholder="Select a Profile" class="chosen-crs" tabindex="16">
 				<option value=""></option>
 			</select>
-			
 		</div>
 		<div id='profileAttWrap' class='sh_profileAttWrap'>
 			<div id='profileName' class='sh_profileName'>Name of Profile</div>
 			<div>
-				<span id='zoomToProfile' class='sh_zoomToText'>Zoom to Profile</span> - <a class="sh_zoomToText" href="plugins/water_share/assets/name1.pdf" target="_blank">View Water Basin Profile</a>
+				<span id='zoomToProfile' class='sh_zoomToText'>Zoom to Profile</span> - <a id='sh_openProfilePdf' class="sh_zoomToText" href="plugins/water_share/assets/name1.pdf" target="_blank">View Water Basin Profile</a>
 			</div>
 		</div>
-	</div> -->
+	</div>
 </div>
 
 
@@ -123,14 +116,14 @@ The unique ContentPane id makes all the element ids unique and prevents duplicat
 The Water Share Explorer leverages data from our <a class='sty_anchor' target='_blank' href='https://global.nature.org/content/water-share'>report</a> which quantifies water scarcity over time and space to provide users with an exploratory tool to look at how, where and when water has been used in a given basin.
 		</p>
 	</div> 
-	<h3 class='infoDepletion'>Explore Basins by Depletion</h3>
+	<h3 class='infoDepletion'>Explore Basins by Water Scarcity Status</h3>
 	<div class='sty_explainWrap'>
 		<div class='sty_underlineInfoHeader'>Water Scarcity over Time:</div>
 		<p>
-			Today more than 90% of water in water-scarce regions goes to irrigated agriculture, but this phenomenon has a long history. This map illustrates the degree to which agriculture has depleted the renewable water resources during the 20th century.
+			Today more than 90% of water consumptively used in water-scarce regions goes to irrigated agriculture, but this phenomenon has a long history. This map illustrates the degree to which agriculture has depleted the renewable water resources during the 20th century.
 		</p>
 	</div>
-	<h3 class='infoCategories'>Explore Basins by Categories</h3>
+	<h3 class='infoCategories'>Explore Basins by Water Use Categories</h3>
 	<div class='sty_explainWrap'>
 		<div class='sty_underlineInfoHeader'>Quantifying drivers of scarcity:</div>
 		<p>
@@ -162,10 +155,10 @@ The Water Share Explorer leverages data from our <a class='sty_anchor' target='_
 		</div>
 		
 	</div>	
-	<!-- <h3 class='infoProfiles'>View Basins by Profile</h3>
+	<!-- <h3 class='infoProfiles sty_hide'>View Basins by Profile</h3>
 	<div class='sty_explainWrap'>
 		<p>
-			View basin by profile test text
+			Here you can click on selected basins to learn more about water issues in the area.
 		</p>
 	</div>	 -->
 </div>	
