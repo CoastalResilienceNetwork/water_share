@@ -16,7 +16,6 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 				var queryTask = new QueryTask(t.url + "/3")
 				var query = new Query();
 				query.returnGeometry = false;
-				//query.outFields = ["Abbr", "clean_names", "Ammonia", "DissolvedOxygen", "InorganicNitrogen", "Nitrate"];
 				query.where = "OBJECTID > -1"
 				queryTask.execute(query, lang.hitch(t, function(results){
 					var profiles = [];
@@ -54,7 +53,6 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 							t.obj.selectedProWhere = '';
 							t.obj.selectedBasinWhere = ''
 						}
-						console.log(t.obj.selectedBasinWhere,'', t.obj.selectedProWhere, 'where clause');
 						// accordion visibility
 						$('#' + t.id + t.obj.accordVisible).show();
 						$('#' + t.id + t.obj.accordHidden).hide();

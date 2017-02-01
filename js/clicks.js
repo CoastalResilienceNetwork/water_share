@@ -65,14 +65,8 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					//Select Huc8
 					$('#' + t.id + 'ch-pro').chosen().change(lang.hitch(t,function(c, p){
 							var index = t.obj.visibleLayers.indexOf(t.selectedProfile);
-							console.log('dropdown triggered')
 						if(p){
 							t.profileName = $('#' + t.id + 'ch-pro').val()
-							// $('#' + t.id + 'profileName').html('Water Market Case Study: ' + t.profileName)
-							// $('#' + t.id + 'profileName').slideDown();
-							// $('#' + t.id + 'profileAttWrap').slideDown();
-							// $('#' + t.id + 'sh_openProfilePdf').html("<a id='sh_openProfilePdf' class='sh_zoomToText' href='plugins/water_share/assets/" + t.profileName +".pdf' target='_blank'>View Water Basin Profile</a>")
-							
 							var q = new Query();
 							q.where = "Name = '"+t.profileName +"'";
 							t.profileDD.selectFeatures(q,esri.layers.FeatureLayer.SELECTION_NEW);
@@ -84,9 +78,6 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 								t.obj.visibleLayers.splice(index, 1);						
 							}
 							t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
-							// slide up profile elements if no profile selected
-							// $('#' + t.id + 'profileName').slideUp();
-							// $('#' + t.id + 'profileAttWrap').slideUp();
 						}
 					}));
 				}));
@@ -106,24 +97,10 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 							t.obj.visibleLayers.push(t.selectedProfile);
 							t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 						}
-						
-						
-						// console.log(t.proCont);
-						$.each(t.proCont, lang.hitch(t,function(i, v){
-							if(v.BasinProfile == t.profileName){
-								console.log(v.BasinProfile, 'this is the match');
-							}
-							// console.log(v);
-							// console.log(v.BasinProfile);
-						}));
-						
-						
-						
 						$('#' + t.id + 'profileName').html('Water Market Case Study: ' + t.profileName)
 						$('#' + t.id + 'profileName').slideDown();
 						$('#' + t.id + 'profileAttWrap').slideDown();
 						$('#' + t.id + 'sh_openProfilePdf').html("<a id='sh_openProfilePdf' class='sh_zoomToText' href='plugins/water_share/assets/" + t.profileName +".pdf' target='_blank'>View Water Basin Profile</a>")
-							
 					}else{
 						$('#' + t.id + 'ch-pro').val('').trigger('chosen:updated').trigger('change');
 						t.obj.selectedProWhere = '';
@@ -217,9 +194,6 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 				}
 				// year range slider
 				$('#' + t.id + 'sh_multiYearSlider').slider({range:false, min:0, max:13,value:0, step:1});
-				// use the below if you want the slide event to fire only after you are done with the slide
-				//$('#' + t.id + 'sh_multiYearSlider').slider({range:false, min:0, max:14, change:function(event,ui){t.clicks.sliderChange(event,ui,t)}});
-				
 				$('#' + t.id + 'sh_multiYearSlider').on('slide', lang.hitch(t,function(w,evt){
 					t.obj.sliderCounter = evt.value;
 					t.clicks.updateSlider(t);
@@ -235,7 +209,6 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					$('#' + t.id + 'sh_sliderStop').removeClass('sh_hide');
 					// show year text
 					$('#' + t.yearID).show();
-					//$('#' + this.yearID).html('<div id="yearMapText">test year update</div>');
 					t.obj.sliderPlayBtn  = 'play' 
 					t.setInt = setInterval(function(){
 						$('#' + t.yearID).html('<div class="sh_yearMapText" id="yearMapText">' + t.labels[t.obj.sliderCounter] + '</div>');
@@ -256,7 +229,6 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					clearInterval(t.setInt);
 					t.obj.sliderPlayBtn  = '';
 					t.obj.sliderCounter = 0;
-					//$('#' + t.id + 'sh_multiYearSlider').slider('value',t.obj.sliderCounter);
 					$('#' + t.yearID).html('<div class="sh_yearMapText" id="yearMapText">1900</div>');
 					//t.clicks.updateSlider(t);
 				}));
