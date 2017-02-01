@@ -10,9 +10,10 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 			esriApiFunctions: function(t){
 				// define dynamic layer numbers
 				t.selectedBasin = 0;
+				t.selectedProfile = 2;
 				t.layerDefinitions = [];
 // build the dropdown menu for the profiles section with the code below. ////////////////////////////////////////////////////////////////////
-				var queryTask = new QueryTask(t.url + "/1")
+				var queryTask = new QueryTask(t.url + "/3")
 				var query = new Query();
 				query.returnGeometry = false;
 				//query.outFields = ["Abbr", "clean_names", "Ammonia", "DissolvedOxygen", "InorganicNitrogen", "Nitrate"];
@@ -20,9 +21,9 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 				queryTask.execute(query, lang.hitch(t, function(results){
 					var profiles = [];
 					$.each(results.features,lang.hitch(this, function(i,v){
-						profiles.push(v.attributes.Name)
+						profiles.push(v.attributes.name)
 					}));
-					profiles.sort(function(a,b) {return (a.clean_names > b.clean_names) ? 1 : ((b.clean_names > a.clean_names) ? -1 : 0);} ); 
+					profiles.sort()
 					$('#' + t.id + 'ch-pro').empty();
 					$('#' + t.id + 'ch-pro').append("<option value=''></option>")
 					$.each(profiles, lang.hitch(this, function(i,v){
@@ -45,6 +46,15 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 					
 // State set work on dynamic layer load ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 					if (t.obj.stateSet == "yes"){
+						if(t.obj.accordActive == 1){
+							t.obj.selectedProWhere = '';
+						} else if(t.obj.accordActive == 2){
+							t.obj.selectedBasinWhere = ''
+						}else{
+							t.obj.selectedProWhere = '';
+							t.obj.selectedBasinWhere = ''
+						}
+						console.log(t.obj.selectedBasinWhere,'', t.obj.selectedProWhere, 'where clause');
 						// accordion visibility
 						$('#' + t.id + t.obj.accordVisible).show();
 						$('#' + t.id + t.obj.accordHidden).hide();
@@ -56,14 +66,20 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 						if(t.obj.sliderPlayBtn == 'play'){
 							$('#' + t.id + 'sh_sliderPlay').trigger('click');
 						}
-						
 						// Work with cat section in save and share
 						t.clicks.categorySelComplete(t);
-						// category click
+						// save and share category section
 						if (t.obj.selectedBasinWhere.length > 0){
 							var q = new Query();
 							q.where = t.obj.selectedBasinWhere;
 							t.category.selectFeatures(q,esri.layers.FeatureLayer.SELECTION_NEW);
+						} 
+						// save and share profile section
+						if(t.obj.selectedProWhere.length > 0){
+							var q = new Query();
+							q.where = t.obj.selectedProWhere;
+							t.profileDD.selectFeatures(q,esri.layers.FeatureLayer.SELECTION_NEW);
+							$('#' + t.id + 'ch-pro').val(t.obj.profileName).trigger('chosen:updated').trigger('change', p);
 						}
 						t.layerDefinitions[0] = t.obj.selectedBasinWhere;
 						t.dynamicLayer.setLayerDefinitions(t.layerDefinitions);
@@ -72,7 +88,7 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 						t.obj.stateSet = "no";
 					}else{
 						// set the initial visible layers on app load
-						t.obj.visibleLayers = [4];
+						t.obj.visibleLayers = [5];
 						t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 						//t.clicks.layerDefsUpdate(t);
 					}
@@ -81,14 +97,14 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 				// set category layer
 				t.category = new FeatureLayer(t.url + "/0", { mode: FeatureLayer.MODE_SELECTION, outFields: ["*"] });
 				// set profile layer
-				t.profile = new FeatureLayer(t.url + "/1", { mode: FeatureLayer.MODE_SELECTION, outFields: ["*"] });
+				t.profile = new FeatureLayer(t.url + "/2", { mode: FeatureLayer.MODE_SELECTION, outFields: ["*"] });
 				// set profile dropdown layer
-				t.profileDD = new FeatureLayer(t.url + "/1", { mode: FeatureLayer.MODE_SELECTION, outFields: ["*"] });
+				t.profileDD = new FeatureLayer(t.url + "/3", { mode: FeatureLayer.MODE_SELECTION, outFields: ["*"] });
 				
 				$('#' + t.id + 'getHelpBtn').on('click',lang.hitch(t,function(){
 					var initHtml = $('#' + t.id + 'getHelpBtn').html();
 					if(initHtml == 'Start Using Water Scarcity Explorer'){
-						t.obj.visibleLayers = [16];
+						t.obj.visibleLayers = [17];
 						t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 					}
 				}));

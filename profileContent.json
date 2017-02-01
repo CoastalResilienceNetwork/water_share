@@ -1,0 +1,160 @@
+[
+
+	{
+		"BasinProfile": "Carson River Basin",
+		"OriginalReportBy": "",
+		"ProfilePreparedBy": "",
+		"WaterScarcity": ["","",""],
+		"location": "",
+		"area": "",
+		"climate": "Dry",
+		"population": "150,000"
+		
+	
+	},
+	{
+		"BasinProfile": "Brazos River Basin",
+		"OriginalReportBy": "",
+		"ProfilePreparedBy": "",
+		"WaterScarcity": ["Over-allocation of water resources for use in agriculture, industry, and municipalities has resulted in unsustainable consumption of surface and groundwater within the basin", "Degradation of aquatic and riparian ecosystems is evidenced by recent addition of two fish onto the US Endangered Species list.", "Businesses and homeowners in the area have experienced economic losses due to the fact that lowered water levels in water storage reservoirs no longer reach waterfront properties and docks are dry."],
+		"location": "Central Texas, United States of America",
+		"area": "42,800 square miles (110,851 square kilometers)",
+		"climate": "Dry (upper basin) to temperate (lower basin)",
+		"population": "2,500,000"
+		
+	},
+	{
+		"BasinProfile": "Cauvery River Basin",
+		"OriginalReportBy": "",
+		"ProfilePreparedBy": "",
+		"WaterScarcity": ["","",""],
+		"location": "",
+		"area": "",
+		"climate": "Dry",
+		"population": "150,000"
+		
+	},
+	{
+		"BasinProfile": "Chao Phraya Basin",
+		"OriginalReportBy": "",
+		"ProfilePreparedBy": "",
+		"WaterScarcity": ["","",""],
+		"location": "",
+		"area": "",
+		"climate": "Dry",
+		"population": "150,000"
+		
+	},
+	{
+		"BasinProfile": "Chesapeake Bay Watershed",
+		"OriginalReportBy": "",
+		"ProfilePreparedBy": "",
+		"WaterScarcity": ["","",""],
+		"location": "",
+		"area": "",
+		"climate": "Dry",
+		"population": "150,000"
+		
+	},
+	{
+		"BasinProfile": "Dead Sea Basin",
+		"OriginalReportBy": "",
+		"ProfilePreparedBy": "",
+		"WaterScarcity": ["","",""],
+		"location": "",
+		"area": "",
+		"climate": "Dry",
+		"population": "150,000"
+		
+	},
+	{
+		"BasinProfile": "Godavari River Basin",
+		"OriginalReportBy": "",
+		"ProfilePreparedBy": "",
+		"WaterScarcity": ["","",""],
+		"location": "",
+		"area": "",
+		"climate": "Dry",
+		"population": "150,000"
+		
+	},
+	{
+		"BasinProfile": "Great Fish River",
+		"OriginalReportBy": "",
+		"ProfilePreparedBy": "",
+		"WaterScarcity": ["","",""],
+		"location": "",
+		"area": "",
+		"climate": "Dry",
+		"population": "150,000"
+		
+	},
+	{
+		"BasinProfile": "Great Salt Lake Basin",
+		"OriginalReportBy": "",
+		"ProfilePreparedBy": "",
+		"WaterScarcity": ["","",""],
+		"location": "",
+		"area": "",
+		"climate": "Dry",
+		"population": "150,000"
+		
+	},
+	{
+		"BasinProfile": "Guadalquivir River Basin",
+		"OriginalReportBy": "",
+		"ProfilePreparedBy": "",
+		"WaterScarcity": ["","",""],
+		"location": "",
+		"area": "",
+		"climate": "Dry",
+		"population": "150,000"
+		
+	},
+	{
+		"BasinProfile": "Guadiana River Basin",
+		"OriginalReportBy": "",
+		"ProfilePreparedBy": "",
+		"WaterScarcity": ["","",""],
+		"location": "",
+		"area": "",
+		"climate": "Dry",
+		"population": "150,000"
+		
+	},
+	{
+		"BasinProfile": "Murray Darling Basin",
+		"OriginalReportBy": "",
+		"ProfilePreparedBy": "",
+		"WaterScarcity": ["","",""],
+		"location": "",
+		"area": "",
+		"climate": "Dry",
+		"population": "150,000"
+		
+	},
+	{
+		"BasinProfile": "Nueces River Basin",
+		"OriginalReportBy": "",
+		"ProfilePreparedBy": "",
+		"WaterScarcity": ["","",""],
+		"location": "",
+		"area": "",
+		"climate": "Dry",
+		"population": "150,000"
+		
+	},
+	{
+		"BasinProfile": "Texas Colorado River Basin",
+		"OriginalReportBy": "",
+		"ProfilePreparedBy": "",
+		"WaterScarcity": ["","",""],
+		"location": "",
+		"area": "",
+		"climate": "Dry",
+		"population": "150,000"
+		
+	}
+	
+]
+

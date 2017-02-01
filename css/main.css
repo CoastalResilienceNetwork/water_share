@@ -95,15 +95,6 @@ abbr.search-choice-close {
 }
 .be_slider{
 	width:100px; display:inline-block;
-}
-.ui-slider-horizontal {
-	height: 5px;
-}
-.ui-slider-horizontal .ui-slider-handle {
-	height:15px; width:15px; margin-top:-1px;
-}
-.ui-widget-header {
-	background: #b8e1fc !important;
 }	
 .be_rslide{
 	width:160px; display:inline-block; margin-bottom:2px;

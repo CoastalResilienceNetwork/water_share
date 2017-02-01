@@ -4,11 +4,10 @@ require({
 });
 // Bring in dojo and javascript api classes as well as varObject.json, js files, and content.html
 define([
-	"dojo/_base/declare", "framework/PluginBase", "dijit/layout/ContentPane", "dojo/dom", "dojo/dom-style", "dojo/dom-geometry", "dojo/_base/lang", "dojo/text!./obj.json", 
+	"dojo/_base/declare", "framework/PluginBase", "dijit/layout/ContentPane", "dojo/dom", "dojo/dom-style", "dojo/dom-geometry", "dojo/_base/lang", "dojo/text!./obj.json", "dojo/text!./profileContent.json", 
 	"jquery", "dojo/text!./html/content.html", './js/jquery-ui-1.11.2/jquery-ui', './js/esriapi', './js/clicks', './js/chartjs', './js/barChart', './js/horizontalBar'
 ],
-function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj, 
-			$, content, ui, esriapi, clicks, chartjs, barChart, hbar ) {
+function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj, proCont, $, content, ui, esriapi, clicks, chartjs, barChart, hbar) {
 	return declare(PluginBase, {
 		// The height and width are set here when an infographic is defined. When the user click Continue it rebuilds the app window with whatever you put in.
 		toolbarName: "Water Scarcity Explorer", showServiceLayersInLegend: true, allowIdentifyWhenActive: false, rendered: false, resizable: false,
@@ -19,13 +18,18 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 			declare.safeMixin(this, frameworkParameters);
 			// Define object to access global variables from JSON object. Only add variables to varObject.json that are needed by Save and Share. 
 			this.obj = dojo.eval("[" + obj + "]")[0];	
+			
+			this.proCont = dojo.eval("[" + proCont + "]")[0];
+
+			
 			this.url = "http://dev.services2.coastalresilience.org:6080/arcgis/rest/services/Water_Blueprint/water_share/MapServer";
 			this.layerDefs = [];
 		},
 		// Called after initialize at plugin startup (why all the tests for undefined). Also called after deactivate when user closes app by clicking X. 
 		hibernate: function () {
 			if (this.appDiv != undefined){
-				this.map.removeLayer(this.dynamicLayer);
+				// this.map.removeLayer(this.dynamicLayer);
+				this.dynamicLayer.setVisibleLayers([-1]);
 			}
 			this.open = "no";
 		},
@@ -37,7 +41,7 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 				// Hide the print button until a hex has been selected
 				$(this.printButton).hide();
 			}else{
-				this.map.addLayer(this.dynamicLayer);	
+				//this.map.addLayer(this.dynamicLayer);	
 				this.dynamicLayer.setVisibleLayers(this.obj.visibleLayers);
 				$('#' + this.id).parent().parent().css('display', 'flex');
 				this.clicks.updateAccord(this);
@@ -48,7 +52,8 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 		deactivate: function () {
 			if (this.appDiv != undefined){
 				$('#' + this.yearID).hide();
-				this.map.removeLayer(this.dynamicLayer);
+				this.dynamicLayer.setVisibleLayers([-1]);
+				//this.map.removeLayer(this.dynamicLayer);
 			}
 			this.open = "no";
 		},	
@@ -58,6 +63,7 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 			// remove this conditional statement when minimize is added
 			if ( $('#' + this.id ).is(":visible") ){
 				this.obj.setStateVisLayers = this.obj.visibleLayers;
+				console.log(this.obj.setStateVisLayers, 'on main')
 				if ( $('#' + this.id + 'mainAccord').is(":visible") ){
 					this.obj.accordVisible = 'mainAccord';
 					this.obj.accordHidden = 'infoAccord';
