@@ -1,7 +1,7 @@
 {
 	"visibleLayers": [4],
 	"setStateVisLayers": [],
-	"chartVisBtn": "sh_rawBtn",
+	"chartVisBtn": "rawBtn",
 	"sliderCounter": 0,
 	"stateSet": "no",
 	"accordVisible": "",

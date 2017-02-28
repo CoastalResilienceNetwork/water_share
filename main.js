@@ -24,7 +24,7 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 		// Called after initialize at plugin startup (why all the tests for undefined). Also called after deactivate when user closes app by clicking X. 
 		hibernate: function () {
 			if (this.appDiv != undefined){
-				// this.map.removeLayer(this.dynamicLayer);
+				$('#' + this.id + 'sliderStop').trigger('click');
 				this.dynamicLayer.setVisibleLayers([-1]);
 			}
 			this.open = "no";
@@ -47,9 +47,7 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 		// Called when user hits the minimize '_' icon on the pluging. Also called before hibernate when users closes app by clicking 'X'.
 		deactivate: function () {
 			if (this.appDiv != undefined){
-				$('#' + this.yearID).hide();
-				this.dynamicLayer.setVisibleLayers([-1]);
-				//this.map.removeLayer(this.dynamicLayer);
+
 			}
 			this.open = "no";
 		},	
@@ -98,11 +96,13 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 			this.id = this.appDiv.id
 			dom.byId(this.container).appendChild(this.appDiv.domNode);					
 			$('#' + this.id).parent().addClass('sty_flexColumn')
+			$('#' + this.id).addClass('accord')
 			if (this.obj.stateSet == "no"){
 				$('#' + this.id).parent().parent().css('display', 'flex')
 			}
 			// Get html from content.html, prepend appDiv.id to html element id's, and add to appDiv
-			var idUpdate = content.replace(/id='/g, "id='" + this.id);	
+			var idUpdate0 = content.replace(/for="/g, 'for="' + this.id);	
+			var idUpdate = idUpdate0.replace(/id="/g, 'id="' + this.id);
 			$('#' + this.id).html(idUpdate);
 			
 			

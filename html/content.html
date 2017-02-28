@@ -4,159 +4,166 @@ takes the ContentPane id and prepends it to every element with a declared id in 
 The unique ContentPane id makes all the element ids unique and prevents duplicate id errors in split screen mode.-->
 
 <!--Opening view of the app. Give a little background and instructions to get started-->
-<div id='getHelpBtnWrap' class='sty_getHelpBtnWrap'>
-	<div id='getHelpBtn' class='sty_getHelpBtn'>Start Using Water Scarcity Explorer</div>
+<div id="getHelpBtnWrap" class="sty_getHelpBtnWrap">
+	<button id="getHelpBtn" class="button button-default">Start Using Water Scarcity Explorer</button>
+	<!--<div id="getHelpBtn" class="sty_getHelpBtn">Start Using Water Scarcity Explorer</div>-->
 </div>
-<div id='mainAccord' class='sty_flex1 sty_hide'>
-	<h3 id='depHeader'>Explore Basins by Water Scarcity Status</h3>  
-	<div id='cbListener' class='ac_sectionWrap'>
-		<div class=''>
-			<div class='lineWrapCenter' id='singleShore'>
-				<div class='sh_lineHeader'>Water Scarcity over Time:<img src='plugins/water_share/images/info.png' alt='show climate info' class='sty_infoIcon' id='-infoDepletion'></div>
-				<div class='sty_explainWrap sh_depletionText'><p>Today more than 90% of water-scarce regions goes to irrigated agriculture, but this phenomenon has a long history. This map illustrates the degree to which irrigated agriculture has depleted the renewable water resources. (adapted from Brauman and others, 2016)</p></div>
-				<div class='sh_multiYearSlider' id='sh_multiYearSlider'></div>
-				<div class='sh_playStopWrap'>
-					<div class='sh_togBtn sh_sliderPlay' id='sh_sliderPlay'>Play</div>
-					<div class='sh_togBtn sh_sliderStop sh_hide' id='sh_sliderStop'>Stop</div>
+<div id="mainAccord" class="sty_flex1 sty_hide">
+	<h3 id="depHeader">Explore Basins by Water Scarcity Status</h3>  
+	<div id="cbListener" class="ac_sectionWrap">
+		<section class="lineWrapCenter sliderOverride" id="singleShore">
+			<h3>Water Scarcity over Time<img src="plugins/water_share/images/info.png" alt="show climate info" class="sty_infoIcon" id="-infoDepletion"></h3>
+			<div class="sty_explainWrap sh_depletionText"><p>Today more than 90% of water-scarce regions goes to irrigated agriculture, but this phenomenon has a long history. This map illustrates the degree to which irrigated agriculture has depleted the renewable water resources. (adapted from Brauman and others, 2016)</p></div>
+			<div class="slider-container" style="width:350px; margin:auto; margin-top:25px;">
+				<div id="sh_multiYearSlider" class="slider sh_multiYearSlider"></div>	
+			</div>
+			<div class="sh_playStopWrap">
+				<div class="toggle-btn" style="width:100px; margin:auto">  
+					<input type="radio" id="sliderPlay" name="sps"/> <label for="sliderPlay">Play</label>  
+					<input type="radio" id="sliderStop" name="sps" checked/> <label for="sliderStop">Stop</label>  
 				</div>
 			</div>
-		</div>
+		</section>
 	</div>
-	<h3 id='catHeader'>Explore Basins by Water Use Categories</h3>
-	<div id='hydroWrap' class='ac_sectionWrap be_hide'>
-		<div id='sh_chartClick' class='sh_lineHeader3'> Click a water basin to see chart</div>
-		<div id='sh_chartWrap' class='sh_chartWrap'>
-		<div class='sh_groupCharts'>
-			<div id='sh_chartUnits' class='sh_lineHeader3 sh_chartUnits'>(Million Cubic Meters)<img src='plugins/water_share/images/info.png' alt='show climate info' class='sty_infoIcon' id='-infoCategories'></div>
-			<div id='sh_chartUnits' class='sh_lineHeader3 sh_chartUnits' style='margin-top:-7px;'>Calculated over a 30 year average (1970-2000)</div>
-			<div class='sh_chWrap' id='sh_rWrap'>	
-				<canvas id='rawChart'></canvas>
-			</div>
-			<div id='sh_yearChartLables' class='sh_yearChartLables'>
-				<div class='sh_yearLabel'>1970</div>
-				<div class='sh_yearLabel'>1980</div>
-				<div class='sh_yearLabel'>1990</div>
-				<div class='sh_yearLabel'>2000</div>
-			</div>
-			<div id='sh_chartLgnd1' class='sh_chartLgnd'>
-				<div class='sh_lgndItemWrap sh_liwLeft'>
-					<div class='sh_lgndItem sh_domLgnd'></div><div>Domestic</div>
-				</div>	
-				<div class='sh_lgndItemWrap'>
-					<div class='sh_lgndItem sh_indLgnd'></div><div>Industry</div>
+	<h3 id="catHeader">Explore Basins by Water Use Categories</h3>
+	<div id="hydroWrap" class="ac_sectionWrap sh_hide">
+		<div id="sh_chartClick" class="sh_lineHeader3"> Click a water basin to see chart</div>
+		<div id="sh_chartWrap" class="sh_chartWrap">
+			<section>
+				<div id="sh_chartUnits" class="sh_lineHeader3 sh_chartUnits">(Million Cubic Meters)<img src="plugins/water_share/images/info.png" alt="show climate info" class="sty_infoIcon" id="-infoCategories"></div>
+				<div id="sh_chartUnits" class="sh_lineHeader3 sh_chartUnits" style="margin-top:-7px;">Calculated over a 30 year average (1970-2000)</div>
+				<div class="sh_chWrap" id="sh_rWrap">	
+					<canvas id="rawChart"></canvas>
 				</div>
-				<div class='sh_lgndItemWrap'>
-					<div class='sh_lgndItem sh_irrLgnd'></div><div>Irrigation</div>
+				<div id="sh_yearChartLables" class="sh_yearChartLables">
+					<div class="sh_yearLabel">1970</div>
+					<div class="sh_yearLabel">1980</div>
+					<div class="sh_yearLabel">1990</div>
+					<div class="sh_yearLabel">2000</div>
+				</div>
+				<div id="sh_chartLgnd1" class="sh_chartLgnd">
+					<div class="sh_lgndItemWrap sh_liwLeft">
+						<div class="sh_lgndItem sh_domLgnd"></div><div>Domestic</div>
+					</div>	
+					<div class="sh_lgndItemWrap">
+						<div class="sh_lgndItem sh_indLgnd"></div><div>Industry</div>
+					</div>
+					<div class="sh_lgndItemWrap">
+						<div class="sh_lgndItem sh_irrLgnd"></div><div>Irrigation</div>
+					</div>	
+					<div class="sh_lgndItemWrap">
+						<div class="sh_lgndItem sh_livLgnd"></div><div>Livestock</div>
+					</div>		
+				</div>
+				<div id="sh_chartLgnd2" class="sh_chartLgnd">
+					<div class="sh_lgndItemWrap" id="sh_avlLWrap">
+						<div class="sh_lgndItem sh_avlLgnd"></div><div>Available</div>
+					</div>	
+					<div class="sh_lgndItemWrap" id="sh_avlmmLWrap">
+						<div class="sh_lgndItem sh_avlmmLgnd"></div><div>Available (min/max)</div>
+					</div>			
+				</div>
+				
+				<div id="sh_chartLgnd3" class="sh_chartLgnd">
+					<div class="sh_lgndItemWrap" id="sh_avlLWrap1">
+						<div class="sh_lgndItem sh_avlLgnd"></div><div>Water by Year</div>
+					</div>		
+				</div>
+				<div class="sh_yearMonthWrap">
+					<div class="sh_lineHeader3 sh_yearMonthHeader"> View Data by:</div>
+					<div class="toggle-btn" style="width:140px;">  
+						<input type="radio" id="monthlyBtn" name="my" checked/> <label for="monthlyBtn">Month</label>  
+						<input type="radio" id="yearlyBtn" name="my"/> <label for="yearlyBtn">Year</label>  
+					</div>
+				</div>
+				<div id="sh_chartBtnWrap" class="sh_chartBtnWrap">
+					<div class="toggle-btn" style="width:300px;">  
+						<input type="radio" id="rawBtn" name="cai" checked/> <label for="rawBtn">Consumed</label>  
+						<input type="radio" id="availBtn" name="cai"/> <label for="availBtn">Available</label>
+						<input type="radio" id="interBtn" name="cai"/> <label for="interBtn">Interannual</label>  
+					</div>
 				</div>	
-				<div class='sh_lgndItemWrap'>
-					<div class='sh_lgndItem sh_livLgnd'></div><div>Livestock</div>
-				</div>		
-			</div>
-			<div id='sh_chartLgnd2' class='sh_chartLgnd'>
-				<div class='sh_lgndItemWrap' id='sh_avlLWrap'>
-					<div class='sh_lgndItem sh_avlLgnd'></div><div>Available</div>
-				</div>	
-				<div class='sh_lgndItemWrap' id='sh_avlmmLWrap'>
-					<div class='sh_lgndItem sh_avlmmLgnd'></div><div>Available (min/max)</div>
-				</div>			
-			</div>
-			
-			<div id='sh_chartLgnd3' class='sh_chartLgnd'>
-				<div class='sh_lgndItemWrap' id='sh_avlLWrap1'>
-					<div class='sh_lgndItem sh_avlLgnd'></div><div>Water by Year</div>
-				</div>		
-			</div>
-			<div class='sh_yearMonthWrap'>
-				<div class='sh_lineHeader3 sh_yearMonthHeader'> View Data by:</div>
-				<div class='sh_togBtn sh_yearMonthBtns' id='sh_monthlyBtn'>Month</div>
-				<div class='sh_togBtn sh_yearMonthBtns' id='sh_yearlyBtn'>Year</div>
-			</div>
-			<div id='sh_chartBtnWrap' class='sh_chartBtnWrap'>
-				<div class='sh_togBtn sh_chartBtns sh_togBtnSel' id='sh_rawBtn'>Consumed</div>
-				<div class='sh_togBtn sh_chartBtns' id='sh_availBtn'>Available</div>
-				<div class='sh_togBtn sh_chartBtns' id='sh_interBtn'>Interannual</div>
-			</div>	
-		</div>
+			</section>
 			<!-- Water category attribute section -->
-			<div id='sh_attributeWrap' class='sh_groupCharts'>
-				<div class='sh_attPaddingBump'>
-					<div class='sh_attLine sh_topAtt'><span id='-BasinID' class='sh_attribute'>Basin ID</span>: <span id='-subBas_ID' class='sh_attSpan'></span> - <span id='zoomToFund' class='sh_zoomToText'> Zoom</span></div>
-					<div class='sh_attLine'><span class='sh_attribute'>Market Strategy</span>: <span id='-category' class='sh_attSpan'></span></div>
-					<div class='sh_attLine'><span class='sh_attribute'>Depletion Index</span>: <span id='-DepletionL' class='sh_attSpan'></span></div>
+			<section id="sh_attributeWrap">
+				<div class="sh_attPaddingBump">
+					<div class="sh_attLine sh_topAtt"><span id="-BasinID" class="sh_attribute">Basin ID</span>: <span id="-subBas_ID" class="sh_attSpan"></span> - <span id="zoomToFund" class="sh_zoomToText"> Zoom</span></div>
+					<div class="sh_attLine"><span class="sh_attribute">Market Strategy</span>: <span id="-category" class="sh_attSpan"></span></div>
+					<div class="sh_attLine"><span class="sh_attribute">Depletion Index</span>: <span id="-DepletionL" class="sh_attSpan"></span></div>
 				</div>
-			</div>
+			</section>
 		</div>
 	</div>
 	<!-- Profile section  -->
-	<h3 id='proHeader' class=''>View Available Basin Profiles</h3>
-	<div id='supDataWrap' class='ac_sectionWrap'>
+	<h3 id="proHeader" class="">View Available Basin Profiles</h3>
+	<div id="supDataWrap" class="ac_sectionWrap">
 	
-		<div class='sh_lineHeader sh_proHeader'>Select a Profile or Click on the Map:<img class='sty_hide' src='plugins/water_share/images/info.png' alt='show climate info' class='sty_infoIcon' id='-infoProfiles'></div>
+		<h3>Select a Profile or Click on the Map:<img class="sty_hide" src="plugins/water_share/images/info.png" alt="show climate info" class="sty_infoIcon" id="-infoProfiles"></h3>
 		<!-- <div>Here you can click on selected basins to learn more about water issues in the area.</div> -->
-		<div id='proChoosenWrapper' class='sh_proChoosenWrapper'>
-			<select id='ch-pro' data-placeholder="Select a Profile" class="chosen-crs" tabindex="16">
+		<div id="proChoosenWrapper" class="choWrap">
+			<select id="ch-pro" data-placeholder="Select a Profile" class="chosen ch-pro" style="width:155px;">
 				<option value=""></option>
 			</select>
 		</div>
-		<div id='profileAttWrap' class='sh_profileAttWrap'>
-			<div id='profileName' class='sh_profileName'>Name of Profile</div>
+		<div id="profileAttWrap" class="sh_profileAttWrap">
+			<div id="profileName" class="sh_profileName">Name of Profile</div>
 			<div>
-				<span id='zoomToProfile' class='sh_zoomToText'>Zoom to Profile</span> - <a id='sh_openProfilePdf' class="sh_zoomToText" href="plugins/water_share/assets/name1.pdf" target="_blank">View Water Basin Profile</a>
+				<span id="zoomToProfile" class="sh_zoomToText">Zoom to Profile</span> - <a id="sh_openProfilePdf" class="sh_zoomToText" href="plugins/water_share/assets/name1.pdf" target="_blank">View Water Basin Profile</a>
 			</div>
 		</div>
 	</div>
 </div>
 
 
-<div id='infoAccord' class='sty_flex1'>
-	<h3 class='infoDoc'>Documentation</h3>
-	<div class='sty_explainWrap'>
+<div id="infoAccord" class="sty_flex1">
+	<h3 class="infoDoc">Documentation</h3>
+	<div class="sty_explainWrap">
 		<p>
 			Water scarcity is a consequence of allowing too much water to be consumed relative to the renewable, affordable supply of water. The problem of water scarcity is planetary in scale: today, at least one-third of the rivers, lakes and aquifers on our planet are being heavily tapped for their water resources.
-The Water Scarcity Explorer leverages data from our <a class='sty_anchor' target='_blank' href='https://global.nature.org/content/water-share'>report</a> which quantifies water scarcity over time and space to provide users with an exploratory tool to look at how, where and when water has been used in a given basin.
+The Water Scarcity Explorer leverages data from our <a class="sty_anchor" target="_blank" href="https://global.nature.org/content/water-share">report</a> which quantifies water scarcity over time and space to provide users with an exploratory tool to look at how, where and when water has been used in a given basin.
 		</p>
 	</div> 
-	<h3 class='infoDepletion'>Explore Basins by Water Scarcity Status</h3>
-	<div class='sty_explainWrap'>
-		<div class='sty_underlineInfoHeader'>Water Scarcity over Time:</div>
+	<h3 class="infoDepletion">Explore Basins by Water Scarcity Status</h3>
+	<div class="sty_explainWrap">
+		<div class="sty_underlineInfoHeader">Water Scarcity over Time:</div>
 		<p>
 			Today more than 90% of water consumptively used in water-scarce regions goes to irrigated agriculture, but this phenomenon has a long history. This map illustrates the degree to which agriculture has depleted the renewable water resources during the 20th century.
 		</p>
 	</div>
-	<h3 class='infoCategories'>Explore Basins by Water Use Categories</h3>
-	<div class='sty_explainWrap'>
-		<div class='sty_underlineInfoHeader'>Quantifying drivers of scarcity:</div>
+	<h3 class="infoCategories">Explore Basins by Water Use Categories</h3>
+	<div class="sty_explainWrap">
+		<div class="sty_underlineInfoHeader">Quantifying drivers of scarcity:</div>
 		<p>
 		    Leveraging WaterGAP data as outlined in Water Share, we identified categories of depletion based on their consumptive water use.
 		</p>
 		<p>
 			Approximately 1,700 basins (35 percent) are chronically depleted, meaning that more than 75 percent of the renewable water replenishment is consumptively used on either an annual or seasonal basis.
 		</p>
-		<div style='margin-top:5px; margin-left:15px; color:#21658c;'>
+		<div style="margin-top:5px; margin-left:15px;">
 			&#8226 The consumptive water use in two-thirds of these chronically-depleted basins is dominated by irrigated agriculture (condition category C1).
 		</div>
-		<div style='margin-top:5px; margin-left:15px; color:#21658c;'>
+		<div style="margin-top:5px; margin-left:15px;">
 			&#8226 A blend of irrigation and other uses, including municipal and industrial, can be found in one-fifth of these basins (condition category C2).
 		</div>
-		<div style='margin-top:5px; margin-left:15px; color:#21658c;'>
+		<div style="margin-top:5px; margin-left:15px;">
 			&#8226 Irrigated agriculture is nearly or fully absent in nearly one-fifth of these basins, and urban (municipal and industrial) water uses are dominant (condition category C3).
 		</div>
 		<p>
 			Approximately 3,100 basins (65 percent) are Episodically depleted, meaning that consumptive use exceeds 75 percent of the renewable water replenishment only during drier years or droughts.
 		</p>
-		<div style='margin-top:5px; margin-left:15px; color:#21658c;'>
+		<div style="margin-top:5px; margin-left:15px;">
 			&#8226 Irrigated agriculture is dominant in one-quarter of these episodically-depleted basins (condition category E1).
 		</div>
-		<div style='margin-top:5px; margin-left:15px; color:#21658c;'>
+		<div style="margin-top:5px; margin-left:15px;">
 			&#8226 A blend of irrigation and other uses can be found in one-quarter of these basins (condition category E2).
 		</div>
-		<div style='margin-top:5px; margin-left:15px; color:#21658c;'>
+		<div style="margin-top:5px; margin-left:15px;">
 			&#8226 In nearly half of these episodically-depleted basins, annual rainfall is relatively low, and livestock grazing and subsistence uses of water account for the majority of water use (condition category E3).
 		</div>
 		
 	</div>	
-	<!-- <h3 class='infoProfiles sty_hide'>View Basins by Profile</h3>
-	<div class='sty_explainWrap'>
+	<!-- <h3 class="infoProfiles sty_hide">View Basins by Profile</h3>
+	<div class="sty_explainWrap">
 		<p>
 			Here you can click on selected basins to learn more about water issues in the area.
 		</p>
