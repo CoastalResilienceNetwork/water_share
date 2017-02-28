@@ -62,7 +62,7 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 
 						// work with depletion section button
 						if(t.obj.sliderPlayBtn == 'play'){
-							$('#' + t.id + 'sliderPlay').trigger('click');
+							$('#' + t.id + 'sh_sliderPlay').trigger('click');
 						}
 						// Work with cat section in save and share
 						t.clicks.categorySelComplete(t);

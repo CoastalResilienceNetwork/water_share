@@ -8,12 +8,8 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 			clickListener: function(t){
 //make accordians /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				$( function() {
-					$( '#' + t.id + 'mainAccord' ).accordion({heightStyle: "fill"})
-					$( '#' + t.id + 'infoAccord' ).accordion({heightStyle: "fill"})
-					$( '#' + t.id + 'mainAccord > h3' ).addClass("accord-header"); 
-					$( '#' + t.id + 'infoAccord > div' ).addClass("accord-body");
-					$( '#' + t.id + 'infoAccord > h3' ).addClass("accord-header"); 
-					$( '#' + t.id + 'mainAccord > div' ).addClass("accord-body");
+					$( '#' + t.id + 'mainAccord' ).accordion({heightStyle: "fill"}); 
+					$( '#' + t.id + 'infoAccord' ).accordion({heightStyle: "fill"});
 				});
 // Work with accordian code when click on a part of the accordian or on map resize///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				// update accordians on window resize 
@@ -61,7 +57,7 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 // Build and work with choosen menu in the profile section /////////////////////////////////////////////////////////////////				
 				// Enable jquery plugin 'chosen'
 				require(["jquery", "plugins/water_share/js/chosen.jquery"],lang.hitch(t,function($) {
-					var configCrs =  { '.ch-pro' : {allow_single_deselect:false, width:"233px", disable_search:false}}
+					var configCrs =  { '.chosen-crs' : {allow_single_deselect:true, width:"233px", disable_search:false}}
 					for (var selector in configCrs)  { $(selector).chosen(configCrs[selector]); }
 				}));
 				// Use selections on chosen menus
@@ -171,7 +167,9 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 						t.obj.visibleLayers = [1];
 						t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 						// trigger click on stop button to stop animation if its going.
-						$('#' + t.id + 'sliderStop').trigger('click');
+						$('#' + t.id + 'sh_sliderStop').trigger('click');
+						$('#' + t.id + 'sh_monthlyBtn').addClass('sh_togBtnSel');
+						$('#' + t.id + 'sh_yearlyBtn').removeClass('sh_togBtnSel');
 						t.clicks.categorySelComplete(t);
 					}
 				}));
@@ -196,7 +194,6 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 				}
 				// year range slider
 				$('#' + t.id + 'sh_multiYearSlider').slider({range:false, min:0, max:13,value:0, step:1});
-				
 				$('#' + t.id + 'sh_multiYearSlider').on('slide', lang.hitch(t,function(w,evt){
 					t.obj.sliderCounter = evt.value;
 					t.clicks.updateSlider(t);
@@ -207,8 +204,9 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					}
 				}));
 				// slider play button click
-				$('#' + t.id + 'sliderPlay').on('click', lang.hitch(t,function(){
-					console.log("click")
+				$('#' + t.id + 'sh_sliderPlay').on('click', lang.hitch(t,function(){
+					$('#' + t.id + 'sh_sliderPlay').addClass('sh_hide');
+					$('#' + t.id + 'sh_sliderStop').removeClass('sh_hide');
 					// show year text
 					$('#' + t.yearID).show();
 					t.obj.sliderPlayBtn  = 'play' 
@@ -223,7 +221,9 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					}, 1000);
 				}));
 				//slider stop button click
-				$('#' + t.id + 'sliderStop').on('click', lang.hitch(t,function(){
+				$('#' + t.id + 'sh_sliderStop').on('click', lang.hitch(t,function(){
+					$('#' + t.id + 'sh_sliderPlay').removeClass('sh_hide');
+					$('#' + t.id + 'sh_sliderStop').addClass('sh_hide');
 					// hide year text
 					$('#' + t.yearID).hide();
 					clearInterval(t.setInt);
@@ -328,9 +328,9 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 						$('#' + t.id + 'sh_chartClick').slideUp();
 						// check to see what button year or month was clicked then trigger clicks
 						if(t.monthYearClick == 'month'){
-							$('#' + t.id + 'rawBtn').trigger('click')
+							$('#' + t.id + 'sh_rawBtn').trigger('click')
 						}else{
-							$('#' + t.id + 'yearlyBtn').trigger('click')
+							$('#' + t.id + 'sh_yearlyBtn').trigger('click')
 						}
 						// build chart labels
 						t.chartLabels = [];
