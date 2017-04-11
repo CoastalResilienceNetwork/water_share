@@ -47,7 +47,8 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 		// Called when user hits the minimize '_' icon on the pluging. Also called before hibernate when users closes app by clicking 'X'.
 		deactivate: function () {
 			if (this.appDiv != undefined){
-
+				$('#' + this.id + 'sliderStop').trigger('click');
+				this.dynamicLayer.setVisibleLayers([-1]);
 			}
 			this.open = "no";
 		},	

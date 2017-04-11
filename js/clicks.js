@@ -25,18 +25,10 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					}, 100);
 				});	
 				$('#' + t.id + 'getHelpBtn').on('click',lang.hitch(t,function(c){
-					if ( $('#' + t.id + 'mainAccord').is(":visible") ){
-						$('#' + t.id + 'infoAccord').show();
-						$('#' + t.id + 'mainAccord').hide();
-						$('#' + t.id + 'getHelpBtn').html('Back to Water Scarcity Explorer');
-						t.clicks.updateAccord(t);
-						$('#' + t.id + 'infoAccord .infoDoc').trigger('click');
-					}else{
-						$('#' + t.id + 'infoAccord').hide();
-						$('#' + t.id + 'mainAccord').show();
-						$('#' + t.id + 'getHelpBtn').html('Back to Documentation');
-						t.clicks.updateAccord(t);
-					}
+					$('#' + t.id + 'infoAccord').hide();
+					$('#' + t.id + 'mainAccord').show();
+					$('#' + t.id + 'getHelpBtnWrap').hide();
+					t.clicks.updateAccord(t);
 				}));
 // info icon clicks ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				$('#' + t.id + ' .sty_infoIcon').on('click',lang.hitch(t,function(c){
@@ -152,7 +144,7 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 // Depletion, category, and profile header clicks //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 				// click on depletion header 
 				$('#' + t.id + 'depHeader').on('click',lang.hitch(t,function(c){
-					if($('#' + t.id + 'depHeader').next().is(':hidden')){
+					if(t.obj.accordSection != 'dep'){
 						t.obj.accordSection = 'dep';
 						$('#' + t.id + 'ch-pro').val('').trigger('chosen:updated').trigger('change');
 						$('#' + t.id + 'sh_chartWrap').hide();
@@ -165,7 +157,7 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 				}));
 				// click on catagory header 
 				$('#' + t.id + 'catHeader').on('click',lang.hitch(t,function(c){
-					if($('#' + t.id + 'catHeader').next().is(':hidden')){
+					if(t.obj.accordSection != 'cat'){
 						t.obj.accordSection = 'cat';
 						$('#' + t.id + 'ch-pro').val('').trigger('chosen:updated').trigger('change');
 						t.obj.visibleLayers = [1];
@@ -177,7 +169,7 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 				}));
 				// click on profile header
 				$('#' + t.id + 'proHeader').on('click',lang.hitch(t,function(c){
-					if($('#' + t.id + 'proHeader').next().is(':hidden')){
+					if(t.obj.accordSection != 'pro'){
 						t.obj.accordSection = 'pro';
 						$('#' + t.id + 'sh_chartWrap').hide();
 						$('#' + t.id + 'sh_chartClick').show();
