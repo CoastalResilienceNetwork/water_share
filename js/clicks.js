@@ -8,8 +8,12 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 			clickListener: function(t){
 //make accordians /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				$( function() {
-					$( '#' + t.id + 'mainAccord' ).accordion({heightStyle: "fill"}); 
-					$( '#' + t.id + 'infoAccord' ).accordion({heightStyle: "fill"});
+					$( '#' + t.id + 'mainAccord' ).accordion({heightStyle: "fill"})
+					$( '#' + t.id + 'infoAccord' ).accordion({heightStyle: "fill"})
+					$( '#' + t.id + 'mainAccord > h3' ).addClass("accord-header"); 
+					$( '#' + t.id + 'infoAccord > div' ).addClass("accord-body");
+					$( '#' + t.id + 'infoAccord > h3' ).addClass("accord-header"); 
+					$( '#' + t.id + 'mainAccord > div' ).addClass("accord-body");
 				});
 // Work with accordian code when click on a part of the accordian or on map resize///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				// update accordians on window resize 
@@ -21,18 +25,10 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					}, 100);
 				});	
 				$('#' + t.id + 'getHelpBtn').on('click',lang.hitch(t,function(c){
-					if ( $('#' + t.id + 'mainAccord').is(":visible") ){
-						$('#' + t.id + 'infoAccord').show();
-						$('#' + t.id + 'mainAccord').hide();
-						$('#' + t.id + 'getHelpBtn').html('Back to Water Scarcity Explorer');
-						t.clicks.updateAccord(t);
-						$('#' + t.id + 'infoAccord .infoDoc').trigger('click');
-					}else{
-						$('#' + t.id + 'infoAccord').hide();
-						$('#' + t.id + 'mainAccord').show();
-						$('#' + t.id + 'getHelpBtn').html('Back to Documentation');
-						t.clicks.updateAccord(t);
-					}
+					$('#' + t.id + 'infoAccord').hide();
+					$('#' + t.id + 'mainAccord').show();
+					$('#' + t.id + 'getHelpBtnWrap').hide();
+					t.clicks.updateAccord(t);
 				}));
 // info icon clicks ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				$('#' + t.id + ' .sty_infoIcon').on('click',lang.hitch(t,function(c){
@@ -57,7 +53,7 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 // Build and work with choosen menu in the profile section /////////////////////////////////////////////////////////////////				
 				// Enable jquery plugin 'chosen'
 				require(["jquery", "plugins/water_share/js/chosen.jquery"],lang.hitch(t,function($) {
-					var configCrs =  { '.chosen-crs' : {allow_single_deselect:true, width:"233px", disable_search:false}}
+					var configCrs =  { '.ch-pro' : {allow_single_deselect:false, width:"233px", disable_search:false}}
 					for (var selector in configCrs)  { $(selector).chosen(configCrs[selector]); }
 				}));
 				// Use selections on chosen menus
@@ -148,7 +144,7 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 // Depletion, category, and profile header clicks //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 				// click on depletion header 
 				$('#' + t.id + 'depHeader').on('click',lang.hitch(t,function(c){
-					if($('#' + t.id + 'depHeader').next().is(':hidden')){
+					if(t.obj.accordSection != 'dep'){
 						t.obj.accordSection = 'dep';
 						$('#' + t.id + 'ch-pro').val('').trigger('chosen:updated').trigger('change');
 						$('#' + t.id + 'sh_chartWrap').hide();
@@ -161,21 +157,19 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 				}));
 				// click on catagory header 
 				$('#' + t.id + 'catHeader').on('click',lang.hitch(t,function(c){
-					if($('#' + t.id + 'catHeader').next().is(':hidden')){
+					if(t.obj.accordSection != 'cat'){
 						t.obj.accordSection = 'cat';
 						$('#' + t.id + 'ch-pro').val('').trigger('chosen:updated').trigger('change');
 						t.obj.visibleLayers = [1];
 						t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 						// trigger click on stop button to stop animation if its going.
-						$('#' + t.id + 'sh_sliderStop').trigger('click');
-						$('#' + t.id + 'sh_monthlyBtn').addClass('sh_togBtnSel');
-						$('#' + t.id + 'sh_yearlyBtn').removeClass('sh_togBtnSel');
+						$('#' + t.id + 'sliderStop').trigger('click');
 						t.clicks.categorySelComplete(t);
 					}
 				}));
 				// click on profile header
 				$('#' + t.id + 'proHeader').on('click',lang.hitch(t,function(c){
-					if($('#' + t.id + 'proHeader').next().is(':hidden')){
+					if(t.obj.accordSection != 'pro'){
 						t.obj.accordSection = 'pro';
 						$('#' + t.id + 'sh_chartWrap').hide();
 						$('#' + t.id + 'sh_chartClick').show();
@@ -194,6 +188,7 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 				}
 				// year range slider
 				$('#' + t.id + 'sh_multiYearSlider').slider({range:false, min:0, max:13,value:0, step:1});
+				
 				$('#' + t.id + 'sh_multiYearSlider').on('slide', lang.hitch(t,function(w,evt){
 					t.obj.sliderCounter = evt.value;
 					t.clicks.updateSlider(t);
@@ -204,9 +199,8 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					}
 				}));
 				// slider play button click
-				$('#' + t.id + 'sh_sliderPlay').on('click', lang.hitch(t,function(){
-					$('#' + t.id + 'sh_sliderPlay').addClass('sh_hide');
-					$('#' + t.id + 'sh_sliderStop').removeClass('sh_hide');
+				$('#' + t.id + 'sliderPlay').on('click', lang.hitch(t,function(){
+					console.log("click")
 					// show year text
 					$('#' + t.yearID).show();
 					t.obj.sliderPlayBtn  = 'play' 
@@ -221,9 +215,7 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					}, 1000);
 				}));
 				//slider stop button click
-				$('#' + t.id + 'sh_sliderStop').on('click', lang.hitch(t,function(){
-					$('#' + t.id + 'sh_sliderPlay').removeClass('sh_hide');
-					$('#' + t.id + 'sh_sliderStop').addClass('sh_hide');
+				$('#' + t.id + 'sliderStop').on('click', lang.hitch(t,function(){
 					// hide year text
 					$('#' + t.yearID).hide();
 					clearInterval(t.setInt);
@@ -328,9 +320,9 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 						$('#' + t.id + 'sh_chartClick').slideUp();
 						// check to see what button year or month was clicked then trigger clicks
 						if(t.monthYearClick == 'month'){
-							$('#' + t.id + 'sh_rawBtn').trigger('click')
+							$('#' + t.id + 'rawBtn').trigger('click')
 						}else{
-							$('#' + t.id + 'sh_yearlyBtn').trigger('click')
+							$('#' + t.id + 'yearlyBtn').trigger('click')
 						}
 						// build chart labels
 						t.chartLabels = [];
