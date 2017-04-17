@@ -31,6 +31,7 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 		},
 		// Called after hibernate at app startup. Calls the render function which builds the plugins elements and functions.   
 		activate: function () {
+			$('.sidebar-nav .nav-title').css("margin-left", "0px");
 			if (this.rendered == false) {
 				this.rendered = true;							
 				this.render();
