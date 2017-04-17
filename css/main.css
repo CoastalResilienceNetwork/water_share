@@ -195,3 +195,6 @@ abbr.search-choice-close {
 .sh_hide{
 	display:none;
 }
+.tinner .tclose {
+    color: #2F6384 !important;
+}
